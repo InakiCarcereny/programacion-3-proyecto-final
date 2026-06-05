@@ -23,7 +23,9 @@ export class Server {
   }
 
   routes(): void {
-    // this.app.use('/products', IMPORTAR RUTAS DE PRODUCTOS COMO MODULO);
+    // this.app.use('/api/products', IMPORTAR RUTAS DE PRODUCTOS COMO MODULO);
+    // this.app.use('/api/categories', IMPORTAR RUTAS DE CATEGORIAS COMO MODULO);
+    // this.app.use('/api/movements', IMPORTAR RUTAS DE MOVIMIENTOS COMO MODULO);
   }
 
   listen(): void {
