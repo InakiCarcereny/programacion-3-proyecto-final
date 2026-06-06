@@ -26,6 +26,9 @@ export class Server {
     // this.app.use('/api/products', IMPORTAR RUTAS DE PRODUCTOS COMO MODULO);
     // this.app.use('/api/categories', IMPORTAR RUTAS DE CATEGORIAS COMO MODULO);
     // this.app.use('/api/movements', IMPORTAR RUTAS DE MOVIMIENTOS COMO MODULO);
+    this.app.get("/api/health", (req, res) => {
+      res.json({ status: "ok", timestamp: new Date() });
+    });
   }
 
   listen(): void {
