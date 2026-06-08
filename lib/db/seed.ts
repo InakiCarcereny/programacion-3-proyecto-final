@@ -3,7 +3,7 @@
 
 // Estos son algunos datos de ejemplo para tener en la db, luego la vamos a llenar ya con productos reales.
 
-import { Category, Product } from "./models";
+import { Category, Product } from "../../models";
 
 export async function seed(): Promise<void> {
   const categories = await Category.bulkCreate([
