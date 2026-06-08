@@ -42,7 +42,7 @@ export const initDatabaseTriggers = async (): Promise<void> => {
             cantidad_movimiento := diferencia;
           ELSE
             tipo_movimiento := 'egreso';
-            cantidad_movimiento := diferencia * -1; -- Lo multiplicamos por -1 para guardarlo en positivo
+            cantidad_movimiento := diferencia * -1; 
           END IF;
 
           
