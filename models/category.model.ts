@@ -1,5 +1,5 @@
 import { DataTypes, Model, Optional } from "sequelize";
-import sequelize from "../db.config";
+import sequelize from "../lib/db/db.config";
 import { Category as CategoryAttributes } from "../types/category";
 
 interface CategoryCreationAttributes extends Optional<
