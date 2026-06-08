@@ -1,4 +1,4 @@
-import { v2 as cloudinary } from "cloudinary";
+import cloudinary from "../lib/cloudinary.config";
 
 export async function uploadImage(
   fileBuffer: Buffer,
