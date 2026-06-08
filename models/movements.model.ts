@@ -1,5 +1,5 @@
 import { DataTypes, Model, Optional } from "sequelize";
-import sequelize from "../db.config";
+import sequelize from "../lib/db/db.config";
 import { Movement as MovementAttributes } from "../types/movements";
 
 interface MovementCreationAttributes extends Optional<
@@ -35,7 +35,7 @@ Movement.init(
       onUpdate: "CASCADE",
       onDelete: "RESTRICT",
     },
-    /* 
+    /*
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
