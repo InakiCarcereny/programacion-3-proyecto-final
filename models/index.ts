@@ -23,7 +23,7 @@ Movement.belongsTo(Product, {
   as: "product",
 });
 
-//trigger para actualizar el
+//trigger para actualizar la tabla movemtents cada vez que se actualice el stock de un producto
 export const initDatabaseTriggers = async (): Promise<void> => {
   try {
     await sequelize.query(`
@@ -60,10 +60,6 @@ export const initDatabaseTriggers = async (): Promise<void> => {
       END;
       $$ LANGUAGE plpgsql;
     `);
-
-    await sequelize.query(
-      `DROP TRIGGER IF EXISTS trigger_actualizar_stock ON movements;`,
-    );
 
     await sequelize.query(
       `DROP TRIGGER IF EXISTS trigger_log_movimientos ON products;`,

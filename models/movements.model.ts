@@ -35,7 +35,7 @@ Movement.init(
       onUpdate: "CASCADE",
       onDelete: "RESTRICT",
     },
-    /* Cuando agreguen el User, descomentás esto:
+    /* 
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
