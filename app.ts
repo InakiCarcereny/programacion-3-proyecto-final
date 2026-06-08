@@ -1,6 +1,6 @@
 import { Server } from "./core/server";
-import { seed } from "./seed";
-import sequelize from "./db.config";
+import { seed } from "./lib/db/seed";
+import sequelize from "./lib/db/db.config";
 import "./models";
 
 async function main(): Promise<void> {

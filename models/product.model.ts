@@ -1,5 +1,5 @@
 import { DataTypes, Model, Optional } from "sequelize";
-import sequelize from "../db.config";
+import sequelize from "../lib/db/db.config";
 import { Product as ProductAttributes } from "../types/product";
 
 interface ProductCreationAttributes extends Optional<
