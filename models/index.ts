@@ -1,7 +1,7 @@
 import Category from "./category.model";
 import Product from "./product.model";
 import Movement from "./movements.model";
-import sequelize from "../db.config";
+import sequelize from "../lib/db/db.config";
 
 Category.hasMany(Product, {
   foreignKey: "categoryId",
@@ -36,26 +36,25 @@ export const initDatabaseTriggers = async (): Promise<void> => {
       BEGIN
         IF NEW.stock <> OLD.stock THEN
           diferencia := NEW.stock - OLD.stock;
-          
+
           IF diferencia > 0 THEN
             tipo_movimiento := 'ingreso';
             cantidad_movimiento := diferencia;
           ELSE
             tipo_movimiento := 'egreso';
-            cantidad_movimiento := diferencia * -1; 
+            cantidad_movimiento := diferencia * -1;
           END IF;
 
-          
           INSERT INTO movements (product_id, quantity, type, description, created_at)
           VALUES (
-            NEW.id, 
-            cantidad_movimiento, 
-            tipo_movimiento::enum_movements_type, 
-            'Cambio de stock en  un producto', 
+            NEW.id,
+            cantidad_movimiento,
+            tipo_movimiento::enum_movements_type,
+            'Cambio de stock en  un producto',
             NOW()
           );
         END IF;
-        
+
         RETURN NEW;
       END;
       $$ LANGUAGE plpgsql;
@@ -72,9 +71,9 @@ export const initDatabaseTriggers = async (): Promise<void> => {
       EXECUTE FUNCTION log_movimiento_stock();
     `);
 
-    console.log("El trigger fue creado con exito.");
+    console.log("Database triggers initialized successfully.");
   } catch (error) {
-    console.error("Error al inicializar el trigger:", error);
+    console.error("Error initializing database triggers:", error);
   }
 };
 
