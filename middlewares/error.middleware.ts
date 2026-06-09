@@ -1,5 +1,5 @@
-import { Request, Response, NextFunction } from "express";
-import { ValidationError } from "sequelize";
+import { Request, Response, NextFunction } from 'express';
+import { ValidationError } from 'sequelize';
 
 export function errorHandler(
   err: Error | ValidationError,
@@ -11,7 +11,7 @@ export function errorHandler(
 
   if (err instanceof ValidationError) {
     res.status(400).json({
-      error: "Validation Error",
+      error: 'Validation Error',
       details: err.errors.map((e) => ({
         message: e.message,
         field: e.path,
@@ -22,7 +22,7 @@ export function errorHandler(
   }
 
   res.status(500).json({
-    error: "Internal Server Error",
+    error: 'Internal Server Error',
     message: err.message,
   });
 }

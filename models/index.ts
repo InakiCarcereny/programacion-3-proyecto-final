@@ -1,26 +1,26 @@
-import Category from "./category.model";
-import Product from "./product.model";
-import Movement from "./movements.model";
-import sequelize from "../lib/db/db.config";
+import Category from './category.model';
+import Product from './product.model';
+import Movement from './movements.model';
+import sequelize from '../lib/db/db.config';
 
 Category.hasMany(Product, {
-  foreignKey: "categoryId",
-  as: "products",
+  foreignKey: 'categoryId',
+  as: 'products',
 });
 
 Product.belongsTo(Category, {
-  foreignKey: "categoryId",
-  as: "category",
+  foreignKey: 'categoryId',
+  as: 'category',
 });
 
 Product.hasMany(Movement, {
-  foreignKey: "productId",
-  as: "movements",
+  foreignKey: 'productId',
+  as: 'movements',
 });
 
 Movement.belongsTo(Product, {
-  foreignKey: "productId",
-  as: "product",
+  foreignKey: 'productId',
+  as: 'product',
 });
 
 //trigger para actualizar la tabla movemtents cada vez que se actualice el stock de un producto
@@ -71,9 +71,9 @@ export const initDatabaseTriggers = async (): Promise<void> => {
       EXECUTE FUNCTION log_movimiento_stock();
     `);
 
-    console.log("Database triggers initialized successfully.");
+    console.log('Database triggers initialized successfully.');
   } catch (error) {
-    console.error("Error initializing database triggers:", error);
+    console.error('Error initializing database triggers:', error);
   }
 };
 

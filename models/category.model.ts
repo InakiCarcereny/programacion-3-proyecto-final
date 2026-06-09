@@ -1,10 +1,10 @@
-import { DataTypes, Model, Optional } from "sequelize";
-import sequelize from "../lib/db/db.config";
-import { Category as CategoryAttributes } from "../types/category";
+import { DataTypes, Model, Optional } from 'sequelize';
+import sequelize from '../lib/db/db.config';
+import { Category as CategoryAttributes } from '../types/category';
 
 interface CategoryCreationAttributes extends Optional<
   CategoryAttributes,
-  "id" | "description"
+  'id' | 'description'
 > {}
 
 class Category
@@ -36,8 +36,8 @@ Category.init(
   },
   {
     sequelize,
-    tableName: "categories",
-    modelName: "Category",
+    tableName: 'categories',
+    modelName: 'Category',
   },
 );
 

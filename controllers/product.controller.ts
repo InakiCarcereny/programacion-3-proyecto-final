@@ -1,7 +1,7 @@
-import { Request, Response, NextFunction } from "express";
-import { Op } from "sequelize";
-import { Product, Category } from "../models";
-import { uploadImage } from "../utils/upload-image";
+import { Request, Response, NextFunction } from 'express';
+import { Op } from 'sequelize';
+import { Product, Category } from '../models';
+import { uploadImage } from '../utils/upload-image';
 
 export async function getProducts(
   req: Request,
@@ -23,7 +23,7 @@ export async function getProducts(
 
     const products = await Product.findAll({
       where,
-      include: [{ model: Category, as: "category" }],
+      include: [{ model: Category, as: 'category' }],
     });
 
     res.json(products);
@@ -40,11 +40,11 @@ export async function getProductById(
   try {
     const id = Number(req.params.id);
     const product = await Product.findByPk(id, {
-      include: [{ model: Category, as: "category" }],
+      include: [{ model: Category, as: 'category' }],
     });
 
     if (!product) {
-      res.status(404).json({ error: "Product not found" });
+      res.status(404).json({ error: 'Product not found' });
       return;
     }
 
@@ -63,7 +63,7 @@ export async function createProduct(
     let imageUrl: string | undefined;
 
     if (req.file) {
-      imageUrl = await uploadImage(req.file.buffer, "products");
+      imageUrl = await uploadImage(req.file.buffer, 'products');
     }
 
     const product = await Product.create({
@@ -87,14 +87,14 @@ export async function updateProduct(
     const product = await Product.findByPk(id);
 
     if (!product) {
-      res.status(404).json({ error: "Product not found" });
+      res.status(404).json({ error: 'Product not found' });
       return;
     }
 
     let imageUrl: string | undefined;
 
     if (req.file) {
-      imageUrl = await uploadImage(req.file.buffer, "products");
+      imageUrl = await uploadImage(req.file.buffer, 'products');
     }
 
     await product.update({
@@ -118,7 +118,7 @@ export async function deleteProduct(
     const product = await Product.findByPk(id);
 
     if (!product) {
-      res.status(404).json({ error: "Product not found" });
+      res.status(404).json({ error: 'Product not found' });
       return;
     }
 

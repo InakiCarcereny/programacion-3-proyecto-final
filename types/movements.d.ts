@@ -3,7 +3,7 @@ export interface Movement {
   productId: number;
   // userId: number;
   quantity: number;
-  type: "ingreso" | "egreso";
+  type: 'ingreso' | 'egreso';
   description?: string;
   createdAt?: Date;
   updatedAt?: Date;

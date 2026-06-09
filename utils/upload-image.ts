@@ -1,4 +1,4 @@
-import cloudinary from "../lib/cloudinary.config";
+import cloudinary from '../lib/cloudinary.config';
 
 export async function uploadImage(
   fileBuffer: Buffer,
@@ -8,7 +8,7 @@ export async function uploadImage(
     cloudinary.uploader
       .upload_stream({ folder }, (error, result) => {
         if (error || !result) {
-          reject(error ?? new Error("Error uploading image to Cloudinary"));
+          reject(error ?? new Error('Error uploading image to Cloudinary'));
           return;
         }
         resolve(result.secure_url);

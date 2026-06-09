@@ -1,10 +1,10 @@
-import { DataTypes, Model, Optional } from "sequelize";
-import sequelize from "../lib/db/db.config";
-import { Product as ProductAttributes } from "../types/product";
+import { DataTypes, Model, Optional } from 'sequelize';
+import sequelize from '../lib/db/db.config';
+import { Product as ProductAttributes } from '../types/product';
 
 interface ProductCreationAttributes extends Optional<
   ProductAttributes,
-  "id" | "description" | "imageUrl"
+  'id' | 'description' | 'imageUrl'
 > {}
 
 class Product
@@ -54,15 +54,15 @@ Product.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: "categories",
-        key: "id",
+        model: 'categories',
+        key: 'id',
       },
     },
   },
   {
     sequelize,
-    tableName: "products",
-    modelName: "Product",
+    tableName: 'products',
+    modelName: 'Product',
   },
 );
 

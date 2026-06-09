@@ -1,10 +1,10 @@
-import { DataTypes, Model, Optional } from "sequelize";
-import sequelize from "../lib/db/db.config";
-import { Movement as MovementAttributes } from "../types/movements";
+import { DataTypes, Model, Optional } from 'sequelize';
+import sequelize from '../lib/db/db.config';
+import { Movement as MovementAttributes } from '../types/movements';
 
 interface MovementCreationAttributes extends Optional<
   MovementAttributes,
-  "id" | "description"
+  'id' | 'description'
 > {}
 
 class Movement
@@ -15,7 +15,7 @@ class Movement
   public productId!: number;
   // public userId!: number;
   public quantity!: number;
-  public type!: "ingreso" | "egreso";
+  public type!: 'ingreso' | 'egreso';
   public description?: string;
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -31,9 +31,9 @@ Movement.init(
     productId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: { model: "products", key: "id" },
-      onUpdate: "CASCADE",
-      onDelete: "RESTRICT",
+      references: { model: 'products', key: 'id' },
+      onUpdate: 'CASCADE',
+      onDelete: 'RESTRICT',
     },
     /*
     userId: {
@@ -49,7 +49,7 @@ Movement.init(
       allowNull: false,
     },
     type: {
-      type: DataTypes.ENUM("ingreso", "egreso"),
+      type: DataTypes.ENUM('ingreso', 'egreso'),
       allowNull: false,
     },
     description: {
@@ -59,8 +59,8 @@ Movement.init(
   },
   {
     sequelize,
-    tableName: "movements",
-    modelName: "Movement",
+    tableName: 'movements',
+    modelName: 'Movement',
     timestamps: true,
     updatedAt: false, // No necesario, log no se actualiza.
   },
