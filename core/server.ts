@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { errorHandler } from "../middlewares/error.middleware";
 import productRoutes from "../routes/product.routes";
+import categoryRoutes from "../routes/category.routes";
 
 dotenv.config();
 
@@ -30,6 +31,7 @@ export class Server {
     this.app.get("/api/health", (req, res) => {
       res.json({ status: "ok", timestamp: new Date() });
     });
+    this.app.use("/api/categories", categoryRoutes);
   }
 
   listen(): void {
