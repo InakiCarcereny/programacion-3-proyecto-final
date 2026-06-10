@@ -11,15 +11,15 @@ class Product
   extends Model<ProductAttributes, ProductCreationAttributes>
   implements ProductAttributes
 {
-  public id!: number;
-  public name!: string;
-  public description?: string;
-  public price!: number;
-  public stock!: number;
-  public imageUrl?: string;
-  public categoryId!: number;
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+  declare id: number;
+  declare name: string;
+  declare description?: string;
+  declare price: number;
+  declare stock: number;
+  declare imageUrl?: string;
+  declare categoryId: number;
+  declare readonly createdAt: Date;
+  declare readonly updatedAt: Date;
 }
 
 Product.init(
@@ -57,12 +57,16 @@ Product.init(
         model: "categories",
         key: "id",
       },
+      onUpdate: "CASCADE",
+      onDelete: "RESTRICT",
     },
   },
   {
     sequelize,
     tableName: "products",
     modelName: "Product",
+    timestamps: true,
+    updatedAt: true,
   },
 );
 

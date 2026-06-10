@@ -11,11 +11,11 @@ class Category
   extends Model<CategoryAttributes, CategoryCreationAttributes>
   implements CategoryAttributes
 {
-  public id!: number;
-  public name!: string;
-  public description?: string;
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+  declare id: number;
+  declare name: string;
+  declare description?: string;
+  declare readonly createdAt: Date;
+  declare readonly updatedAt: Date;
 }
 
 Category.init(
@@ -38,6 +38,8 @@ Category.init(
     sequelize,
     tableName: "categories",
     modelName: "Category",
+    timestamps: true,
+    updatedAt: true,
   },
 );
 
