@@ -14,15 +14,18 @@ export const validateProduct = (
     );
   }
 
-  if (price === undefined || typeof price !== "number" || price <= 0) {
+  const parsedPrice = Number(price);
+  if (!price || isNaN(parsedPrice) || parsedPrice <= 0) {
     errors.push("El precio es obligatorio y debe ser un número mayor a 0.");
   }
 
-  if (!categoryId || typeof categoryId !== "number") {
+  const parsedCategoryId = Number(categoryId);
+  if (!categoryId || isNaN(parsedCategoryId)) {
     errors.push("El ID de la categoría es obligatorio y debe ser un número.");
   }
 
-  if (stock !== undefined && (typeof stock !== "number" || stock < 0)) {
+  const parsedStock = stock !== undefined ? Number(stock) : undefined;
+  if (parsedStock !== undefined && (isNaN(parsedStock) || parsedStock < 0)) {
     errors.push("El stock debe ser un número positivo.");
   }
 
@@ -38,6 +41,10 @@ export const validateProduct = (
     res.status(400).json({ message: "Error de validación", errors });
     return;
   }
+
+  req.body.price = parsedPrice;
+  req.body.categoryId = parsedCategoryId;
+  if (parsedStock !== undefined) req.body.stock = parsedStock;
 
   next();
 };
