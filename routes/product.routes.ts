@@ -6,7 +6,7 @@ import {
   updateProduct,
   deleteProduct,
 } from "../controllers/product.controller";
-import { validateProduct } from "../middlewares/product.validator";
+import { validateProduct } from "../middlewares/product.middleware";
 
 import upload from "../middlewares/upload.middleware";
 
