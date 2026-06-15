@@ -18,17 +18,17 @@ class Category
   declare readonly updatedAt: Date;
 
   static async findAllCategories(): Promise<Category[]> {
-    return Category.findAll();
+    return await Category.findAll();
   }
 
   static async findCategoryById(id: number): Promise<Category | null> {
-    return Category.findByPk(id);
+    return await Category.findByPk(id);
   }
 
   static async createCategory(
     data: CategoryCreationAttributes,
   ): Promise<Category> {
-    return Category.create(data);
+    return await Category.create(data);
   }
 
   static async updateCategory(
@@ -38,7 +38,7 @@ class Category
     const category = await Category.findByPk(id);
     if (!category) return null;
 
-    return category.update(data);
+    return await category.update(data);
   }
 
   static async deleteCategory(id: number): Promise<boolean> {
