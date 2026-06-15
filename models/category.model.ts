@@ -16,6 +16,39 @@ class Category
   declare description?: string;
   declare readonly createdAt: Date;
   declare readonly updatedAt: Date;
+
+  static async findAllCategories(): Promise<Category[]> {
+    return Category.findAll();
+  }
+
+  static async findCategoryById(id: number): Promise<Category | null> {
+    return Category.findByPk(id);
+  }
+
+  static async createCategory(
+    data: CategoryCreationAttributes,
+  ): Promise<Category> {
+    return Category.create(data);
+  }
+
+  static async updateCategory(
+    id: number,
+    data: Partial<CategoryAttributes>,
+  ): Promise<Category | null> {
+    const category = await Category.findByPk(id);
+    if (!category) return null;
+
+    return category.update(data);
+  }
+
+  static async deleteCategory(id: number): Promise<boolean> {
+    const category = await Category.findByPk(id);
+    if (!category) return false;
+
+    await category.destroy();
+
+    return true;
+  }
 }
 
 Category.init(
