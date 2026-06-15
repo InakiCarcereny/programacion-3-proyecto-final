@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { Op } from "sequelize";
-import { Product, Category } from "../models";
+import { Product } from "../models";
 import { uploadImage } from "../utils/upload-image";
 
 export async function getProducts(
@@ -11,20 +10,10 @@ export async function getProducts(
   try {
     const { search, category } = req.query;
 
-    const where: Record<string, unknown> = {};
-
-    if (search) {
-      where.name = { [Op.iLike]: `%${search}%` };
-    }
-
-    if (category) {
-      where.categoryId = category;
-    }
-
-    const products = await Product.findAll({
-      where,
-      include: [{ model: Category, as: "category" }],
-    });
+    const products = await Product.findAllProducts(
+      search as string | undefined,
+      category as string | undefined,
+    );
 
     res.json(products);
   } catch (error) {
@@ -39,9 +28,7 @@ export async function getProductById(
 ): Promise<void> {
   try {
     const id = Number(req.params.id);
-    const product = await Product.findByPk(id, {
-      include: [{ model: Category, as: "category" }],
-    });
+    const product = await Product.findProductById(id);
 
     if (!product) {
       res.status(404).json({ error: "Product not found" });
@@ -61,15 +48,11 @@ export async function createProduct(
 ): Promise<void> {
   try {
     let imageUrl: string | undefined;
-
     if (req.file) {
       imageUrl = await uploadImage(req.file.buffer, "products");
     }
 
-    const product = await Product.create({
-      ...req.body,
-      imageUrl,
-    });
+    const product = await Product.createProduct({ ...req.body, imageUrl });
 
     res.status(201).json(product);
   } catch (error) {
@@ -84,25 +67,22 @@ export async function updateProduct(
 ): Promise<void> {
   try {
     const id = Number(req.params.id);
-    const product = await Product.findByPk(id);
 
+    let imageUrl: string | undefined;
+    if (req.file) {
+      imageUrl = await uploadImage(req.file.buffer, "products");
+    }
+
+    const product = await Product.updateProduct(id, {
+      ...req.body,
+      ...(imageUrl && { imageUrl }),
+    });
     if (!product) {
       res.status(404).json({ error: "Product not found" });
       return;
     }
 
-    let imageUrl: string | undefined;
-
-    if (req.file) {
-      imageUrl = await uploadImage(req.file.buffer, "products");
-    }
-
-    await product.update({
-      ...req.body,
-      ...(imageUrl && { imageUrl }),
-    });
-
-    res.json(product);
+    res.json({ message: "Product updated successfully", product });
   } catch (error) {
     next(error);
   }
@@ -115,15 +95,14 @@ export async function deleteProduct(
 ): Promise<void> {
   try {
     const id = Number(req.params.id);
-    const product = await Product.findByPk(id);
 
-    if (!product) {
+    const deleted = await Product.deleteProduct(id);
+    if (!deleted) {
       res.status(404).json({ error: "Product not found" });
       return;
     }
 
-    await product.destroy();
-    res.status(204).send();
+    res.status(200).json({ message: "Product deleted successfully" });
   } catch (error) {
     next(error);
   }

@@ -1,4 +1,4 @@
-import { DataTypes, Model, Optional } from "sequelize";
+import { DataTypes, Model, Optional, Op } from "sequelize";
 import sequelize from "../lib/db/db.config";
 import { Product as ProductAttributes } from "../types/product";
 
@@ -20,6 +20,60 @@ class Product
   declare categoryId: number;
   declare readonly createdAt: Date;
   declare readonly updatedAt: Date;
+
+  static async findAllProducts(
+    search?: string,
+    categoryId?: string,
+  ): Promise<Product[]> {
+    const { Category } = await import("./index");
+    const where: Record<string, unknown> = {};
+
+    if (search) {
+      where.name = { [Op.iLike]: `%${search}%` };
+    }
+
+    if (categoryId) {
+      where.categoryId = categoryId;
+    }
+
+    return Product.findAll({
+      where,
+      include: [{ model: Category, as: "category" }],
+    });
+  }
+
+  static async findProductById(id: number): Promise<Product | null> {
+    const { Category } = await import("./index");
+
+    return Product.findByPk(id, {
+      include: [{ model: Category, as: "category" }],
+    });
+  }
+
+  static async createProduct(
+    data: ProductCreationAttributes,
+  ): Promise<Product> {
+    return Product.create(data);
+  }
+
+  static async updateProduct(
+    id: number,
+    data: Partial<ProductAttributes>,
+  ): Promise<Product | null> {
+    const product = await Product.findByPk(id);
+    if (!product) return null;
+
+    return product.update(data);
+  }
+
+  static async deleteProduct(id: number): Promise<boolean> {
+    const product = await Product.findByPk(id);
+    if (!product) return false;
+
+    await product.destroy();
+
+    return true;
+  }
 }
 
 Product.init(
