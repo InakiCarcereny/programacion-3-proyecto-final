@@ -8,11 +8,13 @@ export const validateMovement = (
   const { productId, quantity, type, description } = req.body;
   const errors: string[] = [];
 
-  if (!productId || typeof productId !== "number") {
+  const parsedProductId = Number(productId);
+  if (!productId || isNaN(parsedProductId)) {
     errors.push("El ID del producto es obligatorio y debe ser un número.");
   }
 
-  if (!quantity || typeof quantity !== "number" || quantity <= 0) {
+  const parsedQuantity = Number(quantity);
+  if (!quantity || isNaN(parsedQuantity) || parsedQuantity <= 0) {
     errors.push("La cantidad es obligatoria y debe ser mayor a 0.");
   }
 
@@ -28,6 +30,9 @@ export const validateMovement = (
     res.status(400).json({ message: "Error de validación", errors });
     return;
   }
+
+  req.body.productId = parsedProductId;
+  req.body.quantity = parsedQuantity;
 
   next();
 };
