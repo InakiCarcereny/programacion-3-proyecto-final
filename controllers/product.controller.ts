@@ -28,8 +28,8 @@ export async function getProductById(
 ): Promise<void> {
   try {
     const id = Number(req.params.id);
-    const product = await Product.findProductById(id);
 
+    const product = await Product.findProductById(id);
     if (!product) {
       res.status(404).json({ error: "Product not found" });
       return;
