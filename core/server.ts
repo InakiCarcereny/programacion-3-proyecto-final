@@ -26,7 +26,7 @@ export class Server {
 
   routes(): void {
     this.app.use("/api/products", productRoutes);
-    // this.app.use('/api/categories', IMPORTAR RUTAS DE CATEGORIAS COMO MODULO);
+    this.app.use("/api/categories", categoryRoutes);
     // this.app.use('/api/movements', IMPORTAR RUTAS DE MOVIMIENTOS COMO MODULO);
     this.app.get("/api/health", (req, res) => {
       res.json({ status: "ok", timestamp: new Date() });

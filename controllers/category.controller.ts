@@ -2,12 +2,12 @@ import { Request, Response, NextFunction } from "express";
 import { Category } from "../models";
 
 export async function getCategories(
-  req: Request,
+  _req: Request,
   res: Response,
   next: NextFunction,
 ): Promise<void> {
   try {
-    const categories = await Category.findAll();
+    const categories = await Category.findAllCategories();
 
     res.json(categories);
   } catch (error) {
@@ -23,8 +23,7 @@ export async function getCategoryById(
   try {
     const id = Number(req.params.id);
 
-    const category = await Category.findByPk(id);
-
+    const category = await Category.findCategoryById(id);
     if (!category) {
       res.status(404).json({ error: "Category not found" });
       return;
@@ -42,7 +41,7 @@ export async function createCategory(
   next: NextFunction,
 ): Promise<void> {
   try {
-    const category = await Category.create(req.body);
+    const category = await Category.createCategory(req.body);
 
     res.status(201).json(category);
   } catch (error) {
@@ -58,16 +57,13 @@ export async function updateCategory(
   try {
     const id = Number(req.params.id);
 
-    const category = await Category.findByPk(id);
-
+    const category = await Category.updateCategory(id, req.body);
     if (!category) {
       res.status(404).json({ error: "Category not found" });
       return;
     }
 
-    await category.update(req.body);
-
-    res.json(category);
+    res.json({ message: "Category updated successfully", category });
   } catch (error) {
     next(error);
   }
@@ -81,16 +77,13 @@ export async function deleteCategory(
   try {
     const id = Number(req.params.id);
 
-    const category = await Category.findByPk(id);
-
-    if (!category) {
+    const deleted = await Category.deleteCategory(id);
+    if (!deleted) {
       res.status(404).json({ error: "Category not found" });
       return;
     }
 
-    await category.destroy();
-
-    res.status(204).send();
+    res.status(200).json({ message: "Category deleted successfully" });
   } catch (error) {
     next(error);
   }

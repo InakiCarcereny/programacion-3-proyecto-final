@@ -36,7 +36,7 @@ class Product
       where.categoryId = categoryId;
     }
 
-    return Product.findAll({
+    return await Product.findAll({
       where,
       include: [{ model: Category, as: "category" }],
     });
@@ -45,7 +45,7 @@ class Product
   static async findProductById(id: number): Promise<Product | null> {
     const { Category } = await import("./index");
 
-    return Product.findByPk(id, {
+    return await Product.findByPk(id, {
       include: [{ model: Category, as: "category" }],
     });
   }
@@ -53,7 +53,7 @@ class Product
   static async createProduct(
     data: ProductCreationAttributes,
   ): Promise<Product> {
-    return Product.create(data);
+    return await Product.create(data);
   }
 
   static async updateProduct(
@@ -63,7 +63,7 @@ class Product
     const product = await Product.findByPk(id);
     if (!product) return null;
 
-    return product.update(data);
+    return await product.update(data);
   }
 
   static async deleteProduct(id: number): Promise<boolean> {
