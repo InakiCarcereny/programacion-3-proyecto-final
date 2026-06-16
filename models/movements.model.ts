@@ -11,14 +11,14 @@ class Movement
   extends Model<MovementAttributes, MovementCreationAttributes>
   implements MovementAttributes
 {
-  declare id: number;
-  declare productId: number;
-  // declare userId: number;
-  declare quantity: number;
-  declare type: "ingreso" | "egreso";
-  declare description?: string;
-  declare readonly createdAt: Date;
-  declare readonly updatedAt: Date;
+  public id!: number;
+  public productId!: number;
+  // public userId!: number;
+  public quantity!: number;
+  public type!: "ingreso" | "egreso";
+  public description?: string;
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
 }
 
 Movement.init(
@@ -62,7 +62,7 @@ Movement.init(
     tableName: "movements",
     modelName: "Movement",
     timestamps: true,
-    updatedAt: true,
+    updatedAt: false, // No necesario, log no se actualiza.
   },
 );
 
