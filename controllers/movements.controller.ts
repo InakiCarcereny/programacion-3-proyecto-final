@@ -1,13 +1,14 @@
 import { Request, Response, NextFunction } from "express";
-import Movement from "../models/movements.model";
+import { Movement } from "../models";
 
 export async function getMovements(
-  req: Request,
+  _req: Request,
   res: Response,
   next: NextFunction,
 ): Promise<void> {
   try {
-    const movements = await Movement.findAll();
+    const movements = await Movement.findAllMovements();
+
     res.json(movements);
   } catch (error) {
     next(error);
@@ -21,8 +22,8 @@ export async function getMovementById(
 ): Promise<void> {
   try {
     const id = Number(req.params.id);
-    const movement = await Movement.findByPk(id);
 
+    const movement = await Movement.findMovementById(id);
     if (!movement) {
       res.status(404).json({ error: "Movement not found" });
       return;
@@ -40,7 +41,8 @@ export async function createMovement(
   next: NextFunction,
 ): Promise<void> {
   try {
-    const movement = await Movement.create(req.body);
+    const movement = await Movement.createMovement(req.body);
+
     res.status(201).json(movement);
   } catch (error) {
     next(error);
