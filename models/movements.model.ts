@@ -13,12 +13,33 @@ class Movement
 {
   declare id: number;
   declare productId: number;
-  // declare userId: number;
   declare quantity: number;
   declare type: "ingreso" | "egreso";
   declare description?: string;
   declare readonly createdAt: Date;
   declare readonly updatedAt: Date;
+
+  static async findAllMovements(): Promise<Movement[]> {
+    const { Product } = await import("./index");
+
+    return await Movement.findAll({
+      include: [{ model: Product, as: "product" }],
+    });
+  }
+
+  static async findMovementById(id: number): Promise<Movement | null> {
+    const { Product } = await import("./index");
+
+    return await Movement.findByPk(id, {
+      include: [{ model: Product, as: "product" }],
+    });
+  }
+
+  static async createMovement(
+    data: MovementCreationAttributes,
+  ): Promise<Movement> {
+    return await Movement.create(data);
+  }
 }
 
 Movement.init(
@@ -35,15 +56,6 @@ Movement.init(
       onUpdate: "CASCADE",
       onDelete: "RESTRICT",
     },
-    /*
-    userId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: { model: "users", key: "id" },
-      onUpdate: "CASCADE",
-      onDelete: "RESTRICT",
-    },
-    */
     quantity: {
       type: DataTypes.INTEGER,
       allowNull: false,
