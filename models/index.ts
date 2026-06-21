@@ -23,37 +23,22 @@ Movement.belongsTo(Product, {
   as: "product",
 });
 
-//trigger para actualizar la tabla movemtents cada vez que se actualice el stock de un producto
+//trigger para actualizar el stock del producto después de cada movimiento
 export const initDatabaseTriggers = async (): Promise<void> => {
   try {
     await sequelize.query(`
-      CREATE OR REPLACE FUNCTION log_movimiento_stock()
+      CREATE OR REPLACE FUNCTION actualizar_stock_producto()
       RETURNS TRIGGER AS $$
-      DECLARE
-        diferencia INTEGER;
-        tipo_movimiento VARCHAR;
-        cantidad_movimiento INTEGER;
       BEGIN
-        IF NEW.stock <> OLD.stock THEN
-          diferencia := NEW.stock - OLD.stock;
-          
-          IF diferencia > 0 THEN
-            tipo_movimiento := 'ingreso';
-            cantidad_movimiento := diferencia;
-          ELSE
-            tipo_movimiento := 'egreso';
-            cantidad_movimiento := diferencia * -1; 
-          END IF;
-
-          
-          INSERT INTO movements (product_id, quantity, type, description, created_at)
-          VALUES (
-            NEW.id, 
-            cantidad_movimiento, 
-            tipo_movimiento::enum_movements_type, 
-            'Cambio de stock en  un producto', 
-            NOW()
-          );
+        IF NEW.type = 'ingreso' THEN
+          UPDATE products 
+          SET stock = stock + NEW.quantity 
+          WHERE id = NEW.product_id;
+        
+        ELSIF NEW.type = 'egreso' THEN
+          UPDATE products 
+          SET stock = stock - NEW.quantity 
+          WHERE id = NEW.product_id;
         END IF;
         
         RETURN NEW;
@@ -62,17 +47,17 @@ export const initDatabaseTriggers = async (): Promise<void> => {
     `);
 
     await sequelize.query(
-      `DROP TRIGGER IF EXISTS trigger_log_movimientos ON products;`,
+      `DROP TRIGGER IF EXISTS trigger_actualizar_stock ON movements;`,
     );
 
     await sequelize.query(`
-      CREATE TRIGGER trigger_log_movimientos
-      AFTER UPDATE ON products
+      CREATE TRIGGER trigger_actualizar_stock
+      AFTER INSERT ON movements
       FOR EACH ROW
-      EXECUTE FUNCTION log_movimiento_stock();
+      EXECUTE FUNCTION actualizar_stock_producto();
     `);
 
-    console.log("El trigger fue creado con exito.");
+    console.log("El trigger fue creado con éxito.");
   } catch (error) {
     console.error("Error al inicializar el trigger:", error);
   }

@@ -1,5 +1,5 @@
 import { DataTypes, Model, Optional } from "sequelize";
-import sequelize from "../db.config";
+import sequelize from "../lib/db/db.config";
 import { Movement as MovementAttributes } from "../types/movements";
 
 interface MovementCreationAttributes extends Optional<
@@ -11,14 +11,35 @@ class Movement
   extends Model<MovementAttributes, MovementCreationAttributes>
   implements MovementAttributes
 {
-  public id!: number;
-  public productId!: number;
-  // public userId!: number;
-  public quantity!: number;
-  public type!: "ingreso" | "egreso";
-  public description?: string;
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+  declare id: number;
+  declare productId: number;
+  declare quantity: number;
+  declare type: "ingreso" | "egreso";
+  declare description?: string;
+  declare readonly createdAt: Date;
+  declare readonly updatedAt: Date;
+
+  static async findAllMovements(): Promise<Movement[]> {
+    const { Product } = await import("./index");
+
+    return await Movement.findAll({
+      include: [{ model: Product, as: "product" }],
+    });
+  }
+
+  static async findMovementById(id: number): Promise<Movement | null> {
+    const { Product } = await import("./index");
+
+    return await Movement.findByPk(id, {
+      include: [{ model: Product, as: "product" }],
+    });
+  }
+
+  static async createMovement(
+    data: MovementCreationAttributes,
+  ): Promise<Movement> {
+    return await Movement.create(data);
+  }
 }
 
 Movement.init(
@@ -35,15 +56,6 @@ Movement.init(
       onUpdate: "CASCADE",
       onDelete: "RESTRICT",
     },
-    /* 
-    userId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: { model: "users", key: "id" },
-      onUpdate: "CASCADE",
-      onDelete: "RESTRICT",
-    },
-    */
     quantity: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -62,7 +74,7 @@ Movement.init(
     tableName: "movements",
     modelName: "Movement",
     timestamps: true,
-    updatedAt: false, // No necesario, log no se actualiza.
+    updatedAt: true,
   },
 );
 
