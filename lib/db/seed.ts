@@ -1,4 +1,4 @@
-import { Category, Product } from "../../models";
+import { Category, Product, Movement } from "../../models";
 
 export async function seed(): Promise<void> {
   const categories = await Category.bulkCreate([
@@ -131,6 +131,69 @@ export async function seed(): Promise<void> {
       price: 2800,
       stock: 40,
       categoryId: categories[4].id,
+    },
+  ]);
+
+  await Movement.bulkCreate([
+    {
+      productId: 1,
+      quantity: 10,
+      type: "ingreso",
+      description: "Reposición de stock inicial",
+    },
+    {
+      productId: 2,
+      quantity: 5,
+      type: "ingreso",
+      description: "Compra a proveedor",
+    },
+    {
+      productId: 3,
+      quantity: 2,
+      type: "egreso",
+      description: "Venta a cliente",
+    },
+    {
+      productId: 4,
+      quantity: 8,
+      type: "ingreso",
+      description: "Reposición de stock inicial",
+    },
+    {
+      productId: 5,
+      quantity: 3,
+      type: "egreso",
+      description: "Venta a cliente",
+    },
+    {
+      productId: 6,
+      quantity: 15,
+      type: "ingreso",
+      description: "Compra a proveedor",
+    },
+    {
+      productId: 7,
+      quantity: 1,
+      type: "egreso",
+      description: "Devolución a proveedor",
+    },
+    {
+      productId: 8,
+      quantity: 20,
+      type: "ingreso",
+      description: "Reposición de stock inicial",
+    },
+    {
+      productId: 9,
+      quantity: 4,
+      type: "egreso",
+      description: "Venta a cliente",
+    },
+    {
+      productId: 10,
+      quantity: 6,
+      type: "ingreso",
+      description: "Compra a proveedor",
     },
   ]);
 
