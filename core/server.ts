@@ -2,6 +2,9 @@ import express, { Application } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { errorHandler } from "../middlewares/error.middleware";
+import productRoutes from "../routes/product.routes";
+import categoryRoutes from "../routes/category.routes";
+import movementRoutes from "../routes/movements.routes";
 
 dotenv.config();
 
@@ -23,7 +26,12 @@ export class Server {
   }
 
   routes(): void {
-    // this.app.use('/products', IMPORTAR RUTAS DE PRODUCTOS COMO MODULO);
+    this.app.use("/api/products", productRoutes);
+    this.app.use("/api/categories", categoryRoutes);
+    this.app.use("/api/movements", movementRoutes);
+    this.app.get("/api/health", (req, res) => {
+      res.json({ status: "ok", timestamp: new Date() });
+    });
   }
 
   listen(): void {
