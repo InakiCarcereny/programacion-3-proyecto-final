@@ -1,0 +1,1 @@
+aca van las interfaces que son las mismas que estan en la parte del backend, mas alguna otra que se necesite agregar. Como no estamos usando un monorepo hay que duplicarlas.

@@ -1,0 +1,1 @@
+donde vamos a definir valores constantes o configuraciones.
