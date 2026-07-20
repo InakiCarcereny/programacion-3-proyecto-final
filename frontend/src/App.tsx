@@ -1,7 +1,8 @@
-import "./App.css";
+import type { JSX } from "react/jsx-runtime";
+import AppRouter from "./router/AppRouter";
 
-function App() {
-  return <div>Hello world!</div>;
+function App(): JSX.Element {
+  return <AppRouter />;
 }
 
 export default App;
