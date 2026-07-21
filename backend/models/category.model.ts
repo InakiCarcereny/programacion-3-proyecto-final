@@ -14,15 +14,19 @@ class Category
   declare id: number;
   declare name: string;
   declare description?: string;
+  declare companyId: number;
   declare readonly createdAt: Date;
   declare readonly updatedAt: Date;
 
-  static async findAllCategories(): Promise<Category[]> {
-    return await Category.findAll();
+  static async findAllCategories(companyId: number): Promise<Category[]> {
+    return await Category.findAll({ where: { companyId } });
   }
 
-  static async findCategoryById(id: number): Promise<Category | null> {
-    return await Category.findByPk(id);
+  static async findCategoryById(
+    id: number,
+    companyId: number,
+  ): Promise<Category | null> {
+    return await Category.findOne({ where: { id, companyId } });
   }
 
   static async createCategory(
@@ -33,16 +37,17 @@ class Category
 
   static async updateCategory(
     id: number,
+    companyId: number,
     data: Partial<CategoryAttributes>,
   ): Promise<Category | null> {
-    const category = await Category.findByPk(id);
+    const category = await Category.findOne({ where: { id, companyId } });
     if (!category) return null;
 
     return await category.update(data);
   }
 
-  static async deleteCategory(id: number): Promise<boolean> {
-    const category = await Category.findByPk(id);
+  static async deleteCategory(id: number, companyId: number): Promise<boolean> {
+    const category = await Category.findOne({ where: { id, companyId } });
     if (!category) return false;
 
     await category.destroy();
@@ -65,6 +70,13 @@ Category.init(
     description: {
       type: DataTypes.TEXT,
       allowNull: true,
+    },
+    companyId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: { model: "companies", key: "id" },
+      onUpdate: "CASCADE",
+      onDelete: "RESTRICT",
     },
   },
   {
