@@ -18,15 +18,17 @@ class Product
   declare stock: number;
   declare imageUrl?: string;
   declare categoryId: number;
+  declare companyId: number;
   declare readonly createdAt: Date;
   declare readonly updatedAt: Date;
 
   static async findAllProducts(
     search?: string,
     categoryId?: string,
+    companyId?: string,
   ): Promise<Product[]> {
     const { Category } = await import("./index");
-    const where: Record<string, unknown> = {};
+    const where: Record<string, unknown> = { companyId };
 
     if (search) {
       where.name = { [Op.iLike]: `%${search}%` };
@@ -42,10 +44,14 @@ class Product
     });
   }
 
-  static async findProductById(id: number): Promise<Product | null> {
+  static async findProductById(
+    id: number,
+    companyId: number,
+  ): Promise<Product | null> {
     const { Category } = await import("./index");
 
-    return await Product.findByPk(id, {
+    return await Product.findOne({
+      where: { id, companyId },
       include: [{ model: Category, as: "category" }],
     });
   }
@@ -58,16 +64,17 @@ class Product
 
   static async updateProduct(
     id: number,
+    companyId: number,
     data: Partial<ProductAttributes>,
   ): Promise<Product | null> {
-    const product = await Product.findByPk(id);
+    const product = await Product.findOne({ where: { id, companyId } });
     if (!product) return null;
 
     return await product.update(data);
   }
 
-  static async deleteProduct(id: number): Promise<boolean> {
-    const product = await Product.findByPk(id);
+  static async deleteProduct(id: number, companyId: number): Promise<boolean> {
+    const product = await Product.findOne({ where: { id, companyId } });
     if (!product) return false;
 
     await product.destroy();
@@ -111,6 +118,13 @@ Product.init(
         model: "categories",
         key: "id",
       },
+      onUpdate: "CASCADE",
+      onDelete: "RESTRICT",
+    },
+    companyId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: { model: "companies", key: "id" },
       onUpdate: "CASCADE",
       onDelete: "RESTRICT",
     },
