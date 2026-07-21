@@ -9,12 +9,12 @@ export async function getProducts(
 ): Promise<void> {
   try {
     const { search, category } = req.query;
-
+    const { companyId } = req.body;
     const products = await Product.findAllProducts(
+      companyId,
       search as string | undefined,
       category as string | undefined,
     );
-
     res.json(products);
   } catch (error) {
     next(error);
@@ -28,13 +28,12 @@ export async function getProductById(
 ): Promise<void> {
   try {
     const id = Number(req.params.id);
-
-    const product = await Product.findProductById(id);
+    const { companyId } = req.body;
+    const product = await Product.findProductById(id, companyId);
     if (!product) {
       res.status(404).json({ error: "Product not found" });
       return;
     }
-
     res.json(product);
   } catch (error) {
     next(error);
@@ -51,9 +50,7 @@ export async function createProduct(
     if (req.file) {
       imageUrl = await uploadImage(req.file.buffer, "products");
     }
-
     const product = await Product.createProduct({ ...req.body, imageUrl });
-
     res.status(201).json(product);
   } catch (error) {
     next(error);
@@ -67,21 +64,19 @@ export async function updateProduct(
 ): Promise<void> {
   try {
     const id = Number(req.params.id);
-
+    const { companyId, ...data } = req.body;
     let imageUrl: string | undefined;
     if (req.file) {
       imageUrl = await uploadImage(req.file.buffer, "products");
     }
-
-    const product = await Product.updateProduct(id, {
-      ...req.body,
+    const product = await Product.updateProduct(id, companyId, {
+      ...data,
       ...(imageUrl && { imageUrl }),
     });
     if (!product) {
       res.status(404).json({ error: "Product not found" });
       return;
     }
-
     res.json({ message: "Product updated successfully", product });
   } catch (error) {
     next(error);
@@ -95,13 +90,12 @@ export async function deleteProduct(
 ): Promise<void> {
   try {
     const id = Number(req.params.id);
-
-    const deleted = await Product.deleteProduct(id);
+    const { companyId } = req.body;
+    const deleted = await Product.deleteProduct(id, companyId);
     if (!deleted) {
       res.status(404).json({ error: "Product not found" });
       return;
     }
-
     res.status(200).json({ message: "Product deleted successfully" });
   } catch (error) {
     next(error);
