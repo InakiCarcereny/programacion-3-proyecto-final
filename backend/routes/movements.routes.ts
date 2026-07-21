@@ -7,11 +7,12 @@ import {
 } from "../controllers/movements.controller";
 
 import { validateMovement } from "../middlewares/movements.middleware";
+import { authenticate } from "../middlewares/auth.middleware";
 
 const router: IRouter = Router();
 
-router.get("/", getMovements);
-router.get("/:id", getMovementById);
-router.post("/", validateMovement, createMovement);
+router.get("/", authenticate, getMovements);
+router.get("/:id", authenticate, getMovementById);
+router.post("/", authenticate, validateMovement, createMovement);
 
 export default router;

@@ -14,18 +14,26 @@ import {
 } from "../middlewares/product.middleware";
 
 import upload from "../middlewares/upload.middleware";
+import { authenticate } from "../middlewares/auth.middleware";
 
 const router: IRouter = Router();
 
-router.get("/", getProducts);
-router.get("/:id", getProductById);
-router.post("/", upload.single("image"), validateCreateProduct, createProduct);
+router.get("/", authenticate, getProducts);
+router.get("/:id", authenticate, getProductById);
+router.post(
+  "/",
+  authenticate,
+  upload.single("image"),
+  validateCreateProduct,
+  createProduct,
+);
 router.put(
   "/:id",
+  authenticate,
   upload.single("image"),
   validateUpdateProduct,
   updateProduct,
 );
-router.delete("/:id", deleteProduct);
+router.delete("/:id", authenticate, deleteProduct);
 
 export default router;
