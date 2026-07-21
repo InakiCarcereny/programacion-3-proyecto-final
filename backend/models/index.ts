@@ -1,6 +1,10 @@
 import Category from "./category.model";
 import Product from "./product.model";
 import Movement from "./movements.model";
+import Company from "./company.model";
+import User from "./user.model";
+import Profile from "./profile.model";
+import UserDetails from "./user-details.model";
 import sequelize from "../lib/db/db.config";
 
 Category.hasMany(Product, {
@@ -22,6 +26,21 @@ Movement.belongsTo(Product, {
   foreignKey: "productId",
   as: "product",
 });
+
+Company.hasMany(User, { foreignKey: "companyId", as: "users" });
+User.belongsTo(Company, { foreignKey: "companyId", as: "company" });
+
+Profile.hasMany(User, { foreignKey: "profileId", as: "users" });
+User.belongsTo(Profile, { foreignKey: "profileId", as: "profile" });
+
+User.hasOne(UserDetails, { foreignKey: "userId", as: "details" });
+UserDetails.belongsTo(User, { foreignKey: "userId", as: "user" });
+
+Company.hasMany(Product, { foreignKey: "companyId", as: "products" });
+Product.belongsTo(Company, { foreignKey: "companyId", as: "company" });
+
+Company.hasMany(Category, { foreignKey: "companyId", as: "categories" });
+Category.belongsTo(Company, { foreignKey: "companyId", as: "company" });
 
 //trigger para actualizar la tabla movemtents cada vez que se actualice el stock de un producto
 export const initDatabaseTriggers = async (): Promise<void> => {
@@ -77,4 +96,4 @@ export const initDatabaseTriggers = async (): Promise<void> => {
   }
 };
 
-export { Category, Product, Movement };
+export { Category, Product, Movement, Company, User, Profile, UserDetails };
