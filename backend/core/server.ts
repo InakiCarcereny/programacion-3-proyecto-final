@@ -5,6 +5,7 @@ import { errorHandler } from "../middlewares/error.middleware";
 import productRoutes from "../routes/product.routes";
 import categoryRoutes from "../routes/category.routes";
 import movementRoutes from "../routes/movements.routes";
+import userRoutes from "../routes/user.routes";
 
 dotenv.config();
 
@@ -29,6 +30,7 @@ export class Server {
     this.app.use("/api/products", productRoutes);
     this.app.use("/api/categories", categoryRoutes);
     this.app.use("/api/movements", movementRoutes);
+    this.app.use("/api/user", userRoutes);
     this.app.get("/api/health", (req, res) => {
       res.json({ status: "ok", timestamp: new Date() });
     });
