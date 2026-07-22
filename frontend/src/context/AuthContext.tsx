@@ -91,7 +91,10 @@ export function AuthProvider({
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
-    if (!res.ok) throw new Error("Credenciales inválidas");
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(errorData.error || "Error al iniciar sesión");
+    }
 
     const data = await res.json();
     setToken(data.token);
