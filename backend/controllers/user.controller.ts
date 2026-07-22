@@ -7,7 +7,14 @@ export async function getUsers(
   next: NextFunction,
 ): Promise<void> {
   try {
-    const users = await User.findAllUsers();
+    const companyId = Number(req.query.companyId);
+
+    if (!companyId) {
+      res.status(400).json({ error: "companyId query parameter is required" });
+      return;
+    }
+
+    const users = await User.findAllUsers(companyId);
     res.json(users);
   } catch (error) {
     next(error);
@@ -21,25 +28,20 @@ export async function getUserById(
 ): Promise<void> {
   try {
     const id = Number(req.params.id);
-    const user = await User.findUserById(id);
+    const companyId = Number(req.query.companyId);
+
+    if (!companyId) {
+      res.status(400).json({ error: "companyId query parameter is required" });
+      return;
+    }
+
+    const user = await User.findUserById(id, companyId);
     if (!user) {
       res.status(404).json({ error: "User not found" });
       return;
     }
-    res.json(user);
-  } catch (error) {
-    next(error);
-  }
-}
 
-export async function createUser(
-  req: Request,
-  res: Response,
-  next: NextFunction,
-): Promise<void> {
-  try {
-    const user = await User.createUser(req.body);
-    res.status(201).json(user);
+    res.json(user);
   } catch (error) {
     next(error);
   }
@@ -52,11 +54,19 @@ export async function updateUser(
 ): Promise<void> {
   try {
     const id = Number(req.params.id);
-    const user = await User.updateUser(id, req.body);
+    const companyId = Number(req.body.companyId || req.query.companyId);
+
+    if (!companyId) {
+      res.status(400).json({ error: "companyId is required" });
+      return;
+    }
+
+    const user = await User.updateUser(id, companyId, req.body);
     if (!user) {
       res.status(404).json({ error: "User not found" });
       return;
     }
+
     res.json({ message: "User updated successfully", user });
   } catch (error) {
     next(error);
@@ -70,11 +80,19 @@ export async function deleteUser(
 ): Promise<void> {
   try {
     const id = Number(req.params.id);
-    const deleted = await User.deleteUser(id);
+    const companyId = Number(req.body.companyId || req.query.companyId);
+
+    if (!companyId) {
+      res.status(400).json({ error: "companyId is required" });
+      return;
+    }
+
+    const deleted = await User.deleteUser(id, companyId);
     if (!deleted) {
       res.status(404).json({ error: "User not found" });
       return;
     }
+
     res.status(200).json({ message: "User deleted successfully" });
   } catch (error) {
     next(error);

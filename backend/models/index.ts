@@ -27,6 +27,21 @@ Movement.belongsTo(Product, {
   as: "product",
 });
 
+Company.hasMany(User, { foreignKey: "companyId", as: "users" });
+User.belongsTo(Company, { foreignKey: "companyId", as: "company" });
+
+Profile.hasMany(User, { foreignKey: "profileId", as: "users" });
+User.belongsTo(Profile, { foreignKey: "profileId", as: "profile" });
+
+User.hasOne(UserDetails, { foreignKey: "userId", as: "details" });
+UserDetails.belongsTo(User, { foreignKey: "userId", as: "user" });
+
+Company.hasMany(Product, { foreignKey: "companyId", as: "products" });
+Product.belongsTo(Company, { foreignKey: "companyId", as: "company" });
+
+Company.hasMany(Category, { foreignKey: "companyId", as: "categories" });
+Category.belongsTo(Company, { foreignKey: "companyId", as: "company" });
+
 //trigger para actualizar la tabla movemtents cada vez que se actualice el stock de un producto
 export const initDatabaseTriggers = async (): Promise<void> => {
   try {
