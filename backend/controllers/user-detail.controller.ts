@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { UserDetails } from "../models";
+import { uploadImage } from "../utils/upload-image";
 
 export async function getUserDetails(
   req: Request,
@@ -13,6 +14,7 @@ export async function getUserDetails(
     next(error);
   }
 }
+
 export async function getUserDetailsById(
   req: Request,
   res: Response,
@@ -37,7 +39,16 @@ export async function createUserDetail(
   next: NextFunction,
 ): Promise<void> {
   try {
-    const userDetail = await UserDetails.createUserDetail(req.body);
+    let avatarUrl: string | undefined;
+
+    if (req.file) {
+      avatarUrl = await uploadImage(req.file.buffer, "avatar");
+    }
+
+    const userDetail = await UserDetails.createUserDetail({
+      ...req.body,
+      avatarUrl,
+    });
     res.status(201).json(userDetail);
   } catch (error) {
     next(error);
@@ -51,7 +62,17 @@ export async function updateUserDetail(
 ): Promise<void> {
   try {
     const id = Number(req.params.id);
-    const userDetail = await UserDetails.updateUserDetail(id, req.body);
+    let avatarUrl: string | undefined;
+
+    if (req.file) {
+      avatarUrl = await uploadImage(req.file.buffer, "avatar");
+    }
+
+    const userDetail = await UserDetails.updateUserDetail(id, {
+      ...req.body,
+      ...(avatarUrl && { avatarUrl }),
+    });
+
     if (!userDetail) {
       res.status(404).json({ error: "User Detail not found" });
       return;
