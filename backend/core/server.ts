@@ -32,7 +32,7 @@ export class Server {
     this.app.use("/api/categories", categoryRoutes);
     this.app.use("/api/movements", movementRoutes);
     this.app.use("/api/user", userRoutes);
-    this.app.use("/api/user", profileRoutes);
+    this.app.use("/api/profile", profileRoutes);
     this.app.use("/api/user-detail", userDetailRoutes);
     this.app.get("/api/health", (req, res) => {
       res.json({ status: "ok", timestamp: new Date() });
