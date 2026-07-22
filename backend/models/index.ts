@@ -1,6 +1,10 @@
 import Category from "./category.model";
 import Product from "./product.model";
 import Movement from "./movements.model";
+import Company from "./company.model";
+import User from "./user.model";
+import Profile from "./profile.model";
+import UserDetails from "./user-details.model";
 import sequelize from "../lib/db/db.config";
 
 Category.hasMany(Product, {
@@ -77,4 +81,4 @@ export const initDatabaseTriggers = async (): Promise<void> => {
   }
 };
 
-export { Category, Product, Movement };
+export { Category, Product, Movement, Company, User, Profile, UserDetails };

@@ -8,7 +8,7 @@ import movementRoutes from "../routes/movements.routes";
 import userRoutes from "../routes/user.routes";
 import profileRoutes from "../routes/profile.routes";
 import userDetailRoutes from "../routes/user-detail.routes";
-import userCompanies from "../routes/companies.routes";
+import userCompanies from "../routes/company.routes";
 dotenv.config();
 
 export class Server {

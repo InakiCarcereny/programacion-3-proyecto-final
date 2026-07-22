@@ -6,7 +6,7 @@ import {
   createCompany,
   updateCompany,
   deleteCompany,
-} from "../controllers/companies.controller";
+} from "../controllers/company.controller";
 
 // import {
 //   validateCreateCompany,
