@@ -13,8 +13,10 @@ import {
 import { RegisterFormInput } from "../register-form-input/RegisterFormInput";
 import { useAuth } from "../../context/AuthContext";
 import { validateRegisterForm } from "../../utils/validateRegisterForm";
+import { useNavigate } from "react-router-dom";
 
 export function RegisterForm(): JSX.Element {
+  const navigate = useNavigate();
   const { register } = useAuth();
   const [error, setError] = useState<Record<string, string>>({});
   const [formData, setFormData] = useState({
@@ -54,6 +56,7 @@ export function RegisterForm(): JSX.Element {
         formData.email,
         formData.password,
       );
+      navigate("/dashboard");
     } catch (err) {
       if (err instanceof Error) {
         setError({ general: err.message });
