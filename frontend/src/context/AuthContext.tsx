@@ -1,5 +1,4 @@
 /* eslint-disable react-refresh/only-export-components */
-
 import {
   createContext,
   useContext,
@@ -27,6 +26,12 @@ interface AuthContextType {
   user: User | null;
   token: string | null;
   isAuthenticated: boolean;
+  register: (
+    name: string,
+    company: string,
+    email: string,
+    password: string,
+  ) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
 }
@@ -52,14 +57,41 @@ export function AuthProvider({
 
   const isAuthenticated = !!token;
 
+  const register = async (
+    name: string,
+    company: string,
+    email: string,
+    password: string,
+  ): Promise<void> => {
+    const res = await fetch("/api/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        firstName: name.split(" ")[0],
+        lastName: name.split(" ").slice(1).join(" "),
+        companyName: company,
+        email,
+        password,
+      }),
+    });
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(errorData.error || "Error al registrar el usuario");
+    }
+
+    const data = await res.json();
+    setToken(data.token);
+    setUser(data.user);
+    localStorage.setItem("token", data.token);
+  };
+
   const login = async (email: string, password: string): Promise<void> => {
     const res = await fetch("/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
-
-    if (!res.ok) throw new Error("Invalid credentials");
+    if (!res.ok) throw new Error("Credenciales inválidas");
 
     const data = await res.json();
     setToken(data.token);
@@ -75,7 +107,7 @@ export function AuthProvider({
 
   return (
     <AuthContext.Provider
-      value={{ user, token, isAuthenticated, login, logout }}
+      value={{ user, token, isAuthenticated, register, login, logout }}
     >
       {children}
     </AuthContext.Provider>
