@@ -1,1 +1,0 @@
-funciones auxiliares donde reutilizamos logica que puede usarse en otros lados que NO DEPENDEN de react.
