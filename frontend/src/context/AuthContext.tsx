@@ -1,5 +1,4 @@
 /* eslint-disable react-refresh/only-export-components */
-
 import {
   createContext,
   useContext,
@@ -8,25 +7,20 @@ import {
   type ReactNode,
 } from "react";
 
-interface UserProfile {
-  firstName: string;
-  lastName: string;
-  avatarUrl?: string;
-  phone?: string;
-}
+import { registerService, loginService } from "../services/auth";
 
-interface User {
-  id: number;
-  email: string;
-  role: string;
-  companyId: number;
-  profile: UserProfile;
-}
+import { type User } from "../types/user";
 
 interface AuthContextType {
   user: User | null;
   token: string | null;
   isAuthenticated: boolean;
+  register: (
+    name: string,
+    company: string,
+    email: string,
+    password: string,
+  ) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
 }
@@ -36,7 +30,6 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export function useAuth(): AuthContextType {
   const context = useContext(AuthContext);
   if (!context) throw new Error("useAuth must be used within an AuthProvider");
-
   return context;
 }
 
@@ -52,16 +45,26 @@ export function AuthProvider({
 
   const isAuthenticated = !!token;
 
-  const login = async (email: string, password: string): Promise<void> => {
-    const res = await fetch("/api/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
+  const register = async (
+    name: string,
+    company: string,
+    email: string,
+    password: string,
+  ): Promise<void> => {
+    const data = await registerService({
+      firstName: name.split(" ")[0],
+      lastName: name.split(" ").slice(1).join(" "),
+      companyName: company,
+      email,
+      password,
     });
+    setToken(data.token);
+    setUser(data.user);
+    localStorage.setItem("token", data.token);
+  };
 
-    if (!res.ok) throw new Error("Invalid credentials");
-
-    const data = await res.json();
+  const login = async (email: string, password: string): Promise<void> => {
+    const data = await loginService({ email, password });
     setToken(data.token);
     setUser(data.user);
     localStorage.setItem("token", data.token);
@@ -75,7 +78,7 @@ export function AuthProvider({
 
   return (
     <AuthContext.Provider
-      value={{ user, token, isAuthenticated, login, logout }}
+      value={{ user, token, isAuthenticated, register, login, logout }}
     >
       {children}
     </AuthContext.Provider>

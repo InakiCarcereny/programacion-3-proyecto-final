@@ -1,2 +1,0 @@
-lugar donde van a ir cada uno de los components, les dejo un ejemplo con el componente Header.
-

@@ -6,7 +6,7 @@ import { initDatabaseTriggers } from "./models";
 
 async function main(): Promise<void> {
   await sequelize.authenticate();
-  await sequelize.sync({ alter: true });
+  await sequelize.sync({ force: process.env.NODE_ENV === "development" });
 
   await initDatabaseTriggers();
 

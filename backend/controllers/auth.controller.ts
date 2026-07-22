@@ -14,7 +14,7 @@ export async function register(
 
     const existingUser = await User.findByEmail(email);
     if (existingUser) {
-      res.status(409).json({ error: "Email is already registered." });
+      res.status(409).json({ error: "El email ya está en uso." });
       return;
     }
 
@@ -22,7 +22,7 @@ export async function register(
 
     const adminProfile = await Profile.findProfileByName("admin");
     if (!adminProfile) {
-      res.status(500).json({ error: "Admin profile not found." });
+      res.status(500).json({ error: "Perfil de administrador no encontrado." });
       return;
     }
 
@@ -50,7 +50,15 @@ export async function register(
 
     await redis.set(`session:${token}`, user.id, "EX", 60 * 60 * 24 * 7);
 
-    res.status(201).json({ token });
+    res.status(201).json({
+      token,
+      user: {
+        id: user.id,
+        email: user.email,
+        companyId: company.id,
+        profileId: adminProfile.id,
+      },
+    });
   } catch (error) {
     next(error);
   }
@@ -66,18 +74,18 @@ export async function login(
 
     const user = await User.findByEmail(email);
     if (!user) {
-      res.status(401).json({ error: "Invalid credentials." });
+      res.status(401).json({ error: "Credenciales inválidas." });
       return;
     }
 
     if (!user.isActive) {
-      res.status(401).json({ error: "Inactive user." });
+      res.status(401).json({ error: "Usuario inactivo." });
       return;
     }
 
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
-      res.status(401).json({ error: "Invalid credentials." });
+      res.status(401).json({ error: "Credenciales inválidas." });
       return;
     }
 
@@ -89,7 +97,15 @@ export async function login(
 
     await redis.set(`session:${token}`, user.id, "EX", 60 * 60 * 24 * 7);
 
-    res.json({ token });
+    res.json({
+      token,
+      user: {
+        id: user.id,
+        email: user.email,
+        companyId: user.companyId,
+        profileId: user.profileId,
+      },
+    });
   } catch (error) {
     next(error);
   }
@@ -122,7 +138,7 @@ export async function me(
 
     const user = await User.findUserById(userId, companyId);
     if (!user) {
-      res.status(404).json({ error: "User not found." });
+      res.status(404).json({ error: "Usuario no encontrado." });
       return;
     }
 
