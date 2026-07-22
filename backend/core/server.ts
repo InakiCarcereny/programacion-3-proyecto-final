@@ -5,6 +5,7 @@ import { errorHandler } from "../middlewares/error.middleware";
 import productRoutes from "../routes/product.routes";
 import categoryRoutes from "../routes/category.routes";
 import movementRoutes from "../routes/movements.routes";
+import authRoutes from "../routes/auth.routes";
 import userRoutes from "../routes/user.routes";
 import profileRoutes from "../routes/profile.routes";
 import userDetailRoutes from "../routes/user-detail.routes";
@@ -29,6 +30,7 @@ export class Server {
   }
 
   routes(): void {
+    this.app.use("/api/auth", authRoutes);
     this.app.use("/api/products", productRoutes);
     this.app.use("/api/categories", categoryRoutes);
     this.app.use("/api/movements", movementRoutes);
