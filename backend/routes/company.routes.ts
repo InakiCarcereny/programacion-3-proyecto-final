@@ -13,12 +13,23 @@ import {
 //   validateUpdateCompany,
 // } from "../middlewares/companies.middleware";
 
+import upload from "../middlewares/upload.middleware";
+
 const router: IRouter = Router();
 
 router.get("/", getCompanies);
 router.get("/:id", getCompanyById);
-router.post("/", /*validateCreateCompany,*/ createCompany);
-router.put("/:id", /*validateUpdateCompany,*/ updateCompany);
+router.post(
+  "/",
+  upload.single("logo"),
+  /*validateCreateCompany,*/ createCompany,
+);
+router.put(
+  "/:id",
+  upload.single("logo"),
+  /*validateUpdateCompany,*/
+  updateCompany,
+);
 router.delete("/:id", deleteCompany);
 
 export default router;
