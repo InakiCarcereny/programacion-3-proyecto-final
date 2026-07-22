@@ -7,20 +7,9 @@ import {
   type ReactNode,
 } from "react";
 
-interface UserProfile {
-  firstName: string;
-  lastName: string;
-  avatarUrl?: string;
-  phone?: string;
-}
+import { registerService, loginService } from "../services/auth";
 
-interface User {
-  id: number;
-  email: string;
-  role: string;
-  companyId: number;
-  profile: UserProfile;
-}
+import { type User } from "../types/user";
 
 interface AuthContextType {
   user: User | null;
@@ -41,7 +30,6 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export function useAuth(): AuthContextType {
   const context = useContext(AuthContext);
   if (!context) throw new Error("useAuth must be used within an AuthProvider");
-
   return context;
 }
 
@@ -63,40 +51,20 @@ export function AuthProvider({
     email: string,
     password: string,
   ): Promise<void> => {
-    const res = await fetch("/api/auth/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        firstName: name.split(" ")[0],
-        lastName: name.split(" ").slice(1).join(" "),
-        companyName: company,
-        email,
-        password,
-      }),
+    const data = await registerService({
+      firstName: name.split(" ")[0],
+      lastName: name.split(" ").slice(1).join(" "),
+      companyName: company,
+      email,
+      password,
     });
-    if (!res.ok) {
-      const errorData = await res.json();
-      throw new Error(errorData.error || "Error al registrar el usuario");
-    }
-
-    const data = await res.json();
     setToken(data.token);
     setUser(data.user);
     localStorage.setItem("token", data.token);
   };
 
   const login = async (email: string, password: string): Promise<void> => {
-    const res = await fetch("/api/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
-    if (!res.ok) {
-      const errorData = await res.json();
-      throw new Error(errorData.error || "Error al iniciar sesión");
-    }
-
-    const data = await res.json();
+    const data = await loginService({ email, password });
     setToken(data.token);
     setUser(data.user);
     localStorage.setItem("token", data.token);
