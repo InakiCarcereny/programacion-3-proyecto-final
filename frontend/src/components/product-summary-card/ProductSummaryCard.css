@@ -1,0 +1,71 @@
+body {
+  background-color: #faf8ff;
+  font-family: "Inter", sans-serif;
+}
+.summary-card {
+  background-color: #ffffff;
+  border: 1px solid #c3c6d7;
+  border-radius: 8px;
+  padding: 16px;
+  gap: 16px;
+  display: flex;
+  flex-direction: column;
+
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.summary-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.summary-card-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.icon-container {
+  background-color: #dbe1ff;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.badge {
+  padding: 8px 12px;
+  font-size: 16px;
+}
+
+.badge-success {
+  background-color: #dcf8ed;
+  color: #191b23;
+}
+
+.badge-danger {
+  background-color: #ffdad6;
+  color: #cb1a33;
+}
+
+.badge-neutral {
+  background-color: #f3f4f6;
+  color: #4b5563;
+}
+
+.summary-tittle {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 200;
+  letter-spacing: 0.05em;
+}
+
+.summary-value {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
