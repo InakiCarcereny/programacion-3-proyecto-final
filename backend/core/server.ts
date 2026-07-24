@@ -23,7 +23,6 @@ export class Server {
   middlewares(): void {
     this.app.use(cors());
     this.app.use(express.json());
-    this.app.use(errorHandler);
   }
 
   routes(): void {
@@ -34,6 +33,7 @@ export class Server {
     this.app.get("/api/health", (req, res) => {
       res.json({ status: "ok", timestamp: new Date() });
     });
+    this.app.use(errorHandler);
   }
 
   listen(): void {
