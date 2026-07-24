@@ -6,6 +6,7 @@ import { getProductsService } from "../../services/product";
 import type { Product } from "../../types/product";
 import { PageHeader } from "../products/components/page-header/PageHeader";
 import { MetricsCards } from "../products/components/metric-cards/MetricsCards";
+import { FilterBar } from "../products/components/filter-bar/FilterBar";
 
 function ProductsPage(): JSX.Element {
   const [products, setProducts] = useState<Product[]>([]);
@@ -41,6 +42,7 @@ function ProductsPage(): JSX.Element {
     <main className="product-content">
       <PageHeader />
       <MetricsCards products={products} />
+      <FilterBar totalProducts={products.length} />
       <ul>
         {products.map((product) => (
           <li key={product.id}>

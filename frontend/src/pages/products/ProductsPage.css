@@ -2,6 +2,7 @@
   padding: 24px;
   max-width: 1400px;
   margin: 0 auto;
+  margin-bottom: 20px;
 }
 
 .cards-container {
@@ -9,4 +10,8 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
   width: 100%;
+}
+
+.product-content .cards-container {
+  margin-bottom: 20px;
 }
