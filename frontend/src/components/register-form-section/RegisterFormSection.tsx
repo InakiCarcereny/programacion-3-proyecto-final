@@ -21,7 +21,7 @@ export function RegisterFormSection(): JSX.Element {
         <footer className="register-form-footer">
           <span className="register-form-footer-text">
             ¿Ya tienes una cuenta?{" "}
-            <a className="register-form-footer-link" href="/login">
+            <a className="register-form-footer-link" href="/iniciar-sesion">
               Inicia sesión
             </a>
           </span>

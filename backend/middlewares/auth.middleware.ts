@@ -8,6 +8,7 @@ export async function authenticate(
 ): Promise<void> {
   try {
     const authHeader = req.headers.authorization;
+
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
       res.status(401).json({ error: "No Token" });
       return;

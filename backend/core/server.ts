@@ -33,6 +33,7 @@ export class Server {
     this.app.get("/api/health", (req, res) => {
       res.json({ status: "ok", timestamp: new Date() });
     });
+    this.app.use(errorHandler);
   }
 
   listen(): void {
