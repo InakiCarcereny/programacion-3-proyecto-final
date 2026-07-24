@@ -21,7 +21,7 @@ export function LoginFormSection(): JSX.Element {
         <footer className="login-form-footer">
           <span className="login-form-footer-text">
             ¿No tienes una cuenta?{" "}
-            <a className="login-form-footer-link" href="/register">
+            <a className="login-form-footer-link" href="/registro">
               Regístrate
             </a>
           </span>

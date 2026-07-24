@@ -1,0 +1,32 @@
+.add-product-form-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.add-product-form-input-label {
+  font-weight: bold;
+  font-size: 14px;
+  color: #464858;
+}
+
+.add-product-form-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.add-product-form-input {
+  border: none;
+  outline: none;
+  width: 100%;
+}
+
+.add-product-form-input-error {
+  color: red;
+  font-size: 12px;
+  font-weight: bold;
+  margin-top: 4px;
+}

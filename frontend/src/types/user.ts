@@ -5,5 +5,7 @@ export interface User {
   email: string;
   role: string;
   companyId: number;
+  companyName?: string;
+  profileId: number;
   profile?: UserProfile;
 }
