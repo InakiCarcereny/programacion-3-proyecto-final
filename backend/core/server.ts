@@ -18,14 +18,13 @@ export class Server {
     this.port = process.env.PORT || 3000;
     this.middlewares();
     this.routes();
+    this.app.use(errorHandler);
   }
 
   middlewares(): void {
     this.app.use(cors());
     this.app.use(express.json());
-    this.app.use(errorHandler);
   }
-
   routes(): void {
     this.app.use("/api/auth", authRoutes);
     this.app.use("/api/products", productRoutes);

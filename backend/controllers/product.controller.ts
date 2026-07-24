@@ -11,9 +11,9 @@ export async function getProducts(
     const { search, category } = req.query;
     const { companyId } = req.body;
     const products = await Product.findAllProducts(
-      companyId,
       search as string | undefined,
       category as string | undefined,
+      companyId,
     );
     res.json(products);
   } catch (error) {

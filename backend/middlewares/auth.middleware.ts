@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from "express";
 import { verifyToken } from "../lib/jwt.config";
-import redis from "../lib/redis.config";
 
 export async function authenticate(
   req: Request,
@@ -16,19 +15,16 @@ export async function authenticate(
 
     const token = authHeader.split(" ")[1];
 
-    const exists = await redis.get(`session:${token}`);
-    if (!exists) {
-      res.status(401).json({ error: "Invalid session" });
-      return;
-    }
-
     const payload = verifyToken(token);
+
+    if (!req.body) req.body = {};
     req.body.userId = payload.userId;
     req.body.companyId = payload.companyId;
     req.body.profileId = payload.profileId;
 
     next();
   } catch (error) {
+    console.log("AUTH ERROR:", (error as Error).message);
     res.status(401).json({ error: "Invalid token" });
   }
 }
