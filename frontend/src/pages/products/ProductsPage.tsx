@@ -4,6 +4,8 @@ import type { JSX } from "react/jsx-runtime";
 import "./ProductsPage.css";
 import { getProductsService } from "../../services/product";
 import type { Product } from "../../types/product";
+import { PageHeader } from "./page-header/PageHeader";
+import { MetricsCards } from "./metrics-cards/MetricsCards";
 
 function ProductsPage(): JSX.Element {
   const [products, setProducts] = useState<Product[]>([]);
@@ -37,7 +39,8 @@ function ProductsPage(): JSX.Element {
 
   return (
     <main className="product-content">
-      <h1>Productos</h1>
+      <PageHeader />
+      <MetricsCards products={products} />
       <ul>
         {products.map((product) => (
           <li key={product.id}>

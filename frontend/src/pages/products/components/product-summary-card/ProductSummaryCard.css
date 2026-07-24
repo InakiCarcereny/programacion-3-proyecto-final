@@ -1,17 +1,17 @@
-body {
-  background-color: #faf8ff;
-  font-family: "Inter", sans-serif;
-}
 .summary-card {
   background-color: #ffffff;
   border: 1px solid #c3c6d7;
-  border-radius: 8px;
-  padding: 16px;
+  border-radius: 12px;
+  padding: 24px;
   gap: 16px;
   display: flex;
   flex-direction: column;
-
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  transition: box-shadow 0.2s;
+}
+
+.summary-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
 .summary-card-top {
@@ -24,6 +24,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  margin-top: 8px;
 }
 
 .icon-container {
@@ -38,18 +39,22 @@ body {
 }
 
 .badge {
-  padding: 8px 12px;
-  font-size: 16px;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  font-family: "Inter", sans-serif;
+  border-radius: 4px;
 }
 
 .badge-success {
   background-color: #dcf8ed;
-  color: #191b23;
+  color: #007d55;
 }
 
 .badge-danger {
   background-color: #ffdad6;
-  color: #cb1a33;
+  color: #ba1a1a;
 }
 
 .badge-neutral {
@@ -57,15 +62,17 @@ body {
   color: #4b5563;
 }
 
-.summary-tittle {
+.summary-title {
   margin: 0;
   font-size: 12px;
-  font-weight: 200;
+  font-weight: 600;
   letter-spacing: 0.05em;
+  color: #737686;
 }
 
 .summary-value {
   margin: 0;
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 600;
+  color: #191b23;
 }
