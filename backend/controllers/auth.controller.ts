@@ -36,7 +36,7 @@ export async function register(
       profileId: adminProfile.id,
     });
 
-    await UserDetails.create({
+    const userDetails = await UserDetails.create({
       userId: user.id,
       firstName,
       lastName,
@@ -56,7 +56,14 @@ export async function register(
         id: user.id,
         email: user.email,
         companyId: company.id,
+        companyName: company.name,
         profileId: adminProfile.id,
+        role: adminProfile.name,
+        profile: {
+          firstName: userDetails.firstName,
+          lastName: userDetails.lastName,
+          avatarUrl: userDetails.avatarUrl,
+        },
       },
     });
   } catch (error) {
@@ -89,6 +96,12 @@ export async function login(
       return;
     }
 
+    const company = await Company.findByPk(user.companyId);
+    const userDetails = await UserDetails.findOne({
+      where: { userId: user.id },
+    });
+    const profile = await Profile.findByPk(user.profileId);
+
     const token = generateToken({
       userId: user.id,
       companyId: user.companyId,
@@ -103,7 +116,14 @@ export async function login(
         id: user.id,
         email: user.email,
         companyId: user.companyId,
+        companyName: company?.name,
         profileId: user.profileId,
+        role: profile?.name,
+        profile: {
+          firstName: userDetails?.firstName,
+          lastName: userDetails?.lastName,
+          avatarUrl: userDetails?.avatarUrl,
+        },
       },
     });
   } catch (error) {
@@ -121,8 +141,7 @@ export async function logout(
     if (token) {
       await redis.del(`session:${token}`);
     }
-
-    res.json({ message: "Logged out successfully." });
+    res.json({ message: "Cierre de sesión exitoso." });
   } catch (error) {
     next(error);
   }
@@ -135,13 +154,11 @@ export async function me(
 ): Promise<void> {
   try {
     const { userId, companyId } = req.body;
-
     const user = await User.findUserById(userId, companyId);
     if (!user) {
       res.status(404).json({ error: "Usuario no encontrado." });
       return;
     }
-
     res.json(user);
   } catch (error) {
     next(error);

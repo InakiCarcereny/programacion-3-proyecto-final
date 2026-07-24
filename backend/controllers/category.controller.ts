@@ -7,7 +7,9 @@ export async function getCategories(
   next: NextFunction,
 ): Promise<void> {
   try {
-    const { companyId } = req.body;
+    console.log("res.locals:", res.locals);
+    const { companyId } = res.locals;
+    console.log("companyId:", companyId);
     const categories = await Category.findAllCategories(companyId);
     res.json(categories);
   } catch (error) {

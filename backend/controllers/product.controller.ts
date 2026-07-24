@@ -46,11 +46,16 @@ export async function createProduct(
   next: NextFunction,
 ): Promise<void> {
   try {
+    const { companyId } = res.locals;
     let imageUrl: string | undefined;
     if (req.file) {
       imageUrl = await uploadImage(req.file.buffer, "products");
     }
-    const product = await Product.createProduct({ ...req.body, imageUrl });
+    const product = await Product.createProduct({
+      ...req.body,
+      companyId,
+      imageUrl,
+    });
     res.status(201).json(product);
   } catch (error) {
     next(error);
