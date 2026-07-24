@@ -4,8 +4,8 @@ import type { JSX } from "react/jsx-runtime";
 import "./ProductsPage.css";
 import { getProductsService } from "../../services/product";
 import type { Product } from "../../types/product";
-import { PageHeader } from "./page-header/PageHeader";
-import { MetricsCards } from "./metrics-cards/MetricsCards";
+import { PageHeader } from "../products/components/page-header/PageHeader";
+import { MetricsCards } from "../products/components/metric-cards/MetricsCards";
 
 function ProductsPage(): JSX.Element {
   const [products, setProducts] = useState<Product[]>([]);
