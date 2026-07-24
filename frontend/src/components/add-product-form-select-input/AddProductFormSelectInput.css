@@ -1,0 +1,27 @@
+.add-product-form-select-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.add-product-form-label {
+  font-weight: bold;
+  font-size: 14px;
+  color: #464858;
+}
+
+.add-product-form-select {
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  padding: 12px;
+  outline: none;
+  background: transparent;
+  width: 100%;
+}
+
+.input-error {
+  color: red;
+  font-size: 12px;
+  font-weight: bold;
+  margin-top: 4px;
+}

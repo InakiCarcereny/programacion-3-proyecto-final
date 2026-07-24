@@ -10,7 +10,7 @@ function ProtectedRoute({ role }: ProtectedRouteProps): JSX.Element {
   const { user } = useAuth();
 
   if (!user) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/iniciar-sesion" />;
   }
 
   if (role && user.role !== role) {
