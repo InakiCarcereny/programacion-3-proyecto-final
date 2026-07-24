@@ -1,0 +1,181 @@
+.product-table-wrapper {
+  background: #ffffff;
+  border: 1px solid #c3c6d7;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.product-table thead {
+  background: #e1e2ed;
+}
+
+.product-table th {
+  padding: 16px 24px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: #737686;
+  border-bottom: 1px solid #c3c6d7;
+}
+
+.product-table td {
+  padding: 16px 24px;
+  border-bottom: 1px solid #c3c6d7;
+  font-size: 13px;
+  color: #191b23;
+}
+
+.product-table tbody tr {
+  transition: background 0.15s;
+}
+
+.product-table tbody tr:hover {
+  background: #f3f3fe;
+}
+
+.product-name-cell {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.product-image {
+  width: 40px;
+  height: 40px;
+  background: #ededf9;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  color: #c3c6d7;
+  font-size: 20px;
+}
+
+.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-name-text {
+  font-size: 14px;
+  font-weight: 700;
+  color: #191b23;
+}
+
+.category-badge {
+  background: #dae2fd;
+  color: #3f465c;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.price-cell {
+  font-weight: 500;
+}
+
+.stock-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stock-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  width: fit-content;
+}
+
+.stock-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.stock-badge-in-stock {
+  background: #dcf8ed;
+  color: #2e7d32;
+}
+
+.stock-badge-in-stock .stock-badge-dot {
+  background: #2e7d32;
+}
+
+.stock-badge-low-stock {
+  background: #fff3e0;
+  color: #ef6c00;
+}
+
+.stock-badge-low-stock .stock-badge-dot {
+  background: #ef6c00;
+}
+
+.stock-badge-out-of-stock {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.stock-badge-out-of-stock .stock-badge-dot {
+  background: #c62828;
+}
+
+.stock-quantity {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: #c3c6d7;
+}
+
+.actions-cell {
+  text-align: right;
+}
+
+.actions-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.product-table tbody tr:hover .actions-container {
+  opacity: 1;
+}
+
+.action-btn {
+  padding: 8px;
+  border: none;
+  background: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #737686;
+  transition: all 0.15s;
+}
+
+.action-btn:hover {
+  background: #dbe1ff;
+  color: #004ac6;
+}
+
+.action-btn-danger:hover {
+  background: #ffdad6;
+  color: #ba1a1a;
+}

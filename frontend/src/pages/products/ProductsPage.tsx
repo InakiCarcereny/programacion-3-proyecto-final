@@ -7,6 +7,7 @@ import type { Product } from "../../types/product";
 import { PageHeader } from "../products/components/page-header/PageHeader";
 import { MetricsCards } from "../products/components/metric-cards/MetricsCards";
 import { FilterBar } from "../products/components/filter-bar/FilterBar";
+import { ProductTable } from "../products/components/product-table/ProductTable";
 
 function ProductsPage(): JSX.Element {
   const [products, setProducts] = useState<Product[]>([]);
@@ -43,13 +44,7 @@ function ProductsPage(): JSX.Element {
       <PageHeader />
       <MetricsCards products={products} />
       <FilterBar totalProducts={products.length} />
-      <ul>
-        {products.map((product) => (
-          <li key={product.id}>
-            {product.name} - ${product.price} - Stock: {product.stock}
-          </li>
-        ))}
-      </ul>
+      <ProductTable products={products} />
     </main>
   );
 }

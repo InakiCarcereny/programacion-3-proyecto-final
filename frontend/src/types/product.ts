@@ -7,6 +7,7 @@ export interface Product {
   imageUrl?: string;
   categoryId: number;
   companyId: number;
+  category?: { id: number; name: string };
   createdAt?: string;
   updatedAt?: string;
 }

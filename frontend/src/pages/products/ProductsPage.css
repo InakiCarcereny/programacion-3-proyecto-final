@@ -2,16 +2,9 @@
   padding: 24px;
   max-width: 1400px;
   margin: 0 auto;
-  margin-bottom: 20px;
 }
 
-.cards-container {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  width: 100%;
-}
-
-.product-content .cards-container {
+.cards-container,
+.filter-bar {
   margin-bottom: 20px;
 }
