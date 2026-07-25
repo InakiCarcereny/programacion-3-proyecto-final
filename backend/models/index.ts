@@ -70,7 +70,7 @@ export const initDatabaseTriggers = async (): Promise<void> => {
             cantidad_movimiento,
             tipo_movimiento::enum_movements_type,
             'Cambio de stock en  un producto',
-            NOW()
+            NOW(),
             NOW()
           );
         END IF;
