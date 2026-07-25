@@ -13,7 +13,7 @@ import bcrypt from "bcrypt";
 export async function seed(): Promise<void> {
   const profiles = await Profile.bulkCreate([
     { name: "admin", description: "Administrador de la empresa" },
-    { name: "employee", description: "Empleado de la empresa" },
+    { name: "empleado", description: "Empleado de la empresa" },
   ]);
 
   const company = await Company.create({

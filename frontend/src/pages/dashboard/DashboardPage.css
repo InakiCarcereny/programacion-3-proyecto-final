@@ -1,0 +1,231 @@
+.dashboard-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 40px;
+}
+
+.dashboard-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dashboard-page-title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: bold;
+  color: #191b23;
+}
+
+.dashboard-page-subtitle {
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: #6e7191;
+}
+
+.dashboard-page-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.dashboard-page-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background-color: #ffffff;
+  border: 1px solid #e3e3ee;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.dashboard-page-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.dashboard-page-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+}
+
+.dashboard-page-card-badge {
+  font-size: 11px;
+  font-weight: bold;
+  padding: 3px 8px;
+  border-radius: 20px;
+  text-transform: uppercase;
+}
+
+.dashboard-page-card-badge-warning {
+  background-color: #fef3e2;
+  color: #d97706;
+}
+
+.dashboard-page-card-badge-danger {
+  background-color: #fef2f2;
+  color: #dc2626;
+}
+
+.dashboard-page-card-label {
+  margin: 0;
+  font-size: 12px;
+  color: #6e7191;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.dashboard-page-card-value {
+  margin: 0;
+  font-size: 22px;
+  font-weight: bold;
+  color: #191b23;
+}
+
+.dashboard-page-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.dashboard-page-section {
+  background-color: #ffffff;
+  border: 1px solid #e3e3ee;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.dashboard-page-section-title {
+  margin: 0 0 16px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #191b23;
+}
+
+.dashboard-page-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.dashboard-page-table td {
+  padding: 10px 0;
+  font-size: 14px;
+  color: #191b23;
+  border-bottom: 1px solid #e3e3ee;
+}
+
+.dashboard-page-table tr:last-child td {
+  border-bottom: none;
+}
+
+.dashboard-page-table-date {
+  text-align: right;
+  color: #6e7191;
+  font-size: 13px;
+}
+
+.dashboard-page-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.dashboard-page-badge-ingreso {
+  color: #16a34a;
+}
+
+.dashboard-page-badge-egreso {
+  color: #dc2626;
+}
+
+.dashboard-page-low-stock-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dashboard-page-low-stock-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dashboard-page-low-stock-thumb {
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.dashboard-page-low-stock-thumb-fallback {
+  background-color: #f1f0f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dashboard-page-low-stock-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dashboard-page-low-stock-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+}
+
+.dashboard-page-low-stock-name {
+  color: #191b23;
+  font-weight: 500;
+}
+
+.dashboard-page-low-stock-count {
+  font-weight: bold;
+}
+
+.dashboard-page-progress-track {
+  width: 100%;
+  height: 6px;
+  border-radius: 20px;
+  background-color: #f1f0f9;
+  overflow: hidden;
+}
+
+.dashboard-page-progress-fill {
+  height: 100%;
+  border-radius: 20px;
+}
+
+.dashboard-page-message {
+  padding: 20px 0;
+  color: #6e7191;
+  font-size: 14px;
+}
+
+.dashboard-page-message-error {
+  color: #dc2626;
+}
+
+@media (max-width: 1100px) {
+  .dashboard-page-metrics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dashboard-page-grid {
+    grid-template-columns: 1fr;
+  }
+}

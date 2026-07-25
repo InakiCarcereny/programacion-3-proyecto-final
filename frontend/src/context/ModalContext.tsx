@@ -10,13 +10,12 @@ import {
 interface ModalContextType {
   isOpen: boolean;
   type: ModalType | null;
-  data: unknown;
-  open: (type: ModalType, data?: unknown) => void;
+  open: (type: ModalType) => void;
   close: () => void;
   toggle: (type: ModalType) => void;
 }
 
-type ModalType = "add-product" | "edit-product";
+type ModalType = "add-product";
 
 const ModalContext = createContext<ModalContextType | null>(null);
 
@@ -33,18 +32,15 @@ export function ModalProvider({
 }): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
   const [type, setType] = useState<ModalType | null>(null);
-  const [data, setData] = useState<unknown>(null);
 
-  const open = (type: ModalType, data?: unknown): void => {
+  const open = (type: ModalType): void => {
     setType(type);
-    setData(data ?? null);
     setIsOpen(true);
   };
 
   const close = (): void => {
     setIsOpen(false);
     setType(null);
-    setData(null);
   };
 
   const toggle = (type: ModalType): void => {
@@ -53,7 +49,7 @@ export function ModalProvider({
   };
 
   return (
-    <ModalContext.Provider value={{ isOpen, type, data, open, close, toggle }}>
+    <ModalContext.Provider value={{ isOpen, type, open, close, toggle }}>
       {children}
     </ModalContext.Provider>
   );

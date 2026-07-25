@@ -1,13 +1,13 @@
 import { useRef, type JSX } from "react";
 
-import "./AddProductModal.css";
+import "./AddMovementModal.css";
 import { useModal } from "../../context/ModalContext";
 import { useCloseOnEscape } from "../../hooks/useCloseOnEscape";
 import { useOutsideClick } from "../../hooks/useClickOutside";
 import { X } from "lucide-react";
-import { AddProductForm } from "../add-product-form/AddProductForm";
+import { AddMovementForm } from "../add-movement-form/AddMovementForm";
 
-export function AddProductModal(): JSX.Element {
+export function AddMovementModal(): JSX.Element {
   const { isOpen, type, close } = useModal();
   const modalRef = useRef<HTMLDivElement | null>(null);
 
@@ -16,18 +16,18 @@ export function AddProductModal(): JSX.Element {
 
   return (
     <>
-      {isOpen && type === "add-product" && (
+      {isOpen && type === "add-movement" && (
         <div className="modal-background">
           <div className="modal-container" ref={modalRef}>
             <div className="modal-header">
-              <h4 className="modal-title">Añadir Nuevo Producto</h4>
+              <h4 className="modal-title">Registrar Movimiento</h4>
 
               <button className="modal-close-button" onClick={close}>
                 <X />
               </button>
             </div>
 
-            <AddProductForm />
+            <AddMovementForm />
           </div>
         </div>
       )}

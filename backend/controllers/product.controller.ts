@@ -9,7 +9,7 @@ export async function getProducts(
 ): Promise<void> {
   try {
     const { search, category } = req.query;
-    const { companyId } = req.body;
+    const { companyId } = res.locals;
     const products = await Product.findAllProducts(
       search as string | undefined,
       category as string | undefined,

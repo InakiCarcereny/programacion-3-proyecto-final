@@ -1,0 +1,31 @@
+.add-movement-form-select-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.add-movement-form-label {
+  font-weight: bold;
+  font-size: 14px;
+  color: #464858;
+}
+
+.add-movement-form-select {
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  padding: 12px;
+  outline: none;
+  background: transparent;
+  width: 100%;
+}
+
+.add-movement-form-select--error {
+  border-color: red;
+}
+
+.add-movement-form-input-error {
+  color: red;
+  font-size: 12px;
+  font-weight: bold;
+  margin-top: 4px;
+}

@@ -13,6 +13,7 @@ import { FilterBar } from "../products/components/filter-bar/FilterBar";
 import { ProductTable } from "../products/components/product-table/ProductTable";
 import { Pagination } from "../products/components/pagination/Pagination";
 import { useModal } from "../../context/ModalContext";
+import { EditProductModal } from "../../components/edit-product-modal/EditProductModal";
 
 const PAGE_SIZE = 10;
 
@@ -29,13 +30,11 @@ function ProductsPage(): JSX.Element {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState("All Categories");
   const [selectedStock, setSelectedStock] = useState("Stock Status");
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const { open } = useModal();
-  const handleEdit = (product: Product): void => {
-    open("edit-product", product);
-  };
 
-  useEffect(() => {
-    getProductsService()
+  const fetchProducts = (): void => {
+    getProductsService(localStorage.getItem("token"))
       .then((data) => {
         setProducts(data);
         setLoading(false);
@@ -44,6 +43,10 @@ function ProductsPage(): JSX.Element {
         setError(err.message);
         setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    fetchProducts();
   }, []);
 
   const categories = [
@@ -64,6 +67,10 @@ function ProductsPage(): JSX.Element {
     return matchCategory && matchStock;
   });
 
+  const handleEdit = (product: Product): void => {
+    setEditingProduct(product);
+  };
+
   const handleDelete = async (product: Product): Promise<void> => {
     const confirmed = window.confirm(
       `¿Estás seguro de eliminar "${product.name}"?`,
@@ -73,7 +80,7 @@ function ProductsPage(): JSX.Element {
     try {
       const token = localStorage.getItem("token");
       await deleteProductService(token!, product.id);
-      const data = await getProductsService();
+      const data = await getProductsService(token!);
       setProducts(data);
     } catch (err) {
       if (err instanceof Error) {
@@ -82,10 +89,16 @@ function ProductsPage(): JSX.Element {
     }
   };
 
+  const handleEditSuccess = (): void => {
+    setEditingProduct(null);
+    fetchProducts();
+  };
+
   const totalPages = Math.ceil(filteredProducts.length / PAGE_SIZE);
   const safePage = Math.min(currentPage, Math.max(1, totalPages));
   const start = (safePage - 1) * PAGE_SIZE;
   const paginatedProducts = filteredProducts.slice(start, start + PAGE_SIZE);
+
   if (loading)
     return (
       <main className="product-content">
@@ -130,6 +143,13 @@ function ProductsPage(): JSX.Element {
           totalPages={totalPages}
           onPageChange={setCurrentPage}
         />
+        {editingProduct && (
+          <EditProductModal
+            product={editingProduct}
+            onClose={() => setEditingProduct(null)}
+            onSuccess={handleEditSuccess}
+          />
+        )}
       </div>
     </main>
   );

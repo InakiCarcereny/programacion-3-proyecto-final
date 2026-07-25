@@ -7,29 +7,21 @@ import { AddProductFormSelectInput } from "../add-product-form-select-input/AddP
 import { ImageUploadInput } from "../image-upload-input/ImageUploadInput";
 import { useModal } from "../../context/ModalContext";
 import { validateAddProductForm } from "../../utils/validateAddProductForm";
-import {
-  createProductService,
-  updateProductService,
-} from "../../services/product";
+import { createProductService } from "../../services/product";
 import { useAuth } from "../../context/AuthContext";
-import type { Product } from "../../types/product";
 
-interface AddProductFormProps {
-  product?: Product;
-}
-
-export function AddProductForm({ product }: AddProductFormProps): JSX.Element {
+export function AddProductForm(): JSX.Element {
   const { token } = useAuth();
   const { close } = useModal();
   const [error, setError] = useState<Record<string, string>>({});
-  const [formData, setFormData] = useState(() => ({
-    name: product?.name ?? "",
-    price: product ? String(product.price) : "",
-    stock: product ? String(product.stock) : "",
-    category: product ? String(product.categoryId) : "",
+  const [formData, setFormData] = useState({
+    name: "",
+    price: "",
+    stock: "",
+    category: "",
     image: null as File | null,
-    description: product?.description ?? "",
-  }));
+    description: "",
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
@@ -63,11 +55,7 @@ export function AddProductForm({ product }: AddProductFormProps): JSX.Element {
         data.append("image", formData.image);
       }
 
-      if (product) {
-        await updateProductService(token!, product.id, data);
-      } else {
-        await createProductService(token!, data);
-      }
+      await createProductService(token, data);
       close();
     } catch (err) {
       if (err instanceof Error) {
@@ -150,7 +138,7 @@ export function AddProductForm({ product }: AddProductFormProps): JSX.Element {
         </button>
 
         <button type="submit" className="add-product-form-submit-button">
-          {product ? "Actualizar Producto" : "Guardar Producto"}
+          Guardar Producto
         </button>
       </div>
     </form>

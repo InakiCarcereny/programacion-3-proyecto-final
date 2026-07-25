@@ -1,0 +1,90 @@
+.profile-page-header {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-page-header-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.profile-page-container {
+  display: flex;
+  gap: 40px;
+  margin-top: 20px;
+  max-width: 700px;
+  width: 100%;
+  height: 400px;
+  padding: 28px;
+  border: 1px solid #e3e3ee;
+  border-radius: 8px;
+}
+
+.profile-page-avatar-container {
+  margin: 0;
+}
+
+.profile-page-avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.profile-page-avatar-placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 150px;
+  border-radius: 4px;
+  font-size: 48px;
+  font-weight: bold;
+  background-color: #e3e3ee;
+}
+
+.profile-page-info-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.profile-page-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.profile-page-edit-button {
+  display: flex;
+  align-items: center;
+  height: 32px;
+  gap: 8px;
+  padding: 12px 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: #004ac6;
+  font-size: 12px;
+  font-weight: bold;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.profile-page-avatar-edit {
+  position: relative;
+  cursor: pointer;
+}
+
+.profile-page-avatar-overlay {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: #004ac6;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

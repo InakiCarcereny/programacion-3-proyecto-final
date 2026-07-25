@@ -1,0 +1,7 @@
+@import "../add-product-modal/AddProductModal.css";
+
+.edit-modal-title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: bold;
+}
