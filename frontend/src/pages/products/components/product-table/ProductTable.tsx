@@ -1,5 +1,5 @@
 import type { JSX } from "react/jsx-runtime";
-import type { Product } from "../../../types/product";
+import type { Product } from "../../../../types/product";
 import "./ProductTable.css";
 
 interface ProductTableProps {
@@ -36,10 +36,10 @@ function DeleteIcon(): JSX.Element {
 
 function getStockStatus(stock: number): { label: string; className: string } {
   if (stock <= 0)
-    return { label: "Sin Stock", className: "stock-badge-out-of-stock" };
+    return { label: "Out of Stock", className: "stock-badge-out-of-stock" };
   if (stock <= 10)
-    return { label: "Bajo Stock", className: "stock-badge-low-stock" };
-  return { label: "Stock Disponible", className: "stock-badge-in-stock" };
+    return { label: "Low Stock", className: "stock-badge-low-stock" };
+  return { label: "In Stock", className: "stock-badge-in-stock" };
 }
 
 function getCategoryName(product: Product): string {
@@ -48,82 +48,76 @@ function getCategoryName(product: Product): string {
 
 export function ProductTable({ products }: ProductTableProps): JSX.Element {
   return (
-    <div className="product-table-wrapper">
-      <table className="product-table">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>ID</th>
-            <th>Categoria</th>
-            <th>Precio</th>
-            <th>Stock</th>
-            <th className="actions-cell">Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {products.map((product) => {
-            const status = getStockStatus(product.stock);
+    <table className="product-table">
+      <thead>
+        <tr>
+          <th>Product Name</th>
+          <th>ID</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>Stock Level</th>
+          <th className="actions-cell">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {products.map((product) => {
+          const status = getStockStatus(product.stock);
 
-            return (
-              <tr key={product.id}>
-                <td>
-                  <div className="product-name-cell">
-                    <div className="product-image">
-                      {product.imageUrl ? (
-                        <img src={product.imageUrl} alt={product.name} />
-                      ) : (
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          height="24px"
-                          viewBox="0 -960 960 960"
-                          width="24px"
-                          fill="currentColor"
-                        >
-                          <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm40-80h480L570-480 450-320l-90-120-120 160Z" />
-                        </svg>
-                      )}
-                    </div>
-                    <span className="product-name-text">{product.name}</span>
+          return (
+            <tr key={product.id}>
+              <td>
+                <div className="product-name-cell">
+                  <div className="product-image">
+                    {product.imageUrl ? (
+                      <img src={product.imageUrl} alt={product.name} />
+                    ) : (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="24px"
+                        viewBox="0 -960 960 960"
+                        width="24px"
+                        fill="currentColor"
+                      >
+                        <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm40-80h480L570-480 450-320l-90-120-120 160Z" />
+                      </svg>
+                    )}
                   </div>
-                </td>
-                <td className="price-cell">#{product.id}</td>
-                <td>
-                  <span className="category-badge">
-                    {getCategoryName(product)}
+                  <span className="product-name-text">{product.name}</span>
+                </div>
+              </td>
+              <td className="price-cell">#{product.id}</td>
+              <td>
+                <span className="category-badge">
+                  {getCategoryName(product)}
+                </span>
+              </td>
+              <td className="price-cell">${product.price.toLocaleString()}</td>
+              <td>
+                <div className="stock-cell">
+                  <span className={`stock-badge ${status.className}`}>
+                    <span className="stock-badge-dot" />
+                    {status.label}
                   </span>
-                </td>
-                <td className="price-cell">
-                  ${product.price.toLocaleString()}
-                </td>
-                <td>
-                  <div className="stock-cell">
-                    <span className={`stock-badge ${status.className}`}>
-                      <span className="stock-badge-dot" />
-                      {status.label}
-                    </span>
-                    <span className="stock-quantity">
-                      {product.stock} Unidades
-                    </span>
-                  </div>
-                </td>
-                <td className="actions-cell">
-                  <div className="actions-container">
-                    <button className="action-btn" title="Edit">
-                      <EditIcon />
-                    </button>
-                    <button
-                      className="action-btn action-btn-danger"
-                      title="Delete"
-                    >
-                      <DeleteIcon />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+                  <span className="stock-quantity">{product.stock} units</span>
+                </div>
+              </td>
+              <td className="actions-cell">
+                <div className="actions-container">
+                  <button className="action-btn" title="Edit">
+                    <EditIcon />
+                  </button>
+                  <button
+                    className="action-btn action-btn-danger"
+                    title="Delete"
+                  >
+                    <DeleteIcon />
+                  </button>
+                </div>
+              </td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
   );
 }
