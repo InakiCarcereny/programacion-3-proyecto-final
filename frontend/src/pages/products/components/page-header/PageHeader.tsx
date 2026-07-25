@@ -52,20 +52,20 @@ export function PageHeader({ onAddProduct }: PageHeaderProps): JSX.Element {
     <div className="page-header">
       <div>
         <nav className="breadcrumb">
-          <span>Inventory</span>
+          <span>Inventario</span>
           <ChevronRightIcon />
-          <span className="breadcrumb-current">Products</span>
+          <span className="breadcrumb-current">Productos</span>
         </nav>
-        <h1 className="page-title">Product Catalog</h1>
+        <h1 className="page-title">Catalogo de Productos</h1>
       </div>
       <div className="header-actions">
         <button className="btn-outline">
           <DownloadIcon />
-          Export CSV
+          Exportar CSV
         </button>
         <button className="btn-primary" onClick={onAddProduct}>
           <PlusIcon />
-          Add New Product
+          Añadir Producto
         </button>
       </div>
     </div>
