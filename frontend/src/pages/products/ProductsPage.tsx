@@ -7,11 +7,11 @@ import {
   deleteProductService,
 } from "../../services/product";
 import type { Product } from "../../types/product";
-import { PageHeader } from "../products/components/page-header/PageHeader";
+import { PageHeader } from "../../components/product-page-header/PageHeader";
 import { MetricsCards } from "../../components/product-metric-cards/MetricsCards";
 import { FilterBar } from "../../components/product-filter-bar/FilterBar";
 import { ProductTable } from "../../components/product-table/ProductTable";
-import { Pagination } from "../products/components/pagination/Pagination";
+import { Pagination } from "../../components/product-pagination/Pagination";
 import { useModal } from "../../context/ModalContext";
 import { EditProductModal } from "../../components/edit-product-modal/EditProductModal";
 

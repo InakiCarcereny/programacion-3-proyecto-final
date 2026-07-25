@@ -1,38 +1,11 @@
 import type { JSX } from "react/jsx-runtime";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import "./Pagination.css";
 
 interface PaginationProps {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
-}
-
-function ChevronLeftIcon(): JSX.Element {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      height="20px"
-      viewBox="0 -960 960 960"
-      width="20px"
-      fill="currentColor"
-    >
-      <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
-    </svg>
-  );
-}
-
-function ChevronRightIcon(): JSX.Element {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      height="20px"
-      viewBox="0 -960 960 960"
-      width="20px"
-      fill="currentColor"
-    >
-      <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
-    </svg>
-  );
 }
 
 function getPageNumbers(current: number, total: number): (number | "...")[] {
@@ -78,7 +51,7 @@ export function Pagination({
           disabled={currentPage === 1}
           onClick={() => onPageChange(currentPage - 1)}
         >
-          <ChevronLeftIcon />
+          <ChevronLeft size={20} />
         </button>
 
         {getPageNumbers(currentPage, totalPages).map((page, i) =>
@@ -102,7 +75,7 @@ export function Pagination({
           disabled={currentPage === totalPages}
           onClick={() => onPageChange(currentPage + 1)}
         >
-          <ChevronRightIcon />
+          <ChevronRight size={20} />
         </button>
       </div>
     </div>
