@@ -14,7 +14,8 @@ export function DashboardLayout(): JSX.Element {
       <div className="layout-container">
         <div className="layout-content">
           <Header />
-          <main>
+
+          <main className="layout-main">
             <Outlet />
           </main>
         </div>

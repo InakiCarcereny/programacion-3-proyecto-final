@@ -1,0 +1,21 @@
+.profile-page-info-details {
+  display: flex;
+  gap: 40px;
+}
+
+.profile-page-info-details-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.profile-page-info-name {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.profile-page-info-name-value {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
