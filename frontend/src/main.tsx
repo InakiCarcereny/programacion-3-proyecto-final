@@ -5,13 +5,16 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App.tsx";
 import { AuthProvider } from "./context/AuthContext.tsx";
 import { ModalProvider } from "./context/ModalContext.tsx";
+import { SearchProvider } from "./context/SearchContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
       <AuthProvider>
         <ModalProvider>
-          <App />
+          <SearchProvider>
+            <App />
+          </SearchProvider>
         </ModalProvider>
       </AuthProvider>
     </BrowserRouter>
