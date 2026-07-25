@@ -14,9 +14,11 @@ export function AddProductModal(): JSX.Element {
   useCloseOnEscape(close, isOpen);
   useOutsideClick(modalRef, close, isOpen);
 
+  if (type !== "add-product") return null;
+
   return (
     <>
-      {isOpen && type === "add-product" && (
+      {isOpen && (
         <div className="modal-background">
           <div className="modal-container" ref={modalRef}>
             <div className="modal-header">

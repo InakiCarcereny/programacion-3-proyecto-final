@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 export function LoginForm(): JSX.Element {
   const navigate = useNavigate();
   const { login } = useAuth();
+  const { close } = useModal();
   const [error, setError] = useState<Record<string, string>>({});
   const [formData, setFormData] = useState({
     email: "",
@@ -48,6 +49,10 @@ export function LoginForm(): JSX.Element {
       }
     }
   };
+
+  useEffect(() => {
+    close();
+  }, [close]);
 
   return (
     <form className="login-form" onSubmit={onSubmit}>

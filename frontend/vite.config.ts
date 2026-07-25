@@ -9,6 +9,16 @@ export default defineConfig({
       "/api": {
         target: "http://localhost:3000",
         changeOrigin: true,
+        configure: (proxy) => {
+          proxy.on("proxyReq", (proxyReq, req) => {
+            if (req.url?.startsWith("/api/products") && req.method === "GET") {
+              const body = JSON.stringify({});
+              proxyReq.setHeader("Content-Type", "application/json");
+              proxyReq.setHeader("Content-Length", Buffer.byteLength(body));
+              proxyReq.write(body);
+            }
+          });
+        },
       },
     },
   },
