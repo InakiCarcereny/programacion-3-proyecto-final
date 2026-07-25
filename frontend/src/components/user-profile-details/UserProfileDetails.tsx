@@ -32,7 +32,9 @@ export function UserProfileDetails(): JSX.Element {
             <dt className="profile-page-info-name">ROL</dt>
 
             <dd className="profile-page-info-name-value">
-              {`${user?.role}`[0].toUpperCase() + `${user?.role}`.slice(1)}
+              {user?.role
+                ? user.role[0].toUpperCase() + user.role.slice(1)
+                : ""}
             </dd>
           </div>
 
