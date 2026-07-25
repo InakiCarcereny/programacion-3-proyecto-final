@@ -1,5 +1,15 @@
 import type { Product } from "../types/product";
 
+export async function getProductsService(
+  token: string | null,
+): Promise<Product[]> {
+  const res = await fetch("/api/products", {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) throw new Error("Error al obtener los productos");
+  return res.json();
+}
+
 export async function createProductService(
   token: string | null,
   formData: FormData,
