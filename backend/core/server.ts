@@ -6,7 +6,10 @@ import productRoutes from "../routes/product.routes";
 import categoryRoutes from "../routes/category.routes";
 import movementRoutes from "../routes/movements.routes";
 import authRoutes from "../routes/auth.routes";
-
+import userRoutes from "../routes/user.routes";
+import profileRoutes from "../routes/profile.routes";
+import userDetailRoutes from "../routes/user-detail.routes";
+import userCompanies from "../routes/company.routes";
 dotenv.config();
 
 export class Server {
@@ -30,6 +33,10 @@ export class Server {
     this.app.use("/api/products", productRoutes);
     this.app.use("/api/categories", categoryRoutes);
     this.app.use("/api/movements", movementRoutes);
+    this.app.use("/api/users", userRoutes);
+    this.app.use("/api/profiles", profileRoutes);
+    this.app.use("/api/user-details", userDetailRoutes);
+    this.app.use("/api/companies", userCompanies);
     this.app.get("/api/health", (req, res) => {
       res.json({ status: "ok", timestamp: new Date() });
     });
