@@ -43,7 +43,7 @@ export function FilterBar({
         <option value="Stock Status">Stock</option>
         <option value="In Stock">Stock Disponible</option>
         <option value="Low Stock">Bajo Stock</option>
-        <option value="Out of Stock">in Stock</option>
+        <option value="Out of Stock">Sin Stock</option>
       </select>
       <div className="filter-spacer" />
       <p className="filter-results">

@@ -28,7 +28,7 @@ export async function getProductById(
 ): Promise<void> {
   try {
     const id = Number(req.params.id);
-    const { companyId } = req.body;
+    const companyId = req.body.companyId ?? res.locals.companyId;
     const product = await Product.findProductById(id, companyId);
     if (!product) {
       res.status(404).json({ error: "Product not found" });
@@ -69,7 +69,8 @@ export async function updateProduct(
 ): Promise<void> {
   try {
     const id = Number(req.params.id);
-    const { companyId, ...data } = req.body;
+    const { companyId: _companyId, ...data } = req.body;
+    const companyId = _companyId ?? res.locals.companyId;
     let imageUrl: string | undefined;
     if (req.file) {
       imageUrl = await uploadImage(req.file.buffer, "products");
@@ -95,7 +96,7 @@ export async function deleteProduct(
 ): Promise<void> {
   try {
     const id = Number(req.params.id);
-    const { companyId } = req.body;
+    const companyId = req.body.companyId ?? res.locals.companyId;
     const deleted = await Product.deleteProduct(id, companyId);
     if (!deleted) {
       res.status(404).json({ error: "Product not found" });

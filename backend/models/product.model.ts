@@ -80,6 +80,7 @@ class Product
     const { Movement } = await import("./index");
     await Movement.destroy({ where: { productId: id } });
     await product.destroy();
+
     return true;
   }
 }

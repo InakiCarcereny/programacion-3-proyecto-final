@@ -22,7 +22,9 @@ export async function authenticate(
     req.body.userId = payload.userId;
     req.body.companyId = payload.companyId;
     req.body.profileId = payload.profileId;
-
+    res.locals.userId = payload.userId;
+    res.locals.companyId = payload.companyId;
+    res.locals.profileId = payload.profileId;
     next();
   } catch (error) {
     console.log("AUTH ERROR:", (error as Error).message);

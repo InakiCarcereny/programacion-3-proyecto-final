@@ -64,12 +64,13 @@ export const initDatabaseTriggers = async (): Promise<void> => {
             cantidad_movimiento := diferencia * -1;
           END IF;
 
-          INSERT INTO movements (product_id, quantity, type, description, created_at)
+          INSERT INTO movements (product_id, quantity, type, description, created_at, updated_at)
           VALUES (
             NEW.id,
             cantidad_movimiento,
             tipo_movimiento::enum_movements_type,
             'Cambio de stock en  un producto',
+            NOW()
             NOW()
           );
         END IF;
