@@ -3,12 +3,11 @@ import {
   createContext,
   useContext,
   useState,
+  useEffect,
   type JSX,
   type ReactNode,
 } from "react";
-
 import { registerService, loginService } from "../services/auth";
-
 import { type User } from "../types/user";
 
 interface AuthContextType {
@@ -23,6 +22,7 @@ interface AuthContextType {
   ) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
+  updateUser: (data: Partial<User>) => void;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -44,6 +44,29 @@ export function AuthProvider({
   );
 
   const isAuthenticated = !!token;
+
+  useEffect(() => {
+    if (!token || user) return;
+
+    fetch("/api/auth/me", {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          setToken(null);
+          localStorage.removeItem("token");
+          return;
+        }
+        return res.json();
+      })
+      .then((data) => {
+        if (data) setUser(data);
+      })
+      .catch(() => {
+        setToken(null);
+        localStorage.removeItem("token");
+      });
+  }, [token, user]);
 
   const register = async (
     name: string,
@@ -76,9 +99,21 @@ export function AuthProvider({
     localStorage.removeItem("token");
   };
 
+  const updateUser = (data: Partial<User>): void => {
+    setUser((prev) => (prev ? { ...prev, ...data } : prev));
+  };
+
   return (
     <AuthContext.Provider
-      value={{ user, token, isAuthenticated, register, login, logout }}
+      value={{
+        user,
+        token,
+        isAuthenticated,
+        register,
+        login,
+        logout,
+        updateUser,
+      }}
     >
       {children}
     </AuthContext.Provider>

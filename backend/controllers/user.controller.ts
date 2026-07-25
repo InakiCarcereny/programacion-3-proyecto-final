@@ -54,19 +54,12 @@ export async function updateUser(
 ): Promise<void> {
   try {
     const id = Number(req.params.id);
-    const companyId = Number(req.body.companyId || req.query.companyId);
-
-    if (!companyId) {
-      res.status(400).json({ error: "companyId is required" });
-      return;
-    }
-
+    const { companyId } = res.locals;
     const user = await User.updateUser(id, companyId, req.body);
     if (!user) {
       res.status(404).json({ error: "User not found" });
       return;
     }
-
     res.json({ message: "User updated successfully", user });
   } catch (error) {
     next(error);

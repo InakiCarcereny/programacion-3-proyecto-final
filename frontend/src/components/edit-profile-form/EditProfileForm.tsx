@@ -4,6 +4,8 @@ import { useAuth } from "../../context/AuthContext";
 import "./EditProfileForm.css";
 import { EditProfileFormInput } from "../edit-profile-form-input/EditProfileFormInput";
 import { validateEditProfileForm } from "../../utils/validateEditProfileForm";
+import { updateUserDetailsService } from "../../services/user-details";
+import { updateUserService } from "../../services/user";
 
 interface EditProfileFormProps {
   setIsEditing: (editing: boolean) => void;
@@ -14,7 +16,7 @@ export function EditProfileForm({
   setIsEditing,
   avatarFile,
 }: EditProfileFormProps): JSX.Element {
-  const { user } = useAuth();
+  const { user, token, updateUser } = useAuth();
   const [error, setError] = useState<Record<string, string>>({});
   const [formData, setFormData] = useState({
     fullName: `${user?.profile?.firstName} ${user?.profile?.lastName}`,
@@ -41,6 +43,37 @@ export function EditProfileForm({
     if (Object.keys(validationErrors).length > 0) {
       setError(validationErrors);
       return;
+    }
+
+    try {
+      const data = new FormData();
+      data.append("firstName", firstName);
+      data.append("lastName", lastName);
+      data.append("phone", formData.phone);
+      if (avatarFile) {
+        data.append("avatar", avatarFile);
+      }
+
+      await updateUserDetailsService(token!, user!.id, data);
+      await updateUserService(token!, user!.id, { email: formData.email });
+
+      updateUser({
+        email: formData.email,
+        profile: {
+          firstName,
+          lastName,
+          phone: formData.phone,
+          avatarUrl: avatarFile
+            ? URL.createObjectURL(avatarFile)
+            : user?.profile?.avatarUrl,
+        },
+      });
+
+      setIsEditing(false);
+    } catch (err) {
+      if (err instanceof Error) {
+        setError({ general: err.message });
+      }
     }
 
     setIsEditing(false);

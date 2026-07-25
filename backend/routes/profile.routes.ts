@@ -3,10 +3,11 @@ import {
   getProfiles,
   getProfileByName,
 } from "../controllers/profile.controller";
+import { authenticate } from "../middlewares/auth.middleware";
 
 const router: IRouter = Router();
 
-router.get("/", getProfiles);
-router.get("/:name", getProfileByName);
+router.get("/", authenticate, getProfiles);
+router.get("/:name", authenticate, getProfileByName);
 
 export default router;
