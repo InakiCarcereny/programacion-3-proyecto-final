@@ -38,10 +38,7 @@ export function AuthProvider({
 }: {
   children: ReactNode;
 }): JSX.Element {
-  const [user, setUser] = useState<User | null>(() => {
-    const stored = localStorage.getItem("user");
-    return stored ? JSON.parse(stored) : null;
-  });
+  const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(
     localStorage.getItem("token"),
   );
@@ -64,7 +61,6 @@ export function AuthProvider({
     setToken(data.token);
     setUser(data.user);
     localStorage.setItem("token", data.token);
-    localStorage.setItem("user", JSON.stringify(data.user));
   };
 
   const login = async (email: string, password: string): Promise<void> => {
@@ -72,14 +68,12 @@ export function AuthProvider({
     setToken(data.token);
     setUser(data.user);
     localStorage.setItem("token", data.token);
-    localStorage.setItem("user", JSON.stringify(data.user));
   };
 
   const logout = (): void => {
     setToken(null);
     setUser(null);
     localStorage.removeItem("token");
-    localStorage.removeItem("user");
   };
 
   return (
