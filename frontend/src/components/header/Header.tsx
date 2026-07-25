@@ -3,9 +3,11 @@ import { useState, type JSX } from "react";
 import { useAuth } from "../../context/AuthContext";
 
 import "./Header.css";
+import { useSearch } from "../../context/SearchContext";
 
 export function Header(): JSX.Element {
   const { user } = useAuth();
+  const { query, setQuery } = useSearch();
   const [focused, setFocused] = useState(false);
 
   const initials =
@@ -27,9 +29,11 @@ export function Header(): JSX.Element {
           name="search"
           className="input"
           type="text"
-          placeholder="Buscar movimientos, productos, categorias..."
+          placeholder="Buscar movimientos, categorias..."
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
         />
       </div>
 
