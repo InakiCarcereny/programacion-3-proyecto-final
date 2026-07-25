@@ -1,5 +1,5 @@
 import type { JSX } from "react/jsx-runtime";
-import type { Product } from "../../../../types/product";
+import type { Product } from "../../types/product";
 import "./ProductTable.css";
 
 interface ProductTableProps {

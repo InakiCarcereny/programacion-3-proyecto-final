@@ -8,9 +8,9 @@ import {
 } from "../../services/product";
 import type { Product } from "../../types/product";
 import { PageHeader } from "../products/components/page-header/PageHeader";
-import { MetricsCards } from "../products/components/metric-cards/MetricsCards";
-import { FilterBar } from "../products/components/filter-bar/FilterBar";
-import { ProductTable } from "../products/components/product-table/ProductTable";
+import { MetricsCards } from "../../components/product-metric-cards/MetricsCards";
+import { FilterBar } from "../../components/product-filter-bar/FilterBar";
+import { ProductTable } from "../../components/product-table/ProductTable";
 import { Pagination } from "../products/components/pagination/Pagination";
 import { useModal } from "../../context/ModalContext";
 import { EditProductModal } from "../../components/edit-product-modal/EditProductModal";

@@ -1,6 +1,6 @@
 import type { JSX } from "react/jsx-runtime";
-import type { Product } from "../../../../types/product";
-import { ProductSummaryCard } from "../../../products/components/product-summary-card/ProductSummaryCard";
+import type { Product } from "../../types/product";
+import { ProductSummaryCard } from "../product-summary-card/ProductSummaryCard";
 import "./MetricsCards.css";
 
 interface MetricsCardsProps {
