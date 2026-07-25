@@ -42,55 +42,33 @@ Product.belongsTo(Company, { foreignKey: "companyId", as: "company" });
 Company.hasMany(Category, { foreignKey: "companyId", as: "categories" });
 Category.belongsTo(Company, { foreignKey: "companyId", as: "company" });
 
-//trigger para actualizar la tabla movemtents cada vez que se actualice el stock de un producto
 export const initDatabaseTriggers = async (): Promise<void> => {
   try {
     await sequelize.query(`
-      CREATE OR REPLACE FUNCTION log_movimiento_stock()
+      CREATE OR REPLACE FUNCTION actualizar_stock_producto()
       RETURNS TRIGGER AS $$
-      DECLARE
-        diferencia INTEGER;
-        tipo_movimiento VARCHAR;
-        cantidad_movimiento INTEGER;
       BEGIN
-        IF NEW.stock <> OLD.stock THEN
-          diferencia := NEW.stock - OLD.stock;
-
-          IF diferencia > 0 THEN
-            tipo_movimiento := 'ingreso';
-            cantidad_movimiento := diferencia;
-          ELSE
-            tipo_movimiento := 'egreso';
-            cantidad_movimiento := diferencia * -1;
-          END IF;
-
-          INSERT INTO movements (product_id, quantity, type, description, created_at, updated_at)
-          VALUES (
-            NEW.id,
-            cantidad_movimiento,
-            tipo_movimiento::enum_movements_type,
-            'Cambio de stock en  un producto',
-            NOW(),
-            NOW()
-          );
+        IF NEW.type = 'ingreso' THEN
+          UPDATE products SET stock = stock + NEW.quantity WHERE id = NEW.product_id;
+        ELSIF NEW.type = 'egreso' THEN
+          UPDATE products SET stock = stock - NEW.quantity WHERE id = NEW.product_id;
         END IF;
-
         RETURN NEW;
       END;
       $$ LANGUAGE plpgsql;
     `);
-
+    await sequelize.query(
+      `DROP TRIGGER IF EXISTS trigger_actualizar_stock ON movements;`,
+    );
+    await sequelize.query(`
+      CREATE TRIGGER trigger_actualizar_stock
+      AFTER INSERT ON movements
+      FOR EACH ROW
+      EXECUTE FUNCTION actualizar_stock_producto();
+    `);
     await sequelize.query(
       `DROP TRIGGER IF EXISTS trigger_log_movimientos ON products;`,
     );
-
-    await sequelize.query(`
-      CREATE TRIGGER trigger_log_movimientos
-      AFTER UPDATE ON products
-      FOR EACH ROW
-      EXECUTE FUNCTION log_movimiento_stock();
-    `);
-
     console.log("Database triggers initialized successfully.");
   } catch (error) {
     console.error("Error initializing database triggers:", error);

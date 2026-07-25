@@ -5,6 +5,8 @@
   height: 80px;
   padding: 0 40px;
   border-bottom: 1px solid #e3e3ee;
+  position: sticky;
+  top: 0;
 }
 
 .input-container {

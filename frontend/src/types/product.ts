@@ -1,3 +1,5 @@
+import type { Category } from "./category";
+
 export interface Product {
   id: number;
   name: string;
@@ -7,7 +9,7 @@ export interface Product {
   imageUrl?: string;
   categoryId: number;
   companyId: number;
-  category?: { id: number; name: string };
+  category?: Category;
   createdAt?: string;
   updatedAt?: string;
 }
