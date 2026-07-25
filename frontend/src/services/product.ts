@@ -53,3 +53,20 @@ export async function updateProductService(
   }
   return res.json();
 }
+
+export async function deleteProductService(
+  token: string,
+  id: number,
+): Promise<void> {
+  const res = await fetch(`/api/products/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.error ?? "Error al eliminar el producto");
+  }
+}

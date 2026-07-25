@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import type { JSX } from "react/jsx-runtime";
 
 import "./ProductsPage.css";
-import { getProductsService } from "../../services/product";
+import {
+  getProductsService,
+  deleteProductService,
+} from "../../services/product";
 import type { Product } from "../../types/product";
 import { PageHeader } from "../products/components/page-header/PageHeader";
 import { MetricsCards } from "../products/components/metric-cards/MetricsCards";
@@ -61,6 +64,24 @@ function ProductsPage(): JSX.Element {
     return matchCategory && matchStock;
   });
 
+  const handleDelete = async (product: Product): Promise<void> => {
+    const confirmed = window.confirm(
+      `¿Estás seguro de eliminar "${product.name}"?`,
+    );
+    if (!confirmed) return;
+
+    try {
+      const token = localStorage.getItem("token");
+      await deleteProductService(token!, product.id);
+      const data = await getProductsService();
+      setProducts(data);
+    } catch (err) {
+      if (err instanceof Error) {
+        alert(err.message);
+      }
+    }
+  };
+
   const totalPages = Math.ceil(filteredProducts.length / PAGE_SIZE);
   const safePage = Math.min(currentPage, Math.max(1, totalPages));
   const start = (safePage - 1) * PAGE_SIZE;
@@ -98,7 +119,11 @@ function ProductsPage(): JSX.Element {
         }}
       />
       <div className="product-table-wrapper">
-        <ProductTable products={paginatedProducts} onEdit={handleEdit} />
+        <ProductTable
+          products={paginatedProducts}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+        />
 
         <Pagination
           currentPage={safePage}

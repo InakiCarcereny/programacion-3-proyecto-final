@@ -51,7 +51,7 @@ function getCategoryName(product: Product): string {
 export function ProductTable({
   products,
   onEdit,
-  _onDelete,
+  onDelete,
 }: ProductTableProps): JSX.Element {
   return (
     <table className="product-table">
@@ -121,6 +121,7 @@ export function ProductTable({
                   <button
                     className="action-btn action-btn-danger"
                     title="Delete"
+                    onClick={() => onDelete?.(product)}
                   >
                     <DeleteIcon />
                   </button>
