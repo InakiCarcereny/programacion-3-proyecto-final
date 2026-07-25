@@ -121,11 +121,11 @@ function DashboardPage(): JSX.Element {
       <div className="dashboard-page-header">
         <div>
           <h2 className="dashboard-page-title">
-            Hola{user?.profile?.firstName ? `, ${user.profile.firstName}` : ""}{" "}
-            👋
+            Bienvenido de nuevo
+            {user?.profile?.firstName ? ` ${user.profile.firstName}` : ""}
           </h2>
           <p className="dashboard-page-subtitle">
-            Este es el resumen operativo de tu inventario
+            Estado en tiempo real de las instalaciones de {user?.companyName}
           </p>
         </div>
       </div>
