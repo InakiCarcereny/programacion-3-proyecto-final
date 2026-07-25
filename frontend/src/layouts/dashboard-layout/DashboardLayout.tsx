@@ -4,6 +4,7 @@ import { Sidebar } from "../../components/sidebar/Sidebar";
 
 import "./DashboardLayout.css";
 import { AddProductModal } from "../../components/add-product-modal/AddProductModal";
+import { AddMovementModal } from "../../components/add-movement-modal/AddMovementModal";
 import { Header } from "../../components/header/Header";
 
 export function DashboardLayout(): JSX.Element {
@@ -21,6 +22,7 @@ export function DashboardLayout(): JSX.Element {
       </div>
 
       <AddProductModal />
+      <AddMovementModal />
     </div>
   );
 }
