@@ -63,6 +63,7 @@ export async function register(
           firstName: userDetails.firstName,
           lastName: userDetails.lastName,
           avatarUrl: userDetails.avatarUrl,
+          phone: userDetails.phone,
         },
       },
     });
@@ -123,6 +124,7 @@ export async function login(
           firstName: userDetails?.firstName,
           lastName: userDetails?.lastName,
           avatarUrl: userDetails?.avatarUrl,
+          phone: userDetails?.phone,
         },
       },
     });
