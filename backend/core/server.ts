@@ -18,7 +18,6 @@ export class Server {
     this.port = process.env.PORT || 3000;
     this.middlewares();
     this.routes();
-    this.app.use(errorHandler);
   }
 
   middlewares(): void {
