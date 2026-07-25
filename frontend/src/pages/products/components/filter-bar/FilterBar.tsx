@@ -28,7 +28,7 @@ export function FilterBar({
         value={selectedCategory}
         onChange={(e) => onCategoryChange(e.target.value)}
       >
-        <option>All Categories</option>
+        <option>Todas las categorias</option>
         {categories.map((cat) => (
           <option key={cat}>{cat}</option>
         ))}
@@ -38,14 +38,15 @@ export function FilterBar({
         value={selectedStock}
         onChange={(e) => onStockChange(e.target.value)}
       >
-        <option>Stock Status</option>
-        <option>In Stock</option>
-        <option>Low Stock</option>
-        <option>Out of Stock</option>
+        <option>Stock</option>
+        <option>Stock Disponible</option>
+        <option>Bajo Stock</option>
+        <option>Sin Stock</option>
       </select>
       <div className="filter-spacer" />
       <p className="filter-results">
-        Showing <strong>1 - {filteredCount}</strong> of {totalProducts} results
+        Mostrando <strong>1 - {filteredCount}</strong> de {totalProducts}{" "}
+        resultados
       </p>
     </div>
   );

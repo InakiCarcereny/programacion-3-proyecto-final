@@ -9,6 +9,7 @@ import { MetricsCards } from "../products/components/metric-cards/MetricsCards";
 import { FilterBar } from "../products/components/filter-bar/FilterBar";
 import { ProductTable } from "../products/components/product-table/ProductTable";
 import { Pagination } from "../products/components/pagination/Pagination";
+import { useModal } from "../../context/ModalContext";
 
 const PAGE_SIZE = 10;
 
@@ -25,6 +26,7 @@ function ProductsPage(): JSX.Element {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState("All Categories");
   const [selectedStock, setSelectedStock] = useState("Stock Status");
+  const { open } = useModal();
 
   useEffect(() => {
     getProductsService()
@@ -75,7 +77,7 @@ function ProductsPage(): JSX.Element {
 
   return (
     <main className="product-content">
-      <PageHeader />
+      <PageHeader onAddProduct={() => open("add-product")} />
       <MetricsCards products={products} />
       <FilterBar
         totalProducts={products.length}

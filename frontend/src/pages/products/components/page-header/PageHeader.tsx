@@ -1,6 +1,10 @@
 import type { JSX } from "react/jsx-runtime";
 import "./PageHeader.css";
 
+interface PageHeaderProps {
+  onAddProduct?: () => void;
+}
+
 function ChevronRightIcon(): JSX.Element {
   return (
     <svg
@@ -43,7 +47,7 @@ function PlusIcon(): JSX.Element {
   );
 }
 
-export function PageHeader(): JSX.Element {
+export function PageHeader({ onAddProduct }: PageHeaderProps): JSX.Element {
   return (
     <div className="page-header">
       <div>
@@ -59,7 +63,7 @@ export function PageHeader(): JSX.Element {
           <DownloadIcon />
           Export CSV
         </button>
-        <button className="btn-primary">
+        <button className="btn-primary" onClick={onAddProduct}>
           <PlusIcon />
           Add New Product
         </button>
