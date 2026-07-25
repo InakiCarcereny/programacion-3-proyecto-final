@@ -55,7 +55,7 @@ export function MetricsCards({ products }: MetricsCardsProps): JSX.Element {
         }
         title="Bajo Stock"
         value={lowStockProducts}
-        badgeText="Critical"
+        badgeText="Critico"
         badgeType="danger"
         bgColor="#dae2fd"
         iconColor="#3f465c"
@@ -73,7 +73,7 @@ export function MetricsCards({ products }: MetricsCardsProps): JSX.Element {
           </svg>
         }
         title="Categorias"
-        value={`${totalCategories} Active`}
+        value={`${totalCategories} Activas`}
         bgColor="#4edea3"
         iconColor="#005236"
       />

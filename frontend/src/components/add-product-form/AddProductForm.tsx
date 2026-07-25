@@ -7,21 +7,29 @@ import { AddProductFormSelectInput } from "../add-product-form-select-input/AddP
 import { ImageUploadInput } from "../image-upload-input/ImageUploadInput";
 import { useModal } from "../../context/ModalContext";
 import { validateAddProductForm } from "../../utils/validateAddProductForm";
-import { createProductService } from "../../services/product";
+import {
+  createProductService,
+  updateProductService,
+} from "../../services/product";
 import { useAuth } from "../../context/AuthContext";
+import type { Product } from "../../types/product";
 
-export function AddProductForm(): JSX.Element {
+interface AddProductFormProps {
+  product?: Product;
+}
+
+export function AddProductForm({ product }: AddProductFormProps): JSX.Element {
   const { token } = useAuth();
   const { close } = useModal();
   const [error, setError] = useState<Record<string, string>>({});
-  const [formData, setFormData] = useState({
-    name: "",
-    price: "",
-    stock: "",
-    category: "",
+  const [formData, setFormData] = useState(() => ({
+    name: product?.name ?? "",
+    price: product ? String(product.price) : "",
+    stock: product ? String(product.stock) : "",
+    category: product ? String(product.categoryId) : "",
     image: null as File | null,
-    description: "",
-  });
+    description: product?.description ?? "",
+  }));
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
@@ -55,7 +63,11 @@ export function AddProductForm(): JSX.Element {
         data.append("image", formData.image);
       }
 
-      await createProductService(token, data);
+      if (product) {
+        await updateProductService(token!, product.id, data);
+      } else {
+        await createProductService(token!, data);
+      }
       close();
     } catch (err) {
       if (err instanceof Error) {
@@ -138,7 +150,7 @@ export function AddProductForm(): JSX.Element {
         </button>
 
         <button type="submit" className="add-product-form-submit-button">
-          Guardar Producto
+          {product ? "Actualizar Producto" : "Guardar Producto"}
         </button>
       </div>
     </form>

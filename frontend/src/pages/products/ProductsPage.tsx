@@ -27,6 +27,9 @@ function ProductsPage(): JSX.Element {
   const [selectedCategory, setSelectedCategory] = useState("All Categories");
   const [selectedStock, setSelectedStock] = useState("Stock Status");
   const { open } = useModal();
+  const handleEdit = (product: Product): void => {
+    open("edit-product", product);
+  };
 
   useEffect(() => {
     getProductsService()
@@ -95,7 +98,8 @@ function ProductsPage(): JSX.Element {
         }}
       />
       <div className="product-table-wrapper">
-        <ProductTable products={paginatedProducts} />
+        <ProductTable products={paginatedProducts} onEdit={handleEdit} />
+
         <Pagination
           currentPage={safePage}
           totalPages={totalPages}

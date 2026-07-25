@@ -4,6 +4,8 @@ import "./ProductTable.css";
 
 interface ProductTableProps {
   products: Product[];
+  onEdit?: (product: Product) => void;
+  onDelete?: (product: Product) => void;
 }
 
 function EditIcon(): JSX.Element {
@@ -36,27 +38,31 @@ function DeleteIcon(): JSX.Element {
 
 function getStockStatus(stock: number): { label: string; className: string } {
   if (stock <= 0)
-    return { label: "Out of Stock", className: "stock-badge-out-of-stock" };
+    return { label: "Sin Stock", className: "stock-badge-out-of-stock" };
   if (stock <= 10)
-    return { label: "Low Stock", className: "stock-badge-low-stock" };
-  return { label: "In Stock", className: "stock-badge-in-stock" };
+    return { label: "Bajo Stock", className: "stock-badge-low-stock" };
+  return { label: "Disponible Stock", className: "stock-badge-in-stock" };
 }
 
 function getCategoryName(product: Product): string {
   return product.category?.name ?? `ID: ${product.categoryId}`;
 }
 
-export function ProductTable({ products }: ProductTableProps): JSX.Element {
+export function ProductTable({
+  products,
+  onEdit,
+  _onDelete,
+}: ProductTableProps): JSX.Element {
   return (
     <table className="product-table">
       <thead>
         <tr>
-          <th>Product Name</th>
+          <th>Nombre</th>
           <th>ID</th>
-          <th>Category</th>
-          <th>Price</th>
-          <th>Stock Level</th>
-          <th className="actions-cell">Actions</th>
+          <th>Categoria</th>
+          <th>Precio</th>
+          <th>Cantidad de Stock</th>
+          <th className="actions-cell">Acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -98,12 +104,18 @@ export function ProductTable({ products }: ProductTableProps): JSX.Element {
                     <span className="stock-badge-dot" />
                     {status.label}
                   </span>
-                  <span className="stock-quantity">{product.stock} units</span>
+                  <span className="stock-quantity">
+                    {product.stock} unidades
+                  </span>
                 </div>
               </td>
               <td className="actions-cell">
                 <div className="actions-container">
-                  <button className="action-btn" title="Edit">
+                  <button
+                    className="action-btn"
+                    title="Edit"
+                    onClick={() => onEdit?.(product)}
+                  >
                     <EditIcon />
                   </button>
                   <button

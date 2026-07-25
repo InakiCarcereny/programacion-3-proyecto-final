@@ -36,3 +36,20 @@ export async function createProductService(data: unknown): Promise<unknown> {
 
   return res.json();
 }
+
+export async function updateProductService(
+  token: string,
+  id: number,
+  data: FormData,
+): Promise<Product> {
+  const res = await fetch(`/api/products/${id}`, {
+    method: "PUT",
+    headers: { Authorization: `Bearer ${token}` },
+    body: data,
+  });
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.error ?? "Error al actualizar el producto");
+  }
+  return res.json();
+}
