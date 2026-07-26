@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from "vitest";
 import bcrypt from "bcrypt";
 import { generateToken } from "../../lib/jwt.config";
 
-vi.mock("../../src/models", () => ({
+vi.mock("../../models", () => ({
   User: {
     findByEmail: vi.fn(),
     create: vi.fn(),
@@ -22,11 +22,11 @@ vi.mock("../../src/models", () => ({
   },
 }));
 
-vi.mock("../../src/lib/jwt.config", () => ({
+vi.mock("../../lib/jwt.config", () => ({
   generateToken: vi.fn(),
 }));
 
-vi.mock("../../src/lib/redis.config", () => ({
+vi.mock("../../lib/redis.config", () => ({
   default: {
     set: vi.fn(),
     del: vi.fn(),
