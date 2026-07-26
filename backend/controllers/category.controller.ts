@@ -75,14 +75,24 @@ export async function deleteCategory(
 ): Promise<void> {
   try {
     const id = Number(req.params.id);
-    const { companyId } = req.body;
+    const { companyId } = res.locals;
     const deleted = await Category.deleteCategory(id, companyId);
     if (!deleted) {
       res.status(404).json({ error: "Category not found" });
       return;
     }
     res.status(200).json({ message: "Category deleted successfully" });
-  } catch (error) {
+  } catch (error: any) {
+    if (
+      error.name === "SequelizeForeignKeyConstraintError" ||
+      error.parent?.code === "23001"
+    ) {
+      res.status(409).json({
+        error:
+          "No se puede eliminar la categoría porque tiene productos asociados.",
+      });
+      return;
+    }
     next(error);
   }
 }
