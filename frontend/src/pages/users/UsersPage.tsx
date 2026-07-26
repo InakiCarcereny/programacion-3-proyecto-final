@@ -6,6 +6,7 @@ import { useModal } from "../../context/ModalContext";
 import { type UserListItem } from "../../types/user";
 import { Plus } from "lucide-react";
 import { UsersTable } from "../../components/users-table/UsersTable";
+import { Helmet } from "react-helmet-async";
 
 function UsersPage(): JSX.Element {
   const { token, user: currentUser } = useAuth();
@@ -33,6 +34,14 @@ function UsersPage(): JSX.Element {
 
   return (
     <>
+      <Helmet>
+        <title>Inventory Pro | Gestión de Usuarios</title>
+        <meta
+          name="description"
+          content="Página de gestión de usuarios de Inventory Pro con tabla de usuarios y opciones de administración"
+        />
+      </Helmet>
+
       <header className="users-page-header">
         <div className="users-page-header-container">
           <h2 className="users-page-title">Gestión de Usuarios</h2>

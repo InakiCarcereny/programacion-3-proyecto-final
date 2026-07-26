@@ -4,14 +4,22 @@ import "./RegisterPage.css";
 
 import { RegisterContentSection } from "../../../components/register-content-section/RegisterContentSection";
 import { RegisterFormSection } from "../../../components/register-form-section/RegisterFormSection";
+import { Helmet } from "react-helmet-async";
 
 function RegisterPage(): JSX.Element {
   return (
-    <div className="register-container">
-      <RegisterContentSection />
+    <>
+      <Helmet>
+        <title>Inventory Pro | Registrarse</title>
+        <meta name="description" content="Registrarse en Inventory Pro" />
+      </Helmet>
 
-      <RegisterFormSection />
-    </div>
+      <div className="register-container">
+        <RegisterContentSection />
+
+        <RegisterFormSection />
+      </div>
+    </>
   );
 }
 
