@@ -3,8 +3,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 16px 24px;
-  background: #f3f3fe;
-  border-top: 1px solid #c3c6d7;
+  background: #fafafd;
 }
 
 .pagination-info {
@@ -26,7 +25,7 @@
 
 .pagination-btn {
   padding: 8px 12px;
-  border: 1px solid #c3c6d7;
+  border: 1px solid #e3e3ee;
   border-radius: 8px;
   background: #ffffff;
   font-size: 14px;

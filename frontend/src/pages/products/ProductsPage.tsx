@@ -107,7 +107,7 @@ function ProductsPage(): JSX.Element {
     );
 
   return (
-    <main className="product-content">
+    <>
       <PageHeader onAddProduct={() => open("add-product")} />
       <MetricsCards products={products} />
       <FilterBar
@@ -145,7 +145,7 @@ function ProductsPage(): JSX.Element {
           />
         )}
       </div>
-    </main>
+    </>
   );
 }
 
