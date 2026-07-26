@@ -16,7 +16,7 @@ interface ModalContextType {
   toggle: (type: ModalType) => void;
 }
 
-type ModalType = "add-product" | "add-movement";
+type ModalType = "add-product" | "add-movement" | "add-user";
 
 const ModalContext = createContext<ModalContextType | null>(null);
 
