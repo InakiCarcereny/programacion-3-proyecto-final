@@ -1,19 +1,32 @@
 import type { JSX } from "react";
 
-import { Archive, LayoutDashboard, Shapes, UndoDot, User } from "lucide-react";
+import {
+  Archive,
+  LayoutDashboard,
+  Shapes,
+  UndoDot,
+  User,
+  Users,
+} from "lucide-react";
 
 import { NavLink } from "react-router-dom";
 import "./Navbar.css";
-
-const navItems = [
-  { label: "Dashboard", icon: <LayoutDashboard />, path: "/dashboard" },
-  { label: "Productos", icon: <Archive />, path: "/productos" },
-  { label: "Movimientos", icon: <UndoDot />, path: "/movimientos" },
-  { label: "Categorías", icon: <Shapes />, path: "/categorias" },
-  { label: "Perfil", icon: <User />, path: "/perfil" },
-];
+import { useAuth } from "../../context/AuthContext";
 
 export function Navbar(): JSX.Element {
+  const { user } = useAuth();
+
+  const navItems = [
+    { label: "Dashboard", icon: <LayoutDashboard />, path: "/dashboard" },
+    { label: "Productos", icon: <Archive />, path: "/productos" },
+    { label: "Movimientos", icon: <UndoDot />, path: "/movimientos" },
+    { label: "Categorías", icon: <Shapes />, path: "/categorias" },
+    ...(user?.role === "admin"
+      ? [{ label: "Usuarios", icon: <Users />, path: "/usuarios" }]
+      : []),
+    { label: "Perfil", icon: <User />, path: "/perfil" },
+  ];
+
   return (
     <nav className="navbar">
       <ul className="navbar-list">
