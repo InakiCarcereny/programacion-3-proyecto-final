@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, type JSX } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { CategoryCard } from "../category-card/CategoryCard";
 import "./CategoryGrid.css";
+import { useSearch } from "../../context/SearchContext";
 
 export interface CategoryAPI {
   id: number;
@@ -31,6 +32,7 @@ export function CategoryGrid({
   onEditRequest?: (category: CategoryCardData) => void;
 }): JSX.Element {
   const { token } = useAuth();
+  const { query } = useSearch();
   const [categories, setCategories] = useState<CategoryCardData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -103,6 +105,13 @@ export function CategoryGrid({
     void loadCategories();
   }, [refreshTrigger, fetchCategories]);
 
+  const filteredCategories = categories.filter(
+    (category) =>
+      !query ||
+      category.name.toLowerCase().includes(query.toLowerCase()) ||
+      category.description?.toLowerCase().includes(query.toLowerCase()),
+  );
+
   const deleteCategory = async (id: number): Promise<void> => {
     const response = await fetch(`/api/categories/${id}`, {
       method: "DELETE",
@@ -153,7 +162,7 @@ export function CategoryGrid({
     <div>
       {deleteError && <p className="categories-error">{deleteError}</p>}
       <div className="categories-grid">
-        {categories.map((category) => (
+        {filteredCategories.map((category) => (
           <CategoryCard
             key={category.id}
             category={category}

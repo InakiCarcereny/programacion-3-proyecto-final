@@ -90,6 +90,8 @@ export async function seed(): Promise<void> {
       stock: 25,
       categoryId: categories[0].id,
       companyId: company.id,
+      imageUrl:
+        "https://res.cloudinary.com/ddi9kplos/image/upload/v1785099215/products/y3i1mdlaeijybnsc5erh.webp",
     },
     {
       name: "Cable USB-C 2m",
@@ -98,6 +100,8 @@ export async function seed(): Promise<void> {
       stock: 100,
       categoryId: categories[0].id,
       companyId: company.id,
+      imageUrl:
+        "https://res.cloudinary.com/ddi9kplos/image/upload/v1785099765/products/uhe3kgvuh1aaxzue8t1y.webp",
     },
     {
       name: "Teclado mecánico",
@@ -106,6 +110,8 @@ export async function seed(): Promise<void> {
       stock: 10,
       categoryId: categories[0].id,
       companyId: company.id,
+      imageUrl:
+        "https://res.cloudinary.com/ddi9kplos/image/upload/v1785099687/products/woy9i7u5y0adps84wovq.webp",
     },
     {
       name: "Mouse inalámbrico",
@@ -114,6 +120,8 @@ export async function seed(): Promise<void> {
       stock: 30,
       categoryId: categories[0].id,
       companyId: company.id,
+      imageUrl:
+        "https://res.cloudinary.com/ddi9kplos/image/upload/v1785099817/products/bhhlch7plyfiknofx7vp.webp",
     },
     {
       name: "Remera básica blanca",
@@ -122,6 +130,8 @@ export async function seed(): Promise<void> {
       stock: 50,
       categoryId: categories[1].id,
       companyId: company.id,
+      imageUrl:
+        "https://res.cloudinary.com/ddi9kplos/image/upload/v1785099892/products/ol83rjf1hk5wdajmpffb.webp",
     },
     {
       name: "Zapatillas urbanas",
@@ -130,6 +140,8 @@ export async function seed(): Promise<void> {
       stock: 15,
       categoryId: categories[1].id,
       companyId: company.id,
+      imageUrl:
+        "https://res.cloudinary.com/ddi9kplos/image/upload/v1785099942/products/q6qj5qd14u8r7ugznkz2.webp",
     },
     {
       name: "Buzo con capucha",
@@ -138,6 +150,8 @@ export async function seed(): Promise<void> {
       stock: 20,
       categoryId: categories[1].id,
       companyId: company.id,
+      imageUrl:
+        "https://res.cloudinary.com/ddi9kplos/image/upload/v1785100019/products/qtcxsfyf2osl4n1bcmmz.webp",
     },
     {
       name: "Yerba mate 1kg",
@@ -146,6 +160,8 @@ export async function seed(): Promise<void> {
       stock: 80,
       categoryId: categories[2].id,
       companyId: company.id,
+      imageUrl:
+        "https://res.cloudinary.com/ddi9kplos/image/upload/v1785100077/products/nnjdx8glerby9kisbwhe.webp",
     },
     {
       name: "Café molido 500g",
@@ -154,6 +170,8 @@ export async function seed(): Promise<void> {
       stock: 60,
       categoryId: categories[2].id,
       companyId: company.id,
+      imageUrl:
+        "https://res.cloudinary.com/ddi9kplos/image/upload/v1785100123/products/cfolgcrnqnhzgqeymqx6.webp",
     },
     {
       name: "Agua mineral 6x1.5L",
@@ -162,6 +180,8 @@ export async function seed(): Promise<void> {
       stock: 45,
       categoryId: categories[2].id,
       companyId: company.id,
+      imageUrl:
+        "https://res.cloudinary.com/ddi9kplos/image/upload/v1785100206/products/klh9zsoww2dvzz7sgfcy.webp",
     },
     {
       name: "Destornillador Phillips",
@@ -170,6 +190,8 @@ export async function seed(): Promise<void> {
       stock: 35,
       categoryId: categories[3].id,
       companyId: company.id,
+      imageUrl:
+        "https://res.cloudinary.com/ddi9kplos/image/upload/v1785099311/products/z0mmauzdmiwfv8ir0bji.webp",
     },
     {
       name: "Cinta métrica 5m",
@@ -178,6 +200,8 @@ export async function seed(): Promise<void> {
       stock: 25,
       categoryId: categories[3].id,
       companyId: company.id,
+      imageUrl:
+        "https://res.cloudinary.com/ddi9kplos/image/upload/v1785099386/products/c7pyne3squs6mqzzoptv.webp",
     },
     {
       name: "Martillo 300g",
@@ -186,6 +210,8 @@ export async function seed(): Promise<void> {
       stock: 20,
       categoryId: categories[3].id,
       companyId: company.id,
+      imageUrl:
+        "https://res.cloudinary.com/ddi9kplos/image/upload/v1785099444/products/ay9gxhz7v00tp5p6llu5.webp",
     },
     {
       name: "Resma A4 500 hojas",
@@ -194,6 +220,8 @@ export async function seed(): Promise<void> {
       stock: 70,
       categoryId: categories[4].id,
       companyId: company.id,
+      imageUrl:
+        "https://res.cloudinary.com/ddi9kplos/image/upload/v1785099505/products/q3zzzkhjqujbz9anl8v1.webp",
     },
     {
       name: "Lapicera azul x10",
@@ -202,6 +230,8 @@ export async function seed(): Promise<void> {
       stock: 90,
       categoryId: categories[4].id,
       companyId: company.id,
+      imageUrl:
+        "https://res.cloudinary.com/ddi9kplos/image/upload/v1785099576/products/vbfyad4bmbwbnolsbtk4.webp",
     },
     {
       name: "Cuaderno tapa dura A5",
@@ -210,6 +240,8 @@ export async function seed(): Promise<void> {
       stock: 40,
       categoryId: categories[4].id,
       companyId: company.id,
+      imageUrl:
+        "https://res.cloudinary.com/ddi9kplos/image/upload/v1785099638/products/fid4yl85kxnqcraaahvb.webp",
     },
   ]);
 
