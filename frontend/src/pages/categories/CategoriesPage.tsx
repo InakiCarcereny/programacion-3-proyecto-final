@@ -7,6 +7,7 @@ import { CategoryStatsCard } from "../../components/category-stats-card/Category
 import { CategoryGrid } from "../../components/category-grid/CategoryGrid";
 import { CategoryFormModal } from "../../components/category-form-modal/CategoryFormModal";
 import type { CategoryFormData } from "../../components/category-form-modal/CategoryFormModal";
+import { Helmet } from "react-helmet-async";
 
 interface CategoryData {
   id: number;
@@ -138,6 +139,14 @@ export function CategoriesPage(): JSX.Element {
 
   return (
     <>
+      <Helmet>
+        <title>Inventory Pro | Categorías</title>
+        <meta
+          name="description"
+          content="Página de categorías de Inventory Pro con métricas y gestión de categorías"
+        />
+      </Helmet>
+
       <div className="categories-page">
         <div className="page-header">
           <div className="title-container">

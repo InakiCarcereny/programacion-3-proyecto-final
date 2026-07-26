@@ -4,6 +4,7 @@ import { useAuth } from "../../context/AuthContext";
 import { Pencil } from "lucide-react";
 import { EditProfileForm } from "../../components/edit-profile-form/EditProfileForm";
 import { UserProfileDetails } from "../../components/user-profile-details/UserProfileDetails";
+import { Helmet } from "react-helmet-async";
 
 function ProfilePage(): JSX.Element {
   const { user } = useAuth();
@@ -31,6 +32,14 @@ function ProfilePage(): JSX.Element {
 
   return (
     <>
+      <Helmet>
+        <title>Inventory Pro | Perfil de Usuario</title>
+        <meta
+          name="description"
+          content="Página de perfil de usuario de Inventory Pro con información personal y opciones de edición"
+        />
+      </Helmet>
+
       <header className="profile-page-header">
         <h2 className="profile-page-header-title">Perfil de Usuario</h2>
 

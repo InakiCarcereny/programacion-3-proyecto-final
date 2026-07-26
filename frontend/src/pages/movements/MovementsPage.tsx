@@ -14,6 +14,7 @@ import { useAuth } from "../../context/AuthContext";
 import { useModal } from "../../context/ModalContext";
 import { getMovementsService } from "../../services/movements";
 import type { Movement } from "../../types/movements";
+import { Helmet } from "react-helmet-async";
 
 const PAGE_SIZE = 8;
 
@@ -96,203 +97,213 @@ function MovementsPage(): JSX.Element {
   };
 
   return (
-    <div className="movements-page">
-      <div className="movements-page-header">
-        <div>
-          <h2 className="movements-page-title">Movimientos</h2>
-          <p className="movements-page-subtitle">
-            Historial de ingresos y egresos de stock
-          </p>
-        </div>
+    <>
+      <Helmet>
+        <title>Inventory Pro | Movimientos</title>
+        <meta
+          name="description"
+          content="Página de movimientos de Inventory Pro con métricas, filtros y tabla de movimientos"
+        />
+      </Helmet>
 
-        <button
-          className="movements-page-add-button"
-          onClick={() => open("add-movement", fetchMovements)}
-        >
-          <Plus size={20} color="#ffffff" />
-          Registrar Movimiento
-        </button>
-      </div>
-
-      <div className="movements-page-stats">
-        <div className="movements-page-stat-card">
-          <span className="movements-page-stat-icon movements-page-stat-icon-ingreso">
-            <ArrowUpCircle size={18} />
-          </span>
+      <div className="movements-page">
+        <div className="movements-page-header">
           <div>
-            <p className="movements-page-stat-label">Total ingresos</p>
-            <p className="movements-page-stat-value">{totalIngresos} u.</p>
-          </div>
-        </div>
-
-        <div className="movements-page-stat-card">
-          <span className="movements-page-stat-icon movements-page-stat-icon-egreso">
-            <ArrowDownCircle size={18} />
-          </span>
-          <div>
-            <p className="movements-page-stat-label">Total egresos</p>
-            <p className="movements-page-stat-value">{totalEgresos} u.</p>
-          </div>
-        </div>
-
-        <div className="movements-page-stat-card">
-          <span className="movements-page-stat-icon movements-page-stat-icon-net">
-            <UndoDot size={18} />
-          </span>
-          <div>
-            <p className="movements-page-stat-label">Movimiento neto</p>
-            <p className="movements-page-stat-value">
-              {netMovement >= 0 ? "+" : ""}
-              {netMovement} u.
+            <h2 className="movements-page-title">Movimientos</h2>
+            <p className="movements-page-subtitle">
+              Historial de ingresos y egresos de stock
             </p>
           </div>
-        </div>
-      </div>
-
-      <div className="movements-page-toolbar">
-        <div className="movements-page-search">
-          <Search size={16} color="#6e7191" />
-          <input
-            type="text"
-            placeholder="Buscar por producto..."
-            value={search}
-            onChange={(e) => {
-              setSearch(e.target.value);
-              setPage(1);
-            }}
-          />
-        </div>
-
-        <div className="movements-page-filters">
-          <button
-            className={`movements-page-filter-button ${filter === "all" ? "active" : ""}`}
-            onClick={() => handleFilterChange("all")}
-          >
-            Todos
-          </button>
 
           <button
-            className={`movements-page-filter-button ${filter === "ingreso" ? "active" : ""}`}
-            onClick={() => handleFilterChange("ingreso")}
+            className="movements-page-add-button"
+            onClick={() => open("add-movement", fetchMovements)}
           >
-            Ingresos
-          </button>
-
-          <button
-            className={`movements-page-filter-button ${filter === "egreso" ? "active" : ""}`}
-            onClick={() => handleFilterChange("egreso")}
-          >
-            Egresos
+            <Plus size={20} color="#ffffff" />
+            Registrar Movimiento
           </button>
         </div>
-      </div>
 
-      <div className="movements-page-table-container">
-        {loading && (
-          <p className="movements-page-message">Cargando movimientos...</p>
-        )}
-
-        {!loading && error && (
-          <p className="movements-page-message movements-page-message-error">
-            {error}
-          </p>
-        )}
-
-        {!loading && !error && filteredMovements.length === 0 && (
-          <div className="movements-page-empty">
-            <UndoDot size={40} color="#c7c9d6" />
-            <p className="movements-page-message">
-              No se encontraron movimientos.
-            </p>
+        <div className="movements-page-stats">
+          <div className="movements-page-stat-card">
+            <span className="movements-page-stat-icon movements-page-stat-icon-ingreso">
+              <ArrowUpCircle size={18} />
+            </span>
+            <div>
+              <p className="movements-page-stat-label">Total ingresos</p>
+              <p className="movements-page-stat-value">{totalIngresos} u.</p>
+            </div>
           </div>
-        )}
 
-        {!loading && !error && filteredMovements.length > 0 && (
-          <>
-            <table className="movements-page-table">
-              <thead>
-                <tr>
-                  <th>Producto</th>
-                  <th>Tipo</th>
-                  <th>Cantidad</th>
-                  <th>Descripción</th>
-                  <th>Fecha</th>
-                </tr>
-              </thead>
+          <div className="movements-page-stat-card">
+            <span className="movements-page-stat-icon movements-page-stat-icon-egreso">
+              <ArrowDownCircle size={18} />
+            </span>
+            <div>
+              <p className="movements-page-stat-label">Total egresos</p>
+              <p className="movements-page-stat-value">{totalEgresos} u.</p>
+            </div>
+          </div>
 
-              <tbody>
-                {paginatedMovements.map((movement) => (
-                  <tr key={movement.id}>
-                    <td>
-                      {movement.product?.name ??
-                        `Producto #${movement.productId}`}
-                    </td>
-                    <td>
-                      <span
-                        className={`movements-page-badge ${
-                          movement.type === "ingreso"
-                            ? "movements-page-badge-ingreso"
-                            : "movements-page-badge-egreso"
-                        }`}
-                      >
-                        {movement.type === "ingreso" ? (
-                          <ArrowUpCircle size={14} />
-                        ) : (
-                          <ArrowDownCircle size={14} />
-                        )}
-                        {movement.type === "ingreso" ? "Ingreso" : "Egreso"}
-                      </span>
-                    </td>
-                    <td
-                      className={
-                        movement.type === "ingreso"
-                          ? "movements-page-quantity-in"
-                          : "movements-page-quantity-out"
-                      }
-                    >
-                      {movement.type === "ingreso" ? "+" : "-"}
-                      {movement.quantity}
-                    </td>
-                    <td>{movement.description ?? "-"}</td>
-                    <td>{formatDate(movement.createdAt)}</td>
+          <div className="movements-page-stat-card">
+            <span className="movements-page-stat-icon movements-page-stat-icon-net">
+              <UndoDot size={18} />
+            </span>
+            <div>
+              <p className="movements-page-stat-label">Movimiento neto</p>
+              <p className="movements-page-stat-value">
+                {netMovement >= 0 ? "+" : ""}
+                {netMovement} u.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="movements-page-toolbar">
+          <div className="movements-page-search">
+            <Search size={16} color="#6e7191" />
+            <input
+              type="text"
+              placeholder="Buscar por producto..."
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setPage(1);
+              }}
+            />
+          </div>
+
+          <div className="movements-page-filters">
+            <button
+              className={`movements-page-filter-button ${filter === "all" ? "active" : ""}`}
+              onClick={() => handleFilterChange("all")}
+            >
+              Todos
+            </button>
+
+            <button
+              className={`movements-page-filter-button ${filter === "ingreso" ? "active" : ""}`}
+              onClick={() => handleFilterChange("ingreso")}
+            >
+              Ingresos
+            </button>
+
+            <button
+              className={`movements-page-filter-button ${filter === "egreso" ? "active" : ""}`}
+              onClick={() => handleFilterChange("egreso")}
+            >
+              Egresos
+            </button>
+          </div>
+        </div>
+
+        <div className="movements-page-table-container">
+          {loading && (
+            <p className="movements-page-message">Cargando movimientos...</p>
+          )}
+
+          {!loading && error && (
+            <p className="movements-page-message movements-page-message-error">
+              {error}
+            </p>
+          )}
+
+          {!loading && !error && filteredMovements.length === 0 && (
+            <div className="movements-page-empty">
+              <UndoDot size={40} color="#c7c9d6" />
+              <p className="movements-page-message">
+                No se encontraron movimientos.
+              </p>
+            </div>
+          )}
+
+          {!loading && !error && filteredMovements.length > 0 && (
+            <>
+              <table className="movements-page-table">
+                <thead>
+                  <tr>
+                    <th>Producto</th>
+                    <th>Tipo</th>
+                    <th>Cantidad</th>
+                    <th>Descripción</th>
+                    <th>Fecha</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
 
-            <div className="movements-page-pagination">
-              <span className="movements-page-pagination-info">
-                Mostrando {(currentPage - 1) * PAGE_SIZE + 1} a{" "}
-                {Math.min(currentPage * PAGE_SIZE, filteredMovements.length)} de{" "}
-                {filteredMovements.length} movimientos
-              </span>
+                <tbody>
+                  {paginatedMovements.map((movement) => (
+                    <tr key={movement.id}>
+                      <td>
+                        {movement.product?.name ??
+                          `Producto #${movement.productId}`}
+                      </td>
+                      <td>
+                        <span
+                          className={`movements-page-badge ${
+                            movement.type === "ingreso"
+                              ? "movements-page-badge-ingreso"
+                              : "movements-page-badge-egreso"
+                          }`}
+                        >
+                          {movement.type === "ingreso" ? (
+                            <ArrowUpCircle size={14} />
+                          ) : (
+                            <ArrowDownCircle size={14} />
+                          )}
+                          {movement.type === "ingreso" ? "Ingreso" : "Egreso"}
+                        </span>
+                      </td>
+                      <td
+                        className={
+                          movement.type === "ingreso"
+                            ? "movements-page-quantity-in"
+                            : "movements-page-quantity-out"
+                        }
+                      >
+                        {movement.type === "ingreso" ? "+" : "-"}
+                        {movement.quantity}
+                      </td>
+                      <td>{movement.description ?? "-"}</td>
+                      <td>{formatDate(movement.createdAt)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
 
-              <div className="movements-page-pagination-controls">
-                <button
-                  className="movements-page-pagination-button"
-                  disabled={currentPage === 1}
-                  onClick={() => setPage((p) => Math.max(1, p - 1))}
-                >
-                  <ChevronLeft size={16} />
-                </button>
-
-                <span className="movements-page-pagination-current">
-                  {currentPage} / {totalPages}
+              <div className="movements-page-pagination">
+                <span className="movements-page-pagination-info">
+                  Mostrando {(currentPage - 1) * PAGE_SIZE + 1} a{" "}
+                  {Math.min(currentPage * PAGE_SIZE, filteredMovements.length)}{" "}
+                  de {filteredMovements.length} movimientos
                 </span>
 
-                <button
-                  className="movements-page-pagination-button"
-                  disabled={currentPage === totalPages}
-                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                >
-                  <ChevronRight size={16} />
-                </button>
+                <div className="movements-page-pagination-controls">
+                  <button
+                    className="movements-page-pagination-button"
+                    disabled={currentPage === 1}
+                    onClick={() => setPage((p) => Math.max(1, p - 1))}
+                  >
+                    <ChevronLeft size={16} />
+                  </button>
+
+                  <span className="movements-page-pagination-current">
+                    {currentPage} / {totalPages}
+                  </span>
+
+                  <button
+                    className="movements-page-pagination-button"
+                    disabled={currentPage === totalPages}
+                    onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                  >
+                    <ChevronRight size={16} />
+                  </button>
+                </div>
               </div>
-            </div>
-          </>
-        )}
+            </>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

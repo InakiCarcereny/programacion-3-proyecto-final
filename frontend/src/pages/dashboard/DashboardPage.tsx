@@ -15,6 +15,7 @@ import { getMovementsService } from "../../services/movements";
 import type { Product } from "../../types/product";
 import type { Movement } from "../../types/movements";
 import { LOW_STOCK_THRESHOLD } from "../../lib/constants";
+import { Helmet } from "react-helmet-async";
 
 interface Metric {
   label: string;
@@ -117,171 +118,183 @@ function DashboardPage(): JSX.Element {
   ];
 
   return (
-    <div className="dashboard-page">
-      <div className="dashboard-page-header">
-        <div>
-          <h2 className="dashboard-page-title">
-            Bienvenido de nuevo
-            {user?.profile?.firstName ? ` ${user.profile.firstName}` : ""}
-          </h2>
-          <p className="dashboard-page-subtitle">
-            Estado en tiempo real de las instalaciones de {user?.companyName}
-          </p>
-        </div>
-      </div>
+    <>
+      <Helmet>
+        <title>Inventory Pro | Dashboard</title>
+        <meta
+          name="description"
+          content="Dashboard de Inventory Pro con métricas y movimientos recientes"
+        />
+      </Helmet>
 
-      {loading && (
-        <p className="dashboard-page-message">Cargando información...</p>
-      )}
-
-      {!loading && error && (
-        <p className="dashboard-page-message dashboard-page-message-error">
-          {error}
-        </p>
-      )}
-
-      {!loading && !error && (
-        <>
-          <div className="dashboard-page-metrics">
-            {metrics.map((metric) => (
-              <div className="dashboard-page-card" key={metric.label}>
-                <div className="dashboard-page-card-top">
-                  <span
-                    className="dashboard-page-card-icon"
-                    style={{ backgroundColor: metric.background }}
-                  >
-                    {metric.icon}
-                  </span>
-
-                  {metric.badge && (
-                    <span
-                      className={`dashboard-page-card-badge dashboard-page-card-badge-${metric.badge.tone}`}
-                    >
-                      {metric.badge.text}
-                    </span>
-                  )}
-                </div>
-
-                <p className="dashboard-page-card-label">{metric.label}</p>
-                <p className="dashboard-page-card-value">{metric.value}</p>
-              </div>
-            ))}
+      <div className="dashboard-page">
+        <div className="dashboard-page-header">
+          <div>
+            <h2 className="dashboard-page-title">
+              Bienvenido de nuevo
+              {user?.profile?.firstName ? ` ${user.profile.firstName}` : ""}
+            </h2>
+            <p className="dashboard-page-subtitle">
+              Estado en tiempo real de las instalaciones de {user?.companyName}
+            </p>
           </div>
+        </div>
 
-          <div className="dashboard-page-grid">
-            <div className="dashboard-page-section">
-              <h3 className="dashboard-page-section-title">
-                Últimos movimientos
-              </h3>
+        {loading && (
+          <p className="dashboard-page-message">Cargando información...</p>
+        )}
 
-              {recentMovements.length === 0 ? (
-                <p className="dashboard-page-message">
-                  Todavía no hay movimientos registrados.
-                </p>
-              ) : (
-                <table className="dashboard-page-table">
-                  <tbody>
-                    {recentMovements.map((movement) => (
-                      <tr key={movement.id}>
-                        <td>
-                          {movement.product?.name ??
-                            `Producto #${movement.productId}`}
-                        </td>
-                        <td>
-                          <span
-                            className={`dashboard-page-badge ${
-                              movement.type === "ingreso"
-                                ? "dashboard-page-badge-ingreso"
-                                : "dashboard-page-badge-egreso"
-                            }`}
-                          >
-                            {movement.type === "ingreso" ? (
-                              <ArrowUpCircle size={13} />
-                            ) : (
-                              <ArrowDownCircle size={13} />
-                            )}
-                            {movement.type === "ingreso" ? "+" : "-"}
-                            {movement.quantity}
-                          </span>
-                        </td>
-                        <td className="dashboard-page-table-date">
-                          {formatDate(movement.createdAt)}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              )}
+        {!loading && error && (
+          <p className="dashboard-page-message dashboard-page-message-error">
+            {error}
+          </p>
+        )}
+
+        {!loading && !error && (
+          <>
+            <div className="dashboard-page-metrics">
+              {metrics.map((metric) => (
+                <div className="dashboard-page-card" key={metric.label}>
+                  <div className="dashboard-page-card-top">
+                    <span
+                      className="dashboard-page-card-icon"
+                      style={{ backgroundColor: metric.background }}
+                    >
+                      {metric.icon}
+                    </span>
+
+                    {metric.badge && (
+                      <span
+                        className={`dashboard-page-card-badge dashboard-page-card-badge-${metric.badge.tone}`}
+                      >
+                        {metric.badge.text}
+                      </span>
+                    )}
+                  </div>
+
+                  <p className="dashboard-page-card-label">{metric.label}</p>
+                  <p className="dashboard-page-card-value">{metric.value}</p>
+                </div>
+              ))}
             </div>
 
-            <div className="dashboard-page-section">
-              <h3 className="dashboard-page-section-title">Top stock bajo</h3>
+            <div className="dashboard-page-grid">
+              <div className="dashboard-page-section">
+                <h3 className="dashboard-page-section-title">
+                  Últimos movimientos
+                </h3>
 
-              {topLowStock.length === 0 ? (
-                <p className="dashboard-page-message">
-                  Todos los productos tienen stock suficiente.
-                </p>
-              ) : (
-                <div className="dashboard-page-low-stock-list">
-                  {topLowStock.map((product) => {
-                    const percent = Math.min(
-                      100,
-                      Math.round(
-                        (product.stock / (LOW_STOCK_THRESHOLD * 2)) * 100,
-                      ),
-                    );
-                    const isOut = product.stock === 0;
-
-                    return (
-                      <div
-                        className="dashboard-page-low-stock-item"
-                        key={product.id}
-                      >
-                        {product.imageUrl ? (
-                          <img
-                            src={product.imageUrl}
-                            alt={product.name}
-                            className="dashboard-page-low-stock-thumb"
-                          />
-                        ) : (
-                          <div className="dashboard-page-low-stock-thumb dashboard-page-low-stock-thumb-fallback">
-                            <Archive size={16} color="#c7c9d6" />
-                          </div>
-                        )}
-
-                        <div className="dashboard-page-low-stock-info">
-                          <div className="dashboard-page-low-stock-row">
-                            <span className="dashboard-page-low-stock-name">
-                              {product.name}
-                            </span>
+                {recentMovements.length === 0 ? (
+                  <p className="dashboard-page-message">
+                    Todavía no hay movimientos registrados.
+                  </p>
+                ) : (
+                  <table className="dashboard-page-table">
+                    <tbody>
+                      {recentMovements.map((movement) => (
+                        <tr key={movement.id}>
+                          <td>
+                            {movement.product?.name ??
+                              `Producto #${movement.productId}`}
+                          </td>
+                          <td>
                             <span
-                              className="dashboard-page-low-stock-count"
-                              style={{ color: isOut ? "#dc2626" : "#d97706" }}
+                              className={`dashboard-page-badge ${
+                                movement.type === "ingreso"
+                                  ? "dashboard-page-badge-ingreso"
+                                  : "dashboard-page-badge-egreso"
+                              }`}
                             >
-                              {product.stock} en stock
+                              {movement.type === "ingreso" ? (
+                                <ArrowUpCircle size={13} />
+                              ) : (
+                                <ArrowDownCircle size={13} />
+                              )}
+                              {movement.type === "ingreso" ? "+" : "-"}
+                              {movement.quantity}
                             </span>
-                          </div>
+                          </td>
+                          <td className="dashboard-page-table-date">
+                            {formatDate(movement.createdAt)}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
+              </div>
 
-                          <div className="dashboard-page-progress-track">
-                            <div
-                              className="dashboard-page-progress-fill"
-                              style={{
-                                width: `${percent}%`,
-                                backgroundColor: isOut ? "#dc2626" : "#d97706",
-                              }}
+              <div className="dashboard-page-section">
+                <h3 className="dashboard-page-section-title">Top stock bajo</h3>
+
+                {topLowStock.length === 0 ? (
+                  <p className="dashboard-page-message">
+                    Todos los productos tienen stock suficiente.
+                  </p>
+                ) : (
+                  <div className="dashboard-page-low-stock-list">
+                    {topLowStock.map((product) => {
+                      const percent = Math.min(
+                        100,
+                        Math.round(
+                          (product.stock / (LOW_STOCK_THRESHOLD * 2)) * 100,
+                        ),
+                      );
+                      const isOut = product.stock === 0;
+
+                      return (
+                        <div
+                          className="dashboard-page-low-stock-item"
+                          key={product.id}
+                        >
+                          {product.imageUrl ? (
+                            <img
+                              src={product.imageUrl}
+                              alt={product.name}
+                              className="dashboard-page-low-stock-thumb"
                             />
+                          ) : (
+                            <div className="dashboard-page-low-stock-thumb dashboard-page-low-stock-thumb-fallback">
+                              <Archive size={16} color="#c7c9d6" />
+                            </div>
+                          )}
+
+                          <div className="dashboard-page-low-stock-info">
+                            <div className="dashboard-page-low-stock-row">
+                              <span className="dashboard-page-low-stock-name">
+                                {product.name}
+                              </span>
+                              <span
+                                className="dashboard-page-low-stock-count"
+                                style={{ color: isOut ? "#dc2626" : "#d97706" }}
+                              >
+                                {product.stock} en stock
+                              </span>
+                            </div>
+
+                            <div className="dashboard-page-progress-track">
+                              <div
+                                className="dashboard-page-progress-fill"
+                                style={{
+                                  width: `${percent}%`,
+                                  backgroundColor: isOut
+                                    ? "#dc2626"
+                                    : "#d97706",
+                                }}
+                              />
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-        </>
-      )}
-    </div>
+          </>
+        )}
+      </div>
+    </>
   );
 }
 

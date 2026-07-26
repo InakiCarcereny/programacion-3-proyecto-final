@@ -15,6 +15,7 @@ import { Pagination } from "../../components/product-pagination/Pagination";
 import { useModal } from "../../context/ModalContext";
 import { EditProductModal } from "../../components/edit-product-modal/EditProductModal";
 import { useSearch } from "../../context/SearchContext";
+import { Helmet } from "react-helmet-async";
 
 const PAGE_SIZE = 10;
 
@@ -115,6 +116,14 @@ function ProductsPage(): JSX.Element {
 
   return (
     <>
+      <Helmet>
+        <title>Inventory Pro | Productos</title>
+        <meta
+          name="description"
+          content="Página de productos de Inventory Pro con métricas, filtros y tabla de productos"
+        />
+      </Helmet>
+
       <PageHeader onAddProduct={() => open("add-product")} />
       <MetricsCards products={products} />
       <FilterBar
