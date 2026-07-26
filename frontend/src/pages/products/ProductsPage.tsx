@@ -14,6 +14,7 @@ import { ProductTable } from "../../components/product-table/ProductTable";
 import { Pagination } from "../../components/product-pagination/Pagination";
 import { useModal } from "../../context/ModalContext";
 import { EditProductModal } from "../../components/edit-product-modal/EditProductModal";
+import { useSearch } from "../../context/SearchContext";
 
 const PAGE_SIZE = 10;
 
@@ -32,6 +33,7 @@ function ProductsPage(): JSX.Element {
   const [selectedStock, setSelectedStock] = useState("Stock Status");
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const { open } = useModal();
+  const { query } = useSearch();
 
   const fetchProducts = (): void => {
     getProductsService(localStorage.getItem("token"))
@@ -64,7 +66,12 @@ function ProductsPage(): JSX.Element {
       selectedStock === "Stock Status" ||
       getStockStatus(p.stock) === selectedStock;
 
-    return matchCategory && matchStock;
+    const matchSearch =
+      !query ||
+      p.name.toLowerCase().includes(query.toLowerCase()) ||
+      p.category?.name?.toLowerCase().includes(query.toLowerCase());
+
+    return matchCategory && matchStock && matchSearch;
   });
 
   const handleEdit = (product: Product): void => {

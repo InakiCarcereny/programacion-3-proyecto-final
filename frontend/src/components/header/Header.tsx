@@ -29,7 +29,7 @@ export function Header(): JSX.Element {
           name="search"
           className="input"
           type="text"
-          placeholder="Buscar movimientos, categorias..."
+          placeholder="Buscar productos, categorias..."
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
           value={query}
