@@ -28,6 +28,9 @@ export async function authenticate(
     res.locals.userId = payload.userId;
     res.locals.companyId = payload.companyId;
     res.locals.profileId = payload.profileId;
+    res.locals.userId = payload.userId;
+    res.locals.companyId = payload.companyId;
+    res.locals.profileId = payload.profileId;
     next();
   } catch (error) {
     res.status(401).json({ error: "Invalid token" });

@@ -10,8 +10,7 @@ import {
 interface ModalContextType {
   isOpen: boolean;
   type: ModalType | null;
-  onSuccess?: () => void;
-  open: (type: ModalType, onSuccess?: () => void) => void;
+  open: (type: ModalType) => void;
   close: () => void;
   toggle: (type: ModalType) => void;
 }
@@ -33,20 +32,15 @@ export function ModalProvider({
 }): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
   const [type, setType] = useState<ModalType | null>(null);
-  const [onSuccess, setOnSuccess] = useState<(() => void) | undefined>(
-    undefined,
-  );
 
-  const open = (type: ModalType, onSuccess?: () => void): void => {
+  const open = (type: ModalType): void => {
     setType(type);
-    setOnSuccess(() => onSuccess);
     setIsOpen(true);
   };
 
   const close = (): void => {
     setIsOpen(false);
     setType(null);
-    setOnSuccess(undefined);
   };
 
   const toggle = (type: ModalType): void => {
@@ -55,9 +49,7 @@ export function ModalProvider({
   };
 
   return (
-    <ModalContext.Provider
-      value={{ isOpen, type, onSuccess, open, close, toggle }}
-    >
+    <ModalContext.Provider value={{ isOpen, type, open, close, toggle }}>
       {children}
     </ModalContext.Provider>
   );

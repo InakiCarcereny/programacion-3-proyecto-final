@@ -1,4 +1,4 @@
-import { type Category } from "./category";
+import type { Category } from "./category";
 
 export interface Product {
   id: number;
@@ -10,6 +10,6 @@ export interface Product {
   categoryId: number;
   companyId: number;
   category?: Category;
-  createdAt?: Date;
-  updatedAt?: Date;
+  createdAt?: string;
+  updatedAt?: string;
 }

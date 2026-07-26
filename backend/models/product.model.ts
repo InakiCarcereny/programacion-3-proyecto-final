@@ -77,6 +77,8 @@ class Product
     const product = await Product.findOne({ where: { id, companyId } });
     if (!product) return false;
 
+    const { Movement } = await import("./index");
+    await Movement.destroy({ where: { productId: id } });
     await product.destroy();
 
     return true;

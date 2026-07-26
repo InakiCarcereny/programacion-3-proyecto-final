@@ -25,3 +25,36 @@ export async function createProductService(
   }
   return res.json();
 }
+
+export async function updateProductService(
+  token: string,
+  id: number,
+  data: FormData,
+): Promise<Product> {
+  const res = await fetch(`/api/products/${id}`, {
+    method: "PUT",
+    headers: { Authorization: `Bearer ${token}` },
+    body: data,
+  });
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.error ?? "Error al actualizar el producto");
+  }
+  return res.json();
+}
+
+export async function deleteProductService(
+  token: string,
+  id: number,
+): Promise<void> {
+  const res = await fetch(`/api/products/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.error ?? "Error al eliminar el producto");
+  }
+}
