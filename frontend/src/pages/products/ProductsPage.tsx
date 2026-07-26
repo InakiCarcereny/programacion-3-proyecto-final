@@ -70,13 +70,7 @@ function ProductsPage(): JSX.Element {
   const handleEdit = (product: Product): void => {
     setEditingProduct(product);
   };
-
   const handleDelete = async (product: Product): Promise<void> => {
-    const confirmed = window.confirm(
-      `¿Estás seguro de eliminar "${product.name}"?`,
-    );
-    if (!confirmed) return;
-
     try {
       const token = localStorage.getItem("token");
       await deleteProductService(token!, product.id);
