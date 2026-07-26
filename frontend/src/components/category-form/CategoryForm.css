@@ -1,0 +1,115 @@
+/* --- Contenedor principal del formulario --- */
+.category-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* --- Grupo de campos del formulario --- */
+.category-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.category-form-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.category-form-input,
+.category-form-textarea {
+  padding: 12px 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.category-form-input:focus,
+.category-form-textarea:focus {
+  outline: none;
+  border-color: #004ac6;
+  box-shadow: 0 0 0 3px rgba(0, 74, 198, 0.1);
+}
+
+.category-form-input.error {
+  border-color: #dc2626;
+}
+
+.category-form-input.error:focus {
+  border-color: #dc2626;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+.category-form-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* --- Errores del formulario --- */
+.category-form-error {
+  font-size: 12px;
+  color: #dc2626;
+  margin: 0;
+}
+
+/* --- Pie del formulario --- */
+.category-form-footer {
+  display: flex;
+  gap: 16px;
+  justify-content: flex-end;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.category-form-cancel-button,
+.category-form-submit-button {
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.category-form-cancel-button {
+  background-color: #f1f5f9;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+}
+
+.category-form-cancel-button:hover:not(:disabled) {
+  background-color: #e2e8f0;
+}
+
+.category-form-cancel-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.category-form-submit-button {
+  background-color: #004ac6;
+  color: #ffffff;
+  border: none;
+}
+
+.category-form-submit-button:hover:not(:disabled) {
+  background-color: #0056b3;
+  transform: translateY(-1px);
+}
+
+.category-form-submit-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.category-form-submit-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
