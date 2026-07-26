@@ -14,7 +14,7 @@ export function PageHeader({ onAddProduct }: PageHeaderProps): JSX.Element {
       <div className="header-actions">
         <button className="btn-primary" onClick={onAddProduct}>
           <Plus size={20} />
-          Añadir Producto
+          Agregar Producto
         </button>
       </div>
     </div>

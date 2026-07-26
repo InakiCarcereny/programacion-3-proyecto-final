@@ -7,8 +7,8 @@ export async function getMovements(
   next: NextFunction,
 ): Promise<void> {
   try {
-    const movements = await Movement.findAllMovements();
-
+    const { companyId } = res.locals;
+    const movements = await Movement.findAllMovements(companyId);
     res.json(movements);
   } catch (error) {
     next(error);

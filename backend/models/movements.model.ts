@@ -19,11 +19,16 @@ class Movement
   declare readonly createdAt: Date;
   declare readonly updatedAt: Date;
 
-  static async findAllMovements(): Promise<Movement[]> {
+  static async findAllMovements(companyId: number): Promise<Movement[]> {
     const { Product } = await import("./index");
-
     return await Movement.findAll({
-      include: [{ model: Product, as: "product" }],
+      include: [
+        {
+          model: Product,
+          as: "product",
+          where: { companyId },
+        },
+      ],
     });
   }
 
