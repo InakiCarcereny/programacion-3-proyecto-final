@@ -59,13 +59,12 @@ function ProgressRing({
 }
 
 export function CategoriesPage(): JSX.Element {
-  const { token, user } = useAuth();
+  const { token } = useAuth();
   const [refreshTrigger, setRefreshTrigger] = useState(0);
   const [utilData, setUtilData] = useState<CategoryData[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingCategory, setEditingCategory] =
     useState<CategoryFormData | null>(null);
-  const companyId = user?.companyId;
 
   const fetchUtilization = useCallback(async () => {
     if (!token) return;
@@ -109,7 +108,7 @@ export function CategoriesPage(): JSX.Element {
     } catch {
       // ignore
     }
-  }, [token, companyId]);
+  }, [token]);
 
   useEffect(() => {
     const loadUtilization = async (): Promise<void> => {
