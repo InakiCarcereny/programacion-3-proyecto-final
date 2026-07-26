@@ -1,0 +1,26 @@
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  width: 100%;
+}
+
+.loading-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #64748b;
+  font-size: 16px;
+  font-weight: 500;
+  width: 100%;
+}
+
+.error-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #dc2626;
+  font-size: 16px;
+  font-weight: 500;
+  width: 100%;
+  background-color: #fef2f2;
+  border-radius: 8px;
+}
