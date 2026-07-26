@@ -7,6 +7,10 @@
   border-bottom: 1px solid #e3e3ee;
   position: sticky;
   top: 0;
+  z-index: 1000;
+  background-color: rgba(250, 248, 255, 0.85);
+  backdrop-filter: blur(8px);
+  border-left: 1px solid #e3e3ee;
 }
 
 .input-container {

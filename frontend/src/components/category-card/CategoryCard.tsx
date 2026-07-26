@@ -15,7 +15,6 @@ interface CategoryCardProps {
   category: CategoryCardData;
   onEdit: (category: CategoryCardData) => void;
   onDelete: (id: number) => void;
-  onViewDetails: (id: number) => void;
 }
 
 const getTimeAgo = (dateString: string): string => {
@@ -36,7 +35,6 @@ export function CategoryCard({
   category,
   onEdit,
   onDelete,
-  onViewDetails,
 }: CategoryCardProps): JSX.Element {
   return (
     <div className="category-card">
@@ -81,10 +79,7 @@ export function CategoryCard({
         <span className="last-updated">
           Última actualización: {getTimeAgo(category.updatedAt)}
         </span>
-        <button
-          className="arrow-btn"
-          onClick={() => onViewDetails(category.id)}
-        >
+        <button className="arrow-btn">
           <ArrowRight size={20} />
         </button>
       </div>

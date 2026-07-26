@@ -1,5 +1,4 @@
 .categories-page {
-  padding: 32px;
   min-height: 100vh;
 }
 
@@ -133,20 +132,4 @@
   color: #64748b;
   margin: 2px 0 0;
   white-space: nowrap;
-}
-
-/* Footer */
-.categories-footer {
-  text-align: center;
-  padding: 24px 32px;
-  border-top: 1px solid #e2e8f0;
-}
-
-.categories-footer p {
-  font-size: 12px;
-  font-weight: 600;
-  color: #64748b;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  margin: 0;
 }

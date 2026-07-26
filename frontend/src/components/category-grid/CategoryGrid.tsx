@@ -30,10 +30,11 @@ export function CategoryGrid({
   refreshTrigger?: number;
   onEditRequest?: (category: CategoryCardData) => void;
 }): JSX.Element {
-  const { token, user } = useAuth();
+  const { token } = useAuth();
   const [categories, setCategories] = useState<CategoryCardData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
 
   const fetchCategories = useCallback(async () => {
     try {
@@ -89,7 +90,6 @@ export function CategoryGrid({
       const errorMessage =
         error instanceof Error ? error.message : "Error al cargar categorías";
       setError(errorMessage);
-      console.error(errorMessage, error);
     } finally {
       setLoading(false);
     }
@@ -103,14 +103,12 @@ export function CategoryGrid({
     void loadCategories();
   }, [refreshTrigger, fetchCategories]);
 
-  const deleteCategory = async (id: number): Promise<any> => {
+  const deleteCategory = async (id: number): Promise<void> => {
     const response = await fetch(`/api/categories/${id}`, {
       method: "DELETE",
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ companyId: user?.companyId }),
     });
 
     if (!response.ok) {
@@ -119,40 +117,28 @@ export function CategoryGrid({
         const errorData = await response.json();
         errorMessage = errorData.error || errorMessage;
       } catch {
-        // body vacío (502 etc)
+        // body vacío
       }
       throw new Error(errorMessage);
     }
-
-    try {
-      return await response.json();
-    } catch {
-      return null;
-    }
   };
 
-  const handleEdit = (category: any): void => {
+  const handleEdit = (category: CategoryCardData): void => {
     if (onEditRequest) {
       onEditRequest(category);
     }
   };
 
   const handleDelete = async (id: number): Promise<void> => {
-    if (
-      window.confirm("¿Estás seguro de que deseas eliminar esta categoría?")
-    ) {
-      try {
-        await deleteCategory(id);
-        fetchCategories();
-      } catch {
-        alert("Error al eliminar categoría");
+    setDeleteError(null);
+    try {
+      await deleteCategory(id);
+      await fetchCategories();
+    } catch (error) {
+      if (error instanceof Error) {
+        setDeleteError(error.message);
       }
     }
-  };
-
-  const handleViewDetails = (id: number): void => {
-    console.log("Ver detalles de categoría:", id);
-    alert(`Ver detalles de la categoría ${id}`);
   };
 
   if (loading) {
@@ -164,16 +150,18 @@ export function CategoryGrid({
   }
 
   return (
-    <div className="categories-grid">
-      {categories.map((category) => (
-        <CategoryCard
-          key={category.id}
-          category={category}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-          onViewDetails={handleViewDetails}
-        />
-      ))}
+    <div>
+      {deleteError && <p className="categories-error">{deleteError}</p>}
+      <div className="categories-grid">
+        {categories.map((category) => (
+          <CategoryCard
+            key={category.id}
+            category={category}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+          />
+        ))}
+      </div>
     </div>
   );
 }

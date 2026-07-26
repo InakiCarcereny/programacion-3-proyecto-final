@@ -181,10 +181,6 @@ export function CategoriesPage(): JSX.Element {
         </div>
       </div>
 
-      <footer className="categories-footer">
-        <p>© 2026 Inventory Pro v2.4.1 — Optimizado para tu empresa</p>
-      </footer>
-
       <CategoryFormModal
         isOpen={isModalOpen}
         editingCategory={editingCategory}
