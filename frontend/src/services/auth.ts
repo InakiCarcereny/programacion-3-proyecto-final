@@ -1,4 +1,5 @@
 import type { User } from "../types/user";
+import { API_URL } from "../lib/api";
 
 interface RegisterData {
   firstName: string;
@@ -21,7 +22,7 @@ interface AuthResponse {
 export async function registerService(
   data: RegisterData,
 ): Promise<AuthResponse> {
-  const res = await fetch("/api/auth/register", {
+  const res = await fetch(`${API_URL}/api/auth/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
@@ -34,7 +35,7 @@ export async function registerService(
 }
 
 export async function loginService(data: LoginData): Promise<AuthResponse> {
-  const res = await fetch("/api/auth/login", {
+  const res = await fetch(`${API_URL}/api/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),

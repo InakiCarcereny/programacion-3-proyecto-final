@@ -1,4 +1,5 @@
 import { type UserProfile } from "../types/user-profile";
+import { API_URL } from "../lib/api";
 
 interface UpdateDetailsResponse {
   message: string;
@@ -10,7 +11,7 @@ export async function updateUserDetailsService(
   userId: number,
   formData: FormData,
 ): Promise<UpdateDetailsResponse> {
-  const res = await fetch(`/api/user-details/${userId}`, {
+  const res = await fetch(`${API_URL}/api/user-details/${userId}`, {
     method: "PUT",
     headers: { Authorization: `Bearer ${token}` },
     body: formData,

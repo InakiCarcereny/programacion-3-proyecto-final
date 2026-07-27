@@ -1,3 +1,4 @@
+import { API_URL } from "../lib/api";
 import type { Movement } from "../types/movements";
 
 interface CreateMovementData {
@@ -10,7 +11,7 @@ interface CreateMovementData {
 export async function getMovementsService(
   token: string | null,
 ): Promise<Movement[]> {
-  const res = await fetch("/api/movements", {
+  const res = await fetch(`${API_URL}/api/movements`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   if (!res.ok) throw new Error("Error al obtener los movimientos");
@@ -21,7 +22,7 @@ export async function createMovementService(
   token: string | null,
   data: CreateMovementData,
 ): Promise<Movement> {
-  const res = await fetch("/api/movements", {
+  const res = await fetch(`${API_URL}/api/movements`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

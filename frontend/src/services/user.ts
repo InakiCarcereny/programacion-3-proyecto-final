@@ -1,4 +1,5 @@
 import { type UserListItem } from "../types/user";
+import { API_URL } from "../lib/api";
 
 interface CreateUserData {
   firstName: string;
@@ -14,7 +15,7 @@ interface CreateUserResponse {
 }
 
 export async function getUsersService(token: string): Promise<UserListItem[]> {
-  const res = await fetch("/api/users", {
+  const res = await fetch(`${API_URL}/api/users`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   if (!res.ok) throw new Error("Error al obtener los usuarios");
@@ -25,7 +26,7 @@ export async function createUserService(
   token: string | null,
   data: CreateUserData,
 ): Promise<CreateUserResponse> {
-  const res = await fetch("/api/users", {
+  const res = await fetch(`${API_URL}/api/users`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -44,7 +45,7 @@ export async function deleteUserService(
   token: string,
   userId: number,
 ): Promise<void> {
-  const res = await fetch(`/api/users/${userId}`, {
+  const res = await fetch(`${API_URL}/api/users/${userId}`, {
     method: "DELETE",
     headers: { Authorization: `Bearer ${token}` },
   });
@@ -59,7 +60,7 @@ export async function updateUserService(
   userId: number,
   data: { email: string; profileId: number; isActive: boolean },
 ): Promise<void> {
-  const res = await fetch(`/api/users/${userId}`, {
+  const res = await fetch(`${API_URL}/api/users/${userId}`, {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,
