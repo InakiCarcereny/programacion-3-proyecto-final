@@ -3,6 +3,7 @@ import { useAuth } from "../../context/AuthContext";
 import { CategoryCard } from "../category-card/CategoryCard";
 import "./CategoryGrid.css";
 import { useSearch } from "../../context/SearchContext";
+import type { CategoryCardData } from "../category-card/CategoryCard";
 
 export interface CategoryAPI {
   id: number;
@@ -17,11 +18,6 @@ interface ProductAPI {
   id: number;
   categoryId: number;
   stock: number;
-}
-
-export interface CategoryCardData extends CategoryAPI {
-  totalStock: number;
-  isActive: boolean;
 }
 
 export function CategoryGrid({

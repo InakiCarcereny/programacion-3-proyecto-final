@@ -8,6 +8,8 @@ export interface CategoryCardData {
   description: string;
   totalStock: number;
   isActive: boolean;
+  companyId: number;
+  createdAt: string;
   updatedAt: string;
 }
 
