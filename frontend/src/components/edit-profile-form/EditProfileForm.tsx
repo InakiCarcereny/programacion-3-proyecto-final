@@ -55,7 +55,11 @@ export function EditProfileForm({
       }
 
       await updateUserDetailsService(token!, user!.id, data);
-      await updateUserService(token!, user!.id, { email: formData.email });
+      await updateUserService(token!, user!.id, {
+        email: formData.email,
+        profileId: user!.profileId,
+        isActive: user!.isActive ?? true,
+      });
 
       updateUser({
         email: formData.email,
