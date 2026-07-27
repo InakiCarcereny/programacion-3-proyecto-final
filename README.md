@@ -1,3 +1,5 @@
+![Preview](backend/docs/preview.png)
+
 <div align="center">
 
 # Inventory Pro
