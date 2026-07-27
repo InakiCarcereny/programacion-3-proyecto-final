@@ -1,0 +1,137 @@
+.category-card {
+  background-color: #ffffff;
+  border: 1px solid #e3e3ee;
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.category-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.06);
+  border-color: #94a3b8;
+  transform: translateY(-2px);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.icon-wrapper {
+  background-color: #e0e7ff;
+  color: #1e293b;
+  padding: 12px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.edit-btn,
+.delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.edit-btn {
+  color: #475569;
+}
+
+.edit-btn:hover {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+.delete-btn {
+  color: #64748b;
+}
+
+.delete-btn:hover {
+  background-color: #fef2f2;
+  color: #dc2626;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.card-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 8px 0;
+}
+
+.card-meta {
+  font-size: 15px;
+  color: #64748b;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.status-active {
+  color: #059669;
+  font-weight: 600;
+}
+
+.status-inactive {
+  color: #e11d48;
+  font-weight: 600;
+}
+
+.card-divider {
+  border: none;
+  border-top: 1px solid #e2e8f0;
+  margin: 20px 0;
+  width: 100%;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.last-updated {
+  font-size: 14px;
+  font-weight: 700;
+  font-family: monospace;
+  color: #475569;
+}
+
+.arrow-btn {
+  background: none;
+  border: none;
+  color: #004ac6;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+}
+
+.category-card:hover .arrow-btn {
+  transform: translateX(4px);
+}

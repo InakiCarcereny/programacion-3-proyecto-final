@@ -1,0 +1,33 @@
+.edit-profile-form-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.edit-profile-form-input-label {
+  font-weight: bold;
+  font-size: 14px;
+  color: #464858;
+}
+
+.edit-profile-form-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.edit-profile-form-input {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  width: 100%;
+}
+
+.edit-profile-form-input-error {
+  color: red;
+  font-size: 12px;
+  font-weight: bold;
+  margin-top: 4px;
+}

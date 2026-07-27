@@ -1,0 +1,74 @@
+.profile-page-info-details {
+  display: flex;
+  height: 100%;
+  gap: 40px;
+}
+
+.profile-page-info-details-separator {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.profile-page-info-details-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.profile-page-info-name-edit {
+  font-weight: bold;
+  font-size: 14px;
+  color: #464858;
+}
+
+.profile-page-info-name-value-edit {
+  margin: 0 0 21px 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.profile-page-edit-actions {
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+}
+
+.profile-page-save-button {
+  padding: 16px 24px;
+  background-color: #004ac6;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #003399;
+  }
+}
+
+.profile-page-cancel-button {
+  padding: 16px 24px;
+  background-color: #faf8ff;
+  color: #004ac6;
+  font-size: 12px;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #ededf9;
+  }
+}
+
+.input-error {
+  color: red;
+  font-size: 12px;
+  font-weight: bold;
+  margin-top: 4px;
+}
