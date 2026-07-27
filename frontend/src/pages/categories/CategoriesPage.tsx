@@ -8,6 +8,7 @@ import { CategoryGrid } from "../../components/category-grid/CategoryGrid";
 import { CategoryFormModal } from "../../components/category-form-modal/CategoryFormModal";
 import type { CategoryFormData } from "../../components/category-form-modal/CategoryFormModal";
 import { Helmet } from "react-helmet-async";
+import { API_URL } from "../../lib/api";
 
 interface CategoryData {
   id: number;
@@ -71,12 +72,12 @@ export function CategoriesPage(): JSX.Element {
     if (!token) return;
     try {
       const [categoriesData, productsData] = await Promise.all([
-        fetch("/api/categories", {
+        fetch(`${API_URL}/api/categories`, {
           headers: { Authorization: `Bearer ${token}` },
         })
           .then((r) => r.json())
           .catch(() => []),
-        fetch("/api/products", {
+        fetch(`${API_URL}/api/products`, {
           headers: { Authorization: `Bearer ${token}` },
         })
           .then((r) => r.json())

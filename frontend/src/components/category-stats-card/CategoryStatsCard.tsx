@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, type JSX } from "react";
 import { useAuth } from "../../context/AuthContext";
 import "./CategoryStatsCard.css";
+import { API_URL } from "../../lib/api";
 
 interface Metrics {
   categories: number;
@@ -26,7 +27,7 @@ export function CategoryStatsCard({
       setError(null);
 
       const [categoriesData, productsData] = await Promise.all([
-        fetch("/api/categories", {
+        fetch(`${API_URL}/api/categories`, {
           headers: { Authorization: `Bearer ${token}` },
         })
           .then((res) => {
@@ -34,7 +35,7 @@ export function CategoryStatsCard({
             return res.json();
           })
           .catch(() => [] as Record<string, unknown>[]),
-        fetch("/api/products", {
+        fetch(`${API_URL}/api/products`, {
           headers: { Authorization: `Bearer ${token}` },
         })
           .then((res) => {

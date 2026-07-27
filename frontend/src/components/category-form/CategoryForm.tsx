@@ -1,6 +1,7 @@
 import { useState, type JSX } from "react";
 import { useAuth } from "../../context/AuthContext";
 import "./CategoryForm.css";
+import { API_URL } from "../../lib/api";
 
 export interface FormErrors {
   [key: string]: string;
@@ -82,8 +83,8 @@ export function CategoryForm({
 
       const isEditing = !!editingCategory;
       const url = isEditing
-        ? `/api/categories/${editingCategory.id}`
-        : "/api/categories";
+        ? `${API_URL}/api/categories/${editingCategory.id}`
+        : `${API_URL}/api/categories`;
 
       const response = await fetch(url, {
         method: isEditing ? "PUT" : "POST",

@@ -4,6 +4,7 @@ import { CategoryCard } from "../category-card/CategoryCard";
 import "./CategoryGrid.css";
 import { useSearch } from "../../context/SearchContext";
 import type { CategoryCardData } from "../category-card/CategoryCard";
+import { API_URL } from "../../lib/api";
 
 export interface CategoryAPI {
   id: number;
@@ -40,7 +41,7 @@ export function CategoryGrid({
       setError(null);
 
       const [categoriesData, productsData] = await Promise.all([
-        fetch("/api/categories", {
+        fetch(`${API_URL}/api/categories`, {
           headers: { Authorization: `Bearer ${token}` },
         })
           .then((res) => {
@@ -48,7 +49,7 @@ export function CategoryGrid({
             return res.json();
           })
           .catch(() => [] as CategoryAPI[]),
-        fetch("/api/products", {
+        fetch(`${API_URL}/api/products`, {
           headers: { Authorization: `Bearer ${token}` },
         })
           .then((res) => {
@@ -109,7 +110,7 @@ export function CategoryGrid({
   );
 
   const deleteCategory = async (id: number): Promise<void> => {
-    const response = await fetch(`/api/categories/${id}`, {
+    const response = await fetch(`${API_URL}/api/categories/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
